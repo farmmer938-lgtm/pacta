@@ -117,9 +117,9 @@ Generated deterministically from the feeds below (data as of 2026-11-17T12:32:23
 - ethereum block 26408330 (0x8efc8256deb932e65b5117f040db264dc8200850636d90eecd5daccb99979f4d) · source /api/v1/onboarding.json paxos-paxgy-eth · brief https://pacta.wtf/briefs/paxos-paxgy-eth/
 - Sentinel predicates: AdminUpgradePredicate, PausePrivilegeEscalationPredicate, CapSupplyViolationPredicate
 - owner() of the vault, accountant, teller and manager is the TimelockController 0x0DcC…df08 (getMinDelay() = 86,400s). The RolesAuthority 0xC444…99DD is also owned by it. Owner-only changes (including setManageRoot, which no role holds) therefore wait at least 24 hours.
-- Timelock roles (9 events replayed): DEFAULT_ADMIN_ROLE → 0x0DcC…df08; PROPOSER_ROLE → 0x0000…3f2F; EXECUTOR_ROLE → 0x0000…3f2F, 0x1D60…9312, 0x317e…A024, 0x4143…652C, 0x6Be5…526E, 0xFBf7…1A5e; CANCELLER_ROLE → 0x0000…3f2F.
+- Timelock roles (9 events replayed): DEFAULT_ADMIN_ROLE: 0x0DcC…df08; PROPOSER_ROLE: 0x0000…3f2F; EXECUTOR_ROLE: 0x0000…3f2F, 0x1D60…9312, 0x317e…A024, 0x4143…652C, 0x6Be5…526E, 0xFBf7…1A5e; CANCELLER_ROLE: 0x0000…3f2F.
 - Capabilities granted through the RolesAuthority execute with no delay. updateExchangeRate is held by the 3-of-5 Safe 0x0000…3f2F and by 0x1755…4B56 (EOA (no contract code); 8,269 transactions sent). The accountant bounds each update: upper 10004 bps, lower 10000 bps of the current rate, at least 3,600s apart (current rate 1.004425 PAXG per PAXGy; platform / performance fee 0 / 0 bps). In the upstream Veda AccountantWithRateProviders source, an update outside these bounds or sooner than the minimum delay stores the new rate and pauses the accountant instead of reverting (the deployed bytecode was not compared with that source here).
-- Full role → capability → holder map below, replayed from 68 RolesAuthority events (blocks 25,740,680–26,408,330). Selectors without a public signature are shown as raw 4-byte values.
+- Full role, capability and holder map below, replayed from 68 RolesAuthority events (blocks 25,740,680–26,408,330). Selectors without a public signature are shown as raw 4-byte values.
 - Teller 0x41AB…A6f7: isPaused() = false, shareLockPeriod() = 0s. The previous teller 0x5C43…fe72 is paused (isPaused() = true).
 
 ### aave-25721: [ARFC] Onboard syrupUSDC to Aave V4 on Arc
@@ -157,7 +157,7 @@ Generated deterministically from the feeds below (data as of 2026-11-17T12:32:23
 - The router prices efixDI+ through the custom adapter 0x9CD2…7788 (name() = “efixDI/USDC par x ChainlinkBRLUSD”). Borrow / liquidation LTV 70% / 77%, interest fee 15%.
 - Supply cap 3,440.00 USDC, borrow cap 23,000.00 USDC; total assets 3,480.37 USDC, borrows 3,135.58 USDC (90.1% utilization).
 - MINTER_ROLE on efixDI+ is held directly by 0x8f8C…CCb1, an account with no contract code (0 bytes) and 1,159 transactions sent, which is also one of the three signers of the governor Safe. Calls gated only by MINTER_ROLE need no second signature and no delay.
-- efixDI+ AccessControl role history (19 events, blocks 41,724,585–57,050,397): DEFAULT_ADMIN_ROLE → 0x9040…EeD4 (2-of-3 Safe); PAUSER_ROLE → 0x9040…EeD4 (2-of-3 Safe); MINTER_ROLE → 0x8f8C…CCb1 (EOA, 1,159 txs, signer of 0x9040…EeD4).
+- efixDI+ AccessControl role history (19 events, blocks 41,724,585–57,050,397): DEFAULT_ADMIN_ROLE: 0x9040…EeD4 (2-of-3 Safe); PAUSER_ROLE: 0x9040…EeD4 (2-of-3 Safe); MINTER_ROLE: 0x8f8C…CCb1 (EOA, 1,159 txs, signer of 0x9040…EeD4).
 - EFIX.owner() = 0x7C54…7537: an EOA carrying an EIP-7702 delegation designator to 0xdf02…8792, 156 transactions sent. It is not a Safe or a timelock.
 
 ### euler-1862: kUSD/USDC isolated market on Euler Base: deployed, ungoverned, and an underwriting packet for curators
@@ -166,12 +166,12 @@ Generated deterministically from the feeds below (data as of 2026-11-17T12:32:23
 - Sentinel predicates: AdminUpgradePredicate, OracleGovernanceSwapPredicate, PausePrivilegeEscalationPredicate, CapSupplyViolationPredicate
 - The market layer has no governor: governorAdmin() returns 0x0000…0000 on the USDC vault and 0x0000…0000 on the kUSD escrow vault, and EulerRouter.governor() returns 0x0000…0000. Oracle, LTVs and caps cannot be changed by anyone.
 - Caps are unset and cannot be set: supply cap none (AmountCap 0), borrow cap none (AmountCap 0). Exposure limits exist only in the curator vault that allocates to this market.
-- kUSD is priced at a fixed rate: getQuote(1e18 kUSD → USDC) = 1.00 USDC from 0x8f27…D2D3. Borrow / liquidation LTV 60.00% / 65.00%. No market price feeds liquidations, so lender recovery depends on kUSD redemption and its backing.
+- kUSD is priced at a fixed rate: getQuote(1e18 kUSD, USDC) = 1.00 USDC from 0x8f27…D2D3. Borrow / liquidation LTV 60.00% / 65.00%. No market price feeds liquidations, so lender recovery depends on kUSD redemption and its backing.
 - kUSD implements AccessControl (supportsInterface(0x7965db0b) = true). DEFAULT_ADMIN_ROLE on kUSD is held by the TimelockController 0x36A1…0D72 (hasRole = true; getMinDelay() = 172,800s, 48h). The 2-of-3 Safe 0x52d3…4877 is its proposer, executor and canceller (true / true / true) and does not hold DEFAULT_ADMIN_ROLE on kUSD itself.
 - MINTER_ROLE is held by 0xaBDE…9803 (kUSD() = 0x5C2E…0AA3, paused() = false), whose DEFAULT_ADMIN_ROLE is the same timelock (true). Role changes on kUSD and on the minter pass a 48-hour public queue.
-- kUSD AccessControl role history (16 events, blocks 44,448,090–57,050,397): DEFAULT_ADMIN_ROLE → 0x36A1…0D72 (contract, 6,536 bytes); MINTER_ROLE → 0xaBDE…9803 (contract, 11,376 bytes).
-- kUSD admin TimelockController role history (4 events, blocks 49,495,127–57,050,397): DEFAULT_ADMIN_ROLE → 0x36A1…0D72 (contract, 6,536 bytes); PROPOSER_ROLE → 0x52d3…4877 (2-of-3 Safe); EXECUTOR_ROLE → 0x52d3…4877 (2-of-3 Safe); CANCELLER_ROLE → 0x52d3…4877 (2-of-3 Safe).
-- kUSD minter contract role history (11 events, blocks 48,469,020–57,050,397): DEFAULT_ADMIN_ROLE → 0x36A1…0D72 (contract, 6,536 bytes); MANAGER_ROLE → 0x36A1…0D72 (contract, 6,536 bytes), 0xC47a…Cc8E (contract, 1,012 bytes).
+- kUSD AccessControl role history (16 events, blocks 44,448,090–57,050,397): DEFAULT_ADMIN_ROLE: 0x36A1…0D72 (contract, 6,536 bytes); MINTER_ROLE: 0xaBDE…9803 (contract, 11,376 bytes).
+- kUSD admin TimelockController role history (4 events, blocks 49,495,127–57,050,397): DEFAULT_ADMIN_ROLE: 0x36A1…0D72 (contract, 6,536 bytes); PROPOSER_ROLE: 0x52d3…4877 (2-of-3 Safe); EXECUTOR_ROLE: 0x52d3…4877 (2-of-3 Safe); CANCELLER_ROLE: 0x52d3…4877 (2-of-3 Safe).
+- kUSD minter contract role history (11 events, blocks 48,469,020–57,050,397): DEFAULT_ADMIN_ROLE: 0x36A1…0D72 (contract, 6,536 bytes); MANAGER_ROLE: 0x36A1…0D72 (contract, 6,536 bytes), 0xC47a…Cc8E (contract, 1,012 bytes).
 
 ### morpho-2301: [RFC] A User-centric DeFi Collateral Transparency Framework - Phase 1
 - https://forum.morpho.org/t/rfc-a-user-centric-defi-collateral-transparency-framework-phase-1/2301 · framework_reference: block-pinned Morpho Blue and MetaMorpho control-plane observations the framework discusses

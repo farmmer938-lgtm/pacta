@@ -25,38 +25,44 @@
   .scene { position:absolute; inset:0; padding:5.5% 7%; opacity:0; transform:translateY(12px); transition:opacity .6s, transform .6s; pointer-events:none; }
   .scene.on { opacity:1; transform:none; pointer-events:auto; }
   .mark { width:clamp(16px,2vw,26px); height:auto; vertical-align:-0.22em; margin-right:.55em; }
-  .kicker { color:var(--acc); letter-spacing:.14em; text-transform:uppercase; font-size:clamp(10px,1.4vw,18px); font-weight:700; }
-  h1 { font-size:clamp(22px,4.6vw,64px); line-height:1.05; margin:.25em 0 .2em; }
-  h2 { font-size:clamp(18px,3.2vw,44px); margin:.2em 0 .5em; }
-  p, li { font-size:clamp(12px,1.9vw,26px); color:var(--mute); }
+  .kicker { color:var(--acc); letter-spacing:.14em; text-transform:uppercase; font-size:clamp(12px,1.4vw,18px); font-weight:700; }
+  h1 { font-size:clamp(24px,4.6vw,48px); line-height:1.05; margin:.25em 0 .2em; }
+  h2 { font-size:clamp(18px,3.2vw,36px); margin:.2em 0 .5em; }
+  p, li { font-size:clamp(12px,1.9vw,24px); color:var(--mute); }
   b, .ink { color:var(--ink); }
   .row { display:flex; gap:3%; align-items:stretch; }
   .card { background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:2.2% 2.6%; flex:1; }
-  .term { font:clamp(10px,1.55vw,21px)/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:#08090b; border:1px solid var(--line); border-radius:4px; padding:2% 2.4%; white-space:pre-wrap; min-height:56%; }
+  .term { font:clamp(12px,1.55vw,20px)/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:#08090b; border:1px solid var(--line); border-radius:4px; padding:2% 2.4%; white-space:pre-wrap; min-height:56%; }
   .term .l { opacity:0; transition:opacity .35s; } .term .l.on { opacity:1; }
-  .c-req { color:var(--acc); } .c-402 { color:var(--warn); } .c-pay { color:var(--pay); } .c-200 { color:var(--ok); } .c-dim { color:#6c727c; }
+  .c-req { color:var(--acc); } .c-402 { color:var(--warn); } .c-pay { color:var(--pay); } .c-200 { color:var(--ok); } .c-dim { color:#8a909a; }
   .flow { display:flex; align-items:center; justify-content:space-between; margin-top:3%; }
-  .node { background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:1.6% 1.8%; text-align:center; width:22%; font-size:clamp(11px,1.7vw,22px); }
+  .node { background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:1.6% 1.8%; text-align:center; width:22%; font-size:clamp(12px,1.7vw,20px); }
   .node.hot { border-color:var(--acc); }
   .arrow { flex:1; height:4px; margin:0 1%; background:var(--line); border-radius:0; position:relative; }
-  .pill { display:inline-block; padding:.15em .6em; border-radius:3px; font-weight:700; font-size:.85em; }
+  .pill { display:inline-block; padding:.15em .6em; border-radius:3px; font-weight:700; font-size:1em; }
   .p402 { background:#e3a5401f; color:var(--warn); } .p200 { background:#5cc3941f; color:var(--ok); } .ppay { background:#b7a6e81f; color:var(--pay); }
-  .big { font-size:clamp(28px,6vw,88px); font-weight:800; color:var(--ink); }
-  table { width:100%; border-collapse:collapse; font-size:clamp(11px,1.8vw,24px); }
+  .big { font-size:clamp(30px,6vw,48px); font-weight:800; color:var(--ink); }
+  table { width:100%; border-collapse:collapse; font-size:clamp(12px,1.8vw,24px); }
   td, th { padding:.45em .5em; border-bottom:1px solid var(--line); text-align:left; } th { color:var(--acc); font-weight:600; }
   .num { text-align:right; font-variant-numeric:tabular-nums; }
   #hud { position:absolute; left:0; right:0; bottom:0; height:6px; background:#ffffff14; }
   #bar { height:100%; width:0; background:var(--acc); }
   #ctl { position:absolute; right:1.4%; bottom:2.2%; display:flex; gap:.5em; font:12px ui-monospace,monospace; color:var(--mute); }
-  #ctl button { background:#ffffff12; color:var(--ink); border:1px solid #ffffff22; border-radius:3px; padding:.35em .7em; cursor:pointer; font:inherit; }
+  #ctl button { display:inline-flex; align-items:center; min-height:28px; background:#ffffff12; color:var(--ink); border:1px solid #ffffff22; border-radius:3px; padding:.35em .7em; cursor:pointer; font:inherit; }
   #clock { position:absolute; left:1.6%; bottom:2.4%; font:12px ui-monospace,monospace; color:var(--mute); }
-  #ctl a { color:var(--mute); text-decoration:none; padding:.35em .5em; border:1px solid #ffffff22; border-radius:3px; }
+  #ctl a { display:inline-flex; align-items:center; gap:.25em; min-height:28px; color:var(--mute); text-decoration:none; padding:.35em .5em; border:1px solid #ffffff22; border-radius:3px; }
   #ctl a:hover { color:var(--ink); }
   .rec #ctl, .rec #clock { display:none; }
-  .foot { position:absolute; left:7%; bottom:7%; font-size:clamp(9px,1.2vw,15px); color:#6c727c; }
-  .live-receipt { display:none; margin-top:1.2%; font:clamp(10px,1.3vw,17px)/1.4 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--ok); }
+  .foot { position:absolute; left:7%; right:7%; bottom:7%; font-size:clamp(12px,1.2vw,14px); color:var(--mute); }
+  .live-receipt { display:none; margin-top:1.2%; font:clamp(12px,1.3vw,16px)/1.4 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--ok); }
   .live-receipt.on { display:inline-flex; gap:.6em; align-items:center; background:#5cc39414; border:1px solid #5cc39444; border-radius:3px; padding:.3em .9em; }
   .live-receipt a { color:var(--ok); text-decoration:underline dotted; }
+  @media (max-width: 639px) {
+    #stage { width:100vw; height:min(100vh, 160vw); }
+    .scene { inset:0 0 48px 0; }
+    #hud { bottom:48px; }
+    #clock, #ctl { bottom:10px; }
+  }
 </style>
 <script src="../../b.js" defer></script>
 </head>
@@ -96,7 +102,7 @@
     <div class="term">
 <span class="l c-req">GET /v1/token-safety?mint=EPjF…Dt1v            (example provider)</span>
 <span class="l c-402">← HTTP 402 Payment Required   price: $0.01 USDC   payTo: provider wallet</span>
-<span class="l c-pay">→ agent signs a USDC payment and retries with the X-PAYMENT header</span>
+<span class="l c-pay"><svg width="0.9em" height="0.9em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-0.125em"><path d="M5 12h14M12 5l7 7-7 7"/></svg> agent signs a USDC payment and retries with the X-PAYMENT header</span>
 <span class="l c-200">← HTTP 200  { "mintAuthority": "checked", "freezeAuthority": "checked", "verdict": "ok" }</span>
 <span class="l c-dim">  X-PAYMENT-RESPONSE: settlement tx hash  ·  no account, no key</span>
     </div>
@@ -110,7 +116,7 @@
   { input: SOL 3.1, output: USDC, slippageBps: 50, userAddress: treasury }</span>
 <span class="l c-402">← HTTP 402 Payment Required
   { scheme: "exact", network: "solana", asset: USDC, maxAmountRequired: "3000" }   = $0.003</span>
-<span class="l c-pay">→ x402 client pays 0.003 USDC and retries automatically</span>
+<span class="l c-pay"><svg width="0.9em" height="0.9em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-0.125em"><path d="M5 12h14M12 5l7 7-7 7"/></svg> x402 client pays 0.003 USDC and retries automatically</span>
 <span class="l c-200">← HTTP 200  { quotes: [ … ranked … ], bestQuote }   + X-PAYMENT-RESPONSE (tx hash)</span>
     </div>
     <p>The <b>402</b> tells the agent the exact price, token and network. The agent pays and gets the answer in the same loop.</p>
@@ -122,7 +128,7 @@
     <div class="term">
 <span class="l c-req">POST https://hermes.swap.io/v1/swap/build-tx   { providerQuote: bestQuote.providerQuote }</span>
 <span class="l c-402">← HTTP 402   maxAmountRequired: "3000"   = $0.003</span>
-<span class="l c-pay">→ pay 0.003 USDC · retry</span>
+<span class="l c-pay"><svg width="0.9em" height="0.9em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-0.125em"><path d="M5 12h14M12 5l7 7-7 7"/></svg> pay 0.003 USDC · retry</span>
 <span class="l c-200">← HTTP 200  { unsigned transaction }</span>
 <span class="l c-dim">  agent signs with the treasury key, broadcasts via any Solana RPC, logs the Solscan link</span>
     </div>
@@ -139,7 +145,7 @@
       <tr><td><b>Per rebalance</b></td><td class="num"><b>~$0.016 in x402 API fees</b></td></tr>
       <tr><td><b>An idle month</b></td><td class="num"><b class="ink">$0/mo in idle API subscription fees</b></td></tr>
     </table>
-    <p style="font-size:clamp(10px,1.3vw,17px)">API fees only: excludes swap LP fees and slippage, Solana network fees, and bot hosting.</p>
+    <p style="font-size:clamp(12px,1.3vw,16px)">API fees only: excludes swap LP fees and slippage, Solana network fees, and bot hosting.</p>
   </section>
   <!-- 8 -->
   <section class="scene" data-dur="11">
@@ -152,14 +158,14 @@
   <!-- 9 -->
   <section class="scene" data-dur="8">
     <div class="kicker">The x402 loop, once more</div>
-    <p class="big">request → <span style="color:var(--warn)">402</span> → <span style="color:var(--pay)">pay USDC</span> → <span style="color:var(--ok)">200</span></p>
-    <p class="ink" style="font-size:clamp(14px,2.4vw,32px)">TreasuryGuard: a treasury that rebalances itself and pays cents only when it trades.</p>
+    <p class="big">request <svg width="0.9em" height="0.9em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-0.125em"><path d="M5 12h14M12 5l7 7-7 7"/></svg> <span style="color:var(--warn)">402</span> <svg width="0.9em" height="0.9em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-0.125em"><path d="M5 12h14M12 5l7 7-7 7"/></svg> <span style="color:var(--pay)">pay USDC</span> <svg width="0.9em" height="0.9em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-0.125em"><path d="M5 12h14M12 5l7 7-7 7"/></svg> <span style="color:var(--ok)">200</span></p>
+    <p class="ink" style="font-size:clamp(14px,2.4vw,30px)">TreasuryGuard: a treasury that rebalances itself and pays cents only when it trades.</p>
     <div class="live-receipt" data-receipt></div>
     <div class="foot">Swap.io Agent API: hermes.swap.io · docs.swap.io/developer-tools/agent-api-x402 · x402.org · @swapdotio @Superteam</div>
   </section>
   <div id="hud"><div id="bar"></div></div>
   <div id="clock">0:00 / 1:30</div>
-  <div id="ctl"><a id="home" href="../../" title="Back to Pacta">Pacta ↗</a><button id="prev" title="Previous (Left)">◀</button><button id="play" title="Play/Pause (Space)">❚❚</button><button id="next" title="Next (Right)">▶</button><button id="rst" title="Restart (R)">↺</button></div>
+  <div id="ctl"><a id="home" href="../../" title="Back to Pacta">Pacta <svg width="0.9em" height="0.9em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-0.125em"><path d="M7 7h10v10M7 17 17 7"/></svg></a><button id="prev" title="Previous (Left)">◀</button><button id="play" title="Play/Pause (Space)">❚❚</button><button id="next" title="Next (Right)">▶</button><button id="rst" title="Restart (R)">↺</button></div>
 </div>
 <script>
 (() => {

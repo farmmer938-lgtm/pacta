@@ -24,9 +24,14 @@ _ICONS = {
     "github": ('<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 '
                '0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 '
                '1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/>'),
+    # X (formerly Twitter) logo, filled (render with cls="i-fill")
+    "x-logo": '<path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846 h-7.406 l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>',
     "info": '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
     "alert": '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
     "arrow-right": '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+    # v4.4 (R-V4): one-path forms of Lucide arrow-right / arrow-up-right for inline link markers (U.arrow)
+    "arr-right": '<path d="M5 12h14M12 5l7 7-7 7"/>',
+    "arr-up-right": '<path d="M7 7h10v10M7 17 17 7"/>',
     "circle-check": '<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
     "external": '<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>',
     "scale": '<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>',
@@ -36,6 +41,13 @@ _ICONS = {
 def icon(name, cls=""):
     """Lucide icon; stroke, size and caps come from the .i rule in styles.css (keeps the markup small)."""
     return f'<svg class="i{" " + cls if cls else ""}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">{_ICONS[name]}</svg>'
+
+
+def arrow(kind="right"):
+    """v4.4 (R-V4): inline Lucide arrow for link markers instead of a raw → / ↗ glyph (the self-hosted Inter subset has no arrows,
+    so a raw glyph renders as a missing-glyph box wherever the OS has no fallback font). Decorative: aria-hidden; the link text
+    carries the meaning. kind: "right" (internal link) or "up-right" (external, opens in a new tab)."""
+    return f'<svg class="i ia" viewBox="0 0 24 24" aria-hidden="true">{_ICONS["arr-up-right" if kind == "up-right" else "arr-right"]}</svg>'
 
 
 def _attrs(attrs):

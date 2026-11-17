@@ -132,6 +132,7 @@ function build(tree) {
 }
 
 // ---------- run app.js on a page ----------
+const INIT_ERRORS = [];   // every run except the deliberate breakTheme one must start without an init error
 function run(tree, app, loc) {
   const html = build(tree);
   const body = html.querySelector("body") || html;
@@ -145,7 +146,8 @@ function run(tree, app, loc) {
   document.execCommand = () => true;
   document.referrer = loc.referrer || "";
   html.scrollHeight = 4000;
-  const winListeners = {};
+  const winListeners = {}, zero = [];
+  if (loc.breakTheme) html.classList.toggle = () => { throw new Error("simulated early init failure (theme)"); };
   const location = { href: "https://pacta.wtf" + loc.path + (loc.search || "") + (loc.hash || ""), search: loc.search || "", hash: loc.hash || "",
     pathname: loc.path, protocol: loc.protocol || "https:", hostname: "pacta.wtf" };
   const window = {
@@ -159,7 +161,8 @@ function run(tree, app, loc) {
     window, document, location, navigator, URLSearchParams, URL, AbortController: loc.noAbort ? undefined : AbortController,
     console, Promise, JSON, Date, Math, Event: Event_,
     localStorage: { getItem: () => null, setItem: () => {}, removeItem: () => {} },
-    setTimeout: loc.setTimeout || (() => 0), clearTimeout: loc.clearTimeout || (() => {}), setInterval: () => 0,
+    setTimeout: loc.setTimeout || ((fn, ms) => { if (!ms && typeof fn === "function") zero.push(fn); return 0; }),
+    clearTimeout: loc.clearTimeout || (() => {}), setInterval: () => 0,
     fetch: loc.fetch || (() => Promise.reject(new Error("network disabled in harness")))
   };
   vm.createContext(ctx);
@@ -167,8 +170,11 @@ function run(tree, app, loc) {
   if (app) vm.runInContext(app, ctx, { filename: "app.js" });
   if (loc.beacon) vm.runInContext(loc.beacon, ctx, { filename: "b.js" });
   document.dispatchEvent(new Event_("DOMContentLoaded"));
+  const initErrors = [];   // v4.3: errors an isolated init re-threw asynchronously (setTimeout(fn, 0))
+  zero.splice(0).forEach((fn) => { try { fn(); } catch (e) { initErrors.push(String(e && e.message || e)); } });
+  if (!loc.breakTheme) INIT_ERRORS.push(...initErrors);
   const events = () => beacons.map(b => JSON.parse(b.body));
-  return { document, window, winListeners, location, Event_, beacons, events };
+  return { document, window, winListeners, location, Event_, beacons, events, initErrors };
 }
 
 // ---------- scenarios ----------
@@ -179,7 +185,7 @@ const TX = "0x" + "ab".repeat(32);
 const FORUM = "https://forum.example.invalid/t/harness-listing/1";
 const OPT = {
   clearance: "Full Protocol Control-Plane Dossier ($2,500–$5,000 USDC, 24h SLA)",
-  continuous: "Continuous Monitoring ($1,500 USDC per month)",
+  continuous: "Continuous Control-Plane Monitoring ($1,500 USDC per month)",
   api_sla: "Enterprise / High-Throughput API SLA (priced on scope)",
   community: "Community queue (free; unscheduled, typically 6–8 weeks)"
 };
@@ -262,7 +268,7 @@ try {
   pick(d, "continuous");
   q = ghParams(d);
   res.continuous_track = q.get("package_tier") === OPT.continuous && brief(d).includes("$1,500 USDC per month in USDC to the Pacta treasury")
-    && d.getElementById("req-pay-sum").textContent === "Continuous Monitoring · $1,500 USDC per month";
+    && d.getElementById("req-pay-sum").textContent === "Continuous Control-Plane Monitoring · $1,500 USDC per month";
   pick(d, "api_sla");
   q = ghParams(d);
   res.api_sla_track = q.get("package_tier") === OPT.api_sla && d.getElementById("req-pay").hidden === false
@@ -367,7 +373,7 @@ async function preflightScenario() {
     + "&caller_agent=pacta-wtf-checker&requester_role=individual_user&caller_purpose=general_research";
   res.pf_preset_fetches_once = calls.length === 1 && calls[0] === want;
   const txt = out.textContent;
-  res.pf_renders_verdict = txt.includes("MULTISIG_NO_TIMELOCK") && txt.includes("Risk score") && txt.includes("60/100") && txt.includes("multisig_safe (3-of-5)") && txt.includes("pause, upgrade");
+  res.pf_renders_verdict = txt.includes("MULTISIG_NO_TIMELOCK") && txt.includes("Heuristic score") && txt.includes("60/100") && txt.includes("Safe multisig (3-of-5)") && txt.includes("pause, upgrade");
   // V05 + F05: plain-English verdict with the raw enum / JSON one click away; live contract check vs pinned comparison; 1-click RPC verify
   // v4 (U5): verdict first, then score / confidence / scope, then facts; cast + raw JSON in collapsed accordion items
   res.pp2_verdict_plain = txt.includes("A multisig can change it with no delay") && !!out.querySelector("[data-pf-scope]") && !!out.querySelector("[data-pf-raw]")
@@ -612,6 +618,33 @@ async function liveTimelockScenario() {
   x = await runWith(input.request, "/request/", { status: 200, body: { operations: [] } });
   res.live_no_fetch_elsewhere = x.calls.length === 0;
 }
+// (k2) v4.2 staging: a page built with --base-path records it on <html data-base-path>; runtime site links follow the mount, and a
+// malformed value is ignored (the production URL stays)
+async function basePathScenario() {
+  const withBase = (v) => { const t = JSON.parse(JSON.stringify(input.index)); t[1]["data-base-path"] = v; return t; };
+  const body = { ...PF_EXAMPLE, catalogMatch: { slug: "stader-labs-ethx", name: "Stader Labs (ETHx)", url: "https://pacta.wtf/protocols/stader-labs-ethx/",
+    classification: "parameter_delta", pinnedBlock: 26403676 } };
+  const fetchMock = (url) => /\/v1\/check\/preflight/.test(String(url)) ? Promise.resolve({ status: 200, json: () => Promise.resolve(body) })
+    : Promise.reject(new Error("site data not needed here"));
+  const link = async (tree, path) => {
+    const p = run(tree, input.app, { path, fetch: fetchMock });
+    const f = p.document.getElementById("pf-form");
+    f.querySelector('input[name="address"]').value = PF_EXAMPLE.address; f.dispatchEvent(new Event_("submit"));
+    for (let i = 0; i < 4; i++) await flush();
+    const a = p.document.getElementById("pf-out").querySelectorAll("a").find((x) => x.textContent === "Full record");
+    return a ? a.getAttribute("href") : null;
+  };
+  res.v42_base_path_catalog_link = (await link(withBase("/website-test"), "/website-test/")) === "/website-test/protocols/stader-labs-ethx/";
+  res.v42_base_path_rejects_bad_values = (await link(withBase("javascript:alert(1)//"), "/website-test/")) === "https://pacta.wtf/protocols/stader-labs-ethx/"
+    && (await link(input.index, "/")) === "https://pacta.wtf/protocols/stader-labs-ethx/";
+  // v4.2.1 (D1): a standalone "." or ".." segment would leave the mount, so it is ignored; normal dotted names still work
+  let dots = true;
+  for (const v of ["/..", "/.", "/website-test/../../evil", "/website-test/."]) {
+    dots = dots && (await link(withBase(v), "/website-test/")) === "https://pacta.wtf/protocols/stader-labs-ethx/";
+  }
+  res.v421_base_path_rejects_dot_segments = dots;
+  res.v421_base_path_allows_dotted_names = (await link(withBase("/release.v4"), "/release.v4/")) === "/release.v4/protocols/stader-labs-ethx/";
+}
 // (j2) T1 late-payload race (v4.1): once the 9 s fallback has shown the pinned snapshot, a live response that resolves afterwards
 // (the fetch itself, or a slow r.json() body) never changes a badge or the status line, and the guard aborts the request.
 async function lateLivePayloadScenario() {
@@ -739,11 +772,11 @@ async function visitorScenario() {
     && /^Ethereum #[\d,]+$/.test(pcv("[data-pc-block]")) && pc.querySelector("[data-pc-href]").getAttribute("href") === "protocols/stader-labs-ethx/"
     && go.getAttribute("aria-pressed") === "true";
   await flush(); await flush(); await flush();
-  const t = out.textContent, link = out.querySelectorAll("a").find((a) => a.textContent === "Full record →");
+  const t = out.textContent, link = out.querySelectorAll("a").find((a) => a.textContent === "Full record");
   res.v_hero_receipts = rec.length === 3 && instant && rec.every((b) => /^0x[0-9a-fA-F]{40}$/.test(b.getAttribute("data-pf-address") || ""))
     && rec.map((b) => b.getAttribute("data-r-name")).join("|") === "Stader ETHx|YO Protocol|Moonwell (Base)";
   res.v_hero_click_fetches = calls.length === 1 && calls[0].includes("address=" + go.getAttribute("data-pf-address"));
-  res.v_assessment_next_to_score = t.includes("Risk score") && t.includes("60/100") && t.includes("Confidence medium") && t.includes("Indexed & verified record")
+  res.v_assessment_next_to_score = t.includes("Heuristic score") && t.includes("60/100") && t.includes("Confidence medium") && t.includes("Indexed & verified record")
     && t.includes("Limits: riskScore is a heuristic.");
   res.v_catalog_match = t.includes("Indexed by Pacta: Stader Labs (ETHx)") && t.includes("Changed: Safe threshold 3-of-6 observed vs 3-of-5 documented")
     && t.includes("Matched: Timelock delay: 7 d") && !!link && link.getAttribute("href") === "https://pacta.wtf/protocols/stader-labs-ethx/";
@@ -821,10 +854,13 @@ async function visitorScenario() {
   q.value = "usdc"; q.dispatchEvent(new Event_("input")); await flush(); await flush();
   res.e3_search = visible().some((r) => r.getAttribute("data-slug") === "circle-usdc") && visible().length < cards.length;
   const rc = d.querySelector("[data-radar-counts]");
-  // M4 (v4): the header counts the rows by state, e.g. "1 ready · 1 pending · 1 executed (2 operations)"
-  const ST = "(ready|pending|mixed|cancelled or unknown|executed)( \\(\\d+ operations\\))?";
-  res.pp2_radar_counts = !!rc && new RegExp("^\\d+ " + ST + "( · \\d+ " + ST + ")*$").test(rc.textContent)
-    && d.querySelectorAll("#radar tr[data-radar-row]").length === rc.textContent.split(" · ").reduce((s, x) => s + parseInt(x, 10), 0);
+  // M4 (v4): the header counts the rows by state; N5 (v4.3): executed rows are counted by operations, e.g.
+  // "1 ready · 1 pending · Executed (2 ops)", so the line never reads as a total
+  const OPS = "( \\(\\d+ ops?\\))?", PART = "(\\d+ (ready|pending|mixed|cancelled or unknown)" + OPS + "|Executed \\(\\d+ ops?\\))";
+  const parts = rc ? rc.textContent.split(" · ") : [], execRows = d.querySelectorAll('#radar tr[data-radar-row="executed"]').length;
+  res.pp2_radar_counts = !!rc && new RegExp("^" + PART + "( · " + PART + ")*$").test(rc.textContent)
+    && d.querySelectorAll("#radar tr[data-radar-row]").length === parts.reduce((s, x) => s + (/^Executed/.test(x) ? 0 : parseInt(x, 10)), 0) + execRows
+    && (execRows === 0) === !parts.some((x) => /^Executed \(\d+ ops?\)$/.test(x)) && !/operations\)/.test(rc.textContent);
 }
 
 // F05 "Verify live on RPC" (behavioural): a mocked JSON-RPC responder for the four public RPCs records every call, so the test asserts
@@ -886,7 +922,7 @@ async function liveRpcScenario() {
     && m("eth_blockNumber").length === 1 && m("eth_getCode").length === 1 && tail(m("eth_getCode")[0]) === LIVE_HEX
     && m("eth_getStorageAt").length === 1 && m("eth_getStorageAt")[0].params[1] === ADMIN_SLOT && tail(m("eth_getStorageAt")[0]) === LIVE_HEX
     && log.indexOf(m("eth_blockNumber")[0]) < log.indexOf(m("eth_getCode")[0]) && log.every((q) => /base/.test(q.url))
-    && pt.includes("Pinned block #23800000 hash 0x" + "ab".repeat(32) + " = pinned hash ✓")
+    && pt.includes("Pinned block #23800000 hash 0x" + "ab".repeat(32) + " matches the pinned hash")
     && pt.includes("Live at block #" + LIVE_N + " (" + LIVE_HEX + "): eth_getCode 5 bytes") && pt.includes("EIP-1967 admin slot: " + W_ADDR)
     && pt.includes("Decoded: uint256 ") && pt.includes("= address 0x3333333333333333333333333333333333333333")
     && (pt.match(/base-rpc\.publicnode\.com · \d+ ms/g) || []).length === 2;
@@ -909,14 +945,218 @@ async function liveRpcScenario() {
     && log.every((q) => q.method === "eth_blockNumber");
 }
 
+// v4.3 N1: a "Try:" example fills #pf-form (chain + address, previous error cleared) and runs ONE live check whose verdict card renders
+// in #pf-out right under the form; the proof card follows the example. Also: one init that throws (simulated) never leaves the
+// examples or the checker unbound (every init starts on its own), and the error is still reported.
+async function tryExampleScenario() {
+  const calls = [];
+  const fetchMock = (url) => {
+    const u = String(url);
+    if (!/\/v1\/check\/preflight/.test(u)) return Promise.reject(new Error("not needed"));
+    calls.push(u); return Promise.resolve({ status: 200, json: () => Promise.resolve(PF_EXAMPLE) });
+  };
+  const flow = async (loc) => {
+    const p = run(input.index, input.app, Object.assign({ path: "/", fetch: fetchMock }, loc));
+    const d = p.document, form = d.getElementById("pf-form"), out = d.getElementById("pf-out");
+    const sel = form.querySelector('select[name="chain"]'), addr = form.querySelector('input[name="address"]'), err = d.getElementById("pf-addr-error");
+    const chips = d.querySelectorAll("[data-receipt]"), yo = chips.find((b) => b.getAttribute("data-r-name") === "YO Protocol");
+    const stader = chips.find((b) => b.getAttribute("data-r-name") === "Stader ETHx");
+    calls.length = 0;
+    addr.value = "0x123"; form.dispatchEvent(new Event_("submit")); await flush();
+    const errShown = addr.getAttribute("aria-invalid") === "true" && err.hidden === false && calls.length === 0;
+    yo.dispatchEvent(new Event_("click")); await flush(); await flush(); await flush();
+    const box = form.parentNode, kids = box.children;
+    const yoOk = errShown && sel.value === "base" && addr.value === yo.getAttribute("data-pf-address") && addr.getAttribute("aria-invalid") === null
+      && err.hidden === true && err.textContent === "" && calls.length === 1
+      && calls[0].includes("chain=base&address=" + yo.getAttribute("data-pf-address"))
+      && !!out.querySelector("[data-pf-result]") && out.textContent.includes("Heuristic score") && out.textContent.includes("MULTISIG_NO_TIMELOCK")
+      && out.parentNode === box && kids.indexOf(form) >= 0 && kids.indexOf(form) < kids.indexOf(out)
+      && d.querySelector("[data-pc-name]").textContent === "YO Protocol" && yo.getAttribute("aria-pressed") === "true";
+    stader.dispatchEvent(new Event_("click")); await flush(); await flush(); await flush();
+    const staderOk = sel.value === "ethereum" && addr.value === stader.getAttribute("data-pf-address") && calls.length === 2
+      && calls[1].includes("chain=ethereum&address=" + stader.getAttribute("data-pf-address")) && !!out.querySelector("[data-pf-result]")
+      && d.querySelector("[data-pc-name]").textContent === "Stader ETHx" && stader.getAttribute("aria-pressed") === "true"
+      && yo.getAttribute("aria-pressed") === "false";
+    return { ok: yoOk && staderOk, initErrors: p.initErrors };
+  };
+  const a = await flow({});
+  res.v43_n1_try_fills_and_runs = a.ok && a.initErrors.length === 0;
+  const b = await flow({ breakTheme: true });
+  res.v43_init_isolation = b.ok && b.initErrors.length === 1 && /simulated early init failure/.test(b.initErrors[0]);
+}
+// v4.3 N5: after a live re-check the radar header still cites ONE block number (the finalized read); the live block goes on the
+// provenance line under the table; the counts never read as a total ("Executed (N ops)")
+async function radarHeaderScenario() {
+  const fetchMock = (url) => {
+    if (!/live-timelocks/.test(String(url))) return Promise.reject(new Error("not needed"));
+    return Promise.resolve({ status: 200, json: () => Promise.resolve(live) });
+  };
+  let live = null;
+  const p0 = run(input.index, input.app, { path: "/", fetch: () => Promise.reject(new Error("offline")) });
+  const ids = p0.document.querySelectorAll("#radar [data-ops]").map((b) => (b.getAttribute("data-ops") || "").split(/\s+/).filter(Boolean));
+  const execRow = p0.document.querySelectorAll("#radar tr[data-radar-row]").map((tr) => tr.getAttribute("data-radar-row"));
+  live = { operations: ids.flatMap((g, i) => g.map((id) => ({ opId: id, live: execRow[i] === "executed" ? { status: "done", isOperationDone: true }
+    : { status: execRow[i], isOperationPending: true, isOperationDone: false }, block: { number: 26999999 } }))) };
+  const p = run(input.index, input.app, { path: "/", fetch: fetchMock });
+  for (let i = 0; i < 6; i++) await flush();
+  const d = p.document, head = [".radar-head", ".livebar", "[data-radar-live]"].map((s) => (d.querySelector("#radar " + s) || { textContent: "" }).textContent).join(" ");
+  const blocks = head.match(/#?\d{1,3}(,\d{3}){2,}/g) || [];
+  const pill = d.querySelector("#radar [data-prov-pill]"), asof = d.querySelector("#radar .livebar .lb-asof");
+  res.v44_radar_live_pill = !!pill && pill.textContent === "Live-checked · #26,999,999" && !!asof && asof.hidden === true;
+  const p0pill = p0.document.querySelector("#radar [data-prov-pill]"), p0asof = p0.document.querySelector("#radar .livebar .lb-asof");
+  res.v44_radar_pill_stays_pinned_offline = !!p0pill && p0pill.textContent === "Scanner-pinned (L1 finalized)" && !!p0asof && p0asof.hidden !== true;
+  res.v43_n5_radar_header_one_block = blocks.length === 1 && /finalized block #[\d,]+/.test(head)
+    && d.querySelector("[data-live-status-text]").textContent === "Live state confirmed at the latest block"
+    && /#26,999,999/.test(d.querySelector("#radar [data-live-line]").textContent)
+    && (execRow.includes("executed") ? / · Executed \(\d+ ops?\)$|^Executed \(\d+ ops?\)$/ : /^(?!.*Executed)/).test(d.querySelector("[data-radar-counts]").textContent)
+    && !/operations\)/.test(d.querySelector("[data-radar-counts]").textContent);
+}
+
+// v4.4 R-V1 / P2-2 / R-V4: verdict, metrics, then the indexed docs-vs-chain record with its badge; one visible scope sentence; the
+// methodology and limits collapsed; a "Try:" click brings the form (input + result) into view; runtime links end in an inline
+// arrow icon (svg.i.ia, aria-hidden), never a raw arrow glyph
+async function liveCardScenario() {
+  const calls = [];
+  const reply = { ...PF_EXAMPLE, verdict: "UNCLASSIFIED_CONTRACT_CONTROLLER", riskScore: 65, source: "live_rpc",
+    assessment: { coverage: "indexed_verified", confidence: "medium", method: "Live bytecode + storage heuristic", limits: ["riskScore is a heuristic."] },
+    catalogMatch: { slug: "stader-labs-ethx", name: "Stader Labs (ETHx)", url: "https://pacta.wtf/protocols/stader-labs-ethx/", classification: "parameter_delta",
+      pinnedBlock: 26403676, whatDiffers: { changed: [{ parameter: "Safe threshold", observed: "3-of-6", documented: "3-of-5", classification: "parameter_delta" }],
+        matched: [{ parameter: "Timelock delay", value: "7 d" }] } } };
+  const fetchMock = (url) => {
+    if (!/\/v1\/check\/preflight/.test(String(url))) return Promise.reject(new Error("not needed"));
+    calls.push(String(url)); return Promise.resolve({ status: 200, json: () => Promise.resolve(reply) });
+  };
+  const p = run(input.index, input.app, { path: "/", fetch: fetchMock });
+  const d = p.document, form = d.getElementById("pf-form"), out = d.getElementById("pf-out");
+  const scrolled = [];
+  form.scrollIntoView = (o) => scrolled.push(["form", o && o.block]);
+  out.scrollIntoView = (o) => scrolled.push(["out", o && o.block]);
+  const chip = d.querySelectorAll("[data-receipt]").find((b) => b.getAttribute("data-r-name") === "Stader ETHx");
+  chip.dispatchEvent(new Event_("click"));
+  for (let i = 0; i < 4; i++) await flush();
+  const card = out.querySelector("[data-pf-result]"), kids = card ? card.children : [];
+  const is = (k, sel) => k.closest(sel) === k, at = (sel) => kids.findIndex((k) => is(k, sel));
+  const iVerdict = at(".pf-verdict-row"), iMetrics = at(".pf-metrics"), iMatch = at("[data-pf-match]"), iScope = at("[data-pf-scope]");
+  const lim = card ? card.querySelector("details[data-pf-limits]") : null;
+  const visibleText = card ? kids.filter((k) => !is(k, '[data-slot="accordion"]') && !is(k, ".live-verify")).map((k) => k.textContent).join(" ") : "";
+  const dvc = card ? card.querySelector("[data-pf-dvc]") : null, scope = card ? card.querySelector("[data-pf-scope]") : null;
+  res.v44_live_card_verdict_first = !!card && iVerdict === 1 && iMetrics === iVerdict + 1 && iMatch === iMetrics + 1 && iScope === iMatch + 1
+    && !!dvc && dvc.textContent === "Docs vs chain: Delta" && dvc.getAttribute("data-variant") === "warning"
+    && scope.textContent === "The verdict and heuristic score cover only this one contract address (" + reply.address.slice(0, 6) + "…"
+       + reply.address.slice(-4) + "), not the whole protocol."
+    && !!lim && lim.getAttribute("open") === null && lim.querySelector("summary").textContent === "Methodology & single-address scope limits"
+    && lim.textContent.includes("Limits: riskScore is a heuristic.") && lim.textContent.includes("Confidence medium")
+    && !visibleText.includes("Limits:") && card.querySelectorAll("[data-pf-scope]").length === 1 && calls.length === 1;
+  res.v44_try_scrolls_form = scrolled.length === 1 && scrolled[0][0] === "form" && scrolled[0][1] === "start";
+  // F3a: the examples sit between the form and the result (a rendered result never moves them); F3b: no raw enum outside the raw JSON
+  const pfKids = form.parentNode.children, tryBox = d.querySelector(".try");
+  res.v44_examples_between_form_and_result = !!tryBox && tryBox.parentNode === form.parentNode
+    && pfKids.indexOf(form) < pfKids.indexOf(tryBox) && pfKids.indexOf(tryBox) < pfKids.indexOf(out);
+  const raw = card ? card.querySelector("[data-pf-raw]") : null;
+  const shown = card ? card.textContent.replace(raw ? raw.textContent : "", "") : "";
+  res.v44_no_raw_enums_in_result = !!card && !!raw && !/parameter_delta|protective_delta|aligned_baseline|rpc_observed|multisig_safe|access_control/.test(shown)
+    && raw.textContent.includes("parameter_delta") && /Chain \/ block(Base|Ethereum) · block/.test(shown);
+  const rec = out.querySelectorAll("a").find((a) => a.textContent === "Full record");
+  const svg = rec ? rec.querySelector("svg") : null;
+  res.v44_runtime_link_arrow_icon = !!svg && svg.getAttribute("class") === "i ia" && svg.getAttribute("aria-hidden") === "true"
+    && !!svg.querySelector("path") && !/[\u2192\u2197\u2713\u2260]/.test(out.textContent);
+}
+
+// v4.4 (F6): the scope brief does not repeat the address (it is in the card header); the Gmail body starts at the track; "Copy brief
+// and address" prefixes the address; the secondary actions are all outline buttons
+async function requestBriefScenario() {
+  const p = run(input.request, input.app, { path: "/request/" });
+  for (let i = 0; i < 3; i++) await flush();
+  const d = p.document, b = d.getElementById("req-brief").textContent, gm = d.getElementById("req-gmail"), cp = d.getElementById("req-copy");
+  const body = decodeURIComponent((gm.getAttribute("href") || "").split("&body=")[1] || "");
+  res.v44_request_brief_no_to = /^Subject: /.test(b) && !/^To: /m.test(b) && /^Track: /.test(body)
+    && cp.getAttribute("data-copy-prefix") === "To: pacta@dri.network"
+    && ["req-gh", "req-gmail", "req-copy"].every((id) => d.getElementById(id).getAttribute("data-variant") === "outline");
+}
+
+// v4.5: search and the /request/ combobox find a protocol by any of its contract addresses (the hero Try targets included); the
+// homepage keeps 10 of its 16 static rows back below 640 px until any interaction; the combobox ranks prefix matches first and a
+// mouse pick closes it; catalogMatch lines stay <= 140 characters and name the Safe a threshold belongs to; the limits link to
+// /methodology/#live-checker
+async function v45Scenario() {
+  const TRY = { "stader-labs-ethx": "0xa35b1b31ce002fbf2058d22f30f95d405200a15b", "yo-protocol": "0xb4b3f5c964a360bbd7201f72a55d0c48b8ad7021",
+    "moonwell-lending-base": "0xfbb21d0380bee3312b33c4353c8936a0f13ef26c" };
+  const scMock = (url) => /api\/v1\/scorecards\.json/.test(String(url)) && input.scorecardsJson
+    ? Promise.resolve({ status: 200, json: () => Promise.resolve(input.scorecardsJson) }) : Promise.reject(new Error("not needed"));
+  let p = run(input.index, input.app, { path: "/", fetch: scMock });
+  let d = p.document;
+  const body = d.querySelector("[data-sc-body]"), staticRows = d.querySelectorAll("#scorecards tr.sc-row");
+  const sixFirst = staticRows.length === 16 && staticRows.slice(0, 6).every((r) => !r.classList.contains("sc-m"))
+    && staticRows.slice(6).every((r) => r.classList.contains("sc-m")) && !body.hasAttribute("data-all");
+  const q = d.getElementById("sc-q"), found = {};
+  for (const [slug, a] of Object.entries(TRY)) {
+    q.value = a; const ev = new Event_("input"); ev.target = q; q.dispatchEvent(ev);
+    for (let i = 0; i < 4; i++) await flush();
+    found[slug] = d.querySelectorAll("#scorecards tr.sc-row").filter((r) => !r.hidden).map((r) => r.getAttribute("data-slug")).join(",");
+  }
+  res.v45_search_finds_try_addresses = Object.entries(found).every(([slug, v]) => v === slug);
+  res.v45_mobile_six_then_all = sixFirst && body.hasAttribute("data-all");
+  // /request/ combobox
+  p = run(input.request, input.app, { path: "/request/" });
+  d = p.document;
+  const ci = d.getElementById("req-proto-q"), list = d.getElementById("req-proto-list");
+  const type = async (v) => { ci.value = v; const ev = new Event_("input"); ev.target = ci; ci.dispatchEvent(ev); await flush(); };
+  const shown = () => list.querySelectorAll('[role="option"]').filter((o) => !o.hidden).map((o) => o.getAttribute("data-name"));
+  await type("stad");
+  const stad = shown();
+  await type(TRY["stader-labs-ethx"]);
+  const byAddr = shown();
+  const opt = list.querySelectorAll('[role="option"]').find((o) => o.getAttribute("data-name") === "Stader Labs (ETHx)");
+  const ck = new Event_("click"); ck.target = opt; list.dispatchEvent(ck); await flush();
+  res.v45_combobox_prefix_address_click = stad[0] === "Stader Labs (ETHx)" && stad.includes("Fluid / Instadapp")
+    && stad.indexOf("Stader Labs (ETHx)") < stad.indexOf("Fluid / Instadapp")
+    && byAddr.length === 1 && byAddr[0] === "Stader Labs (ETHx)"
+    && ci.getAttribute("aria-expanded") === "false" && ci.value === "" && list.hidden === true
+    && d.querySelectorAll("[data-combo-chips] .chip-x").length === 1 && opt.getAttribute("aria-selected") === "true";
+  // catalogMatch lines (the live Moonwell response shape) + the methodology link in the collapsed limits
+  const reply = { ...PF_EXAMPLE, verdict: "UNCLASSIFIED_CONTRACT_CONTROLLER", riskScore: 60, source: "live_rpc",
+    catalogMatch: { slug: "moonwell-lending-base", name: "Moonwell Lending (Base)", url: "https://pacta.wtf/protocols/moonwell-lending-base/",
+      classification: "mixed", pinnedBlock: 57842915, whatDiffers: {
+        changed: [{ classification: "parameter_delta", recordId: "moonwell-pause-guardian-2of4-safe-s18",
+          parameter: "Comptroller pauseGuardian = 2-of-4 Safe (Constitution: pause = Security Council 3-of-5)",
+          observed: "Unitroller (0xfBb21d0380beE3312B33c4353c8936a0F13EF26C).pauseGuardian() = 2-of-4 Safe 0x5B710010586C1b728B047c3E42473c700eeA4026 (v1.4.1);",
+          documented: "Moonwell DAO Constitution 8.1: 'The Security Council has the power to execute any pause functionality, or perform other required actions with no delay ..." }],
+        matched: [{ parameter: "Safe threshold", recordId: "moonwell-pause-guardian-2of4-safe-s18", value: "3-of-5" },
+          { parameter: "Unitroller admin = TemporalGovernor (24h proposal delay), owned by the 3-of-5 Security Council",
+            recordId: "moonwell-temporal-governor-24h-security-council-3of5-s18", value: "matches the documentation" }] } } };
+  const pfMock = (url) => /\/v1\/check\/preflight/.test(String(url)) ? Promise.resolve({ status: 200, json: () => Promise.resolve(reply) })
+    : Promise.reject(new Error("not needed"));
+  p = run(input.index, input.app, { path: "/", fetch: pfMock });
+  d = p.document;
+  const f = d.getElementById("pf-form");
+  f.querySelector('input[name="address"]').value = "0xfBb21d0380beE3312B33c4353c8936a0F13EF26C"; f.dispatchEvent(new Event_("submit"));
+  for (let i = 0; i < 4; i++) await flush();
+  const out = d.getElementById("pf-out"), lines = (sel) => out.querySelectorAll(sel).map((x) => x.textContent);
+  const ch = lines("[data-pf-changed]"), mt = lines("[data-pf-matched]");
+  res.v45_catalog_lines = ch.length === 1 && ch[0] === "Changed: Comptroller pauseGuardian = 2-of-4 Safe (Constitution: pause = Security Council 3-of-5)"
+    && mt[0] === "Matched: Security Council Safe threshold 3-of-5" && mt.length === 2 && ch.concat(mt).every((x) => x.length <= 140)
+    && !!out.querySelector("[data-pf-dvc]") && out.querySelector("[data-pf-dvc]").textContent === "Docs vs chain: Delta";
+  const ml = out.querySelectorAll("details[data-pf-limits] a").find((a) => a.textContent === "How the heuristic score differs from Docs vs chain");
+  res.v45_live_checker_link = !!ml && ml.getAttribute("href") === "https://pacta.wtf/methodology/#live-checker"
+    && out.textContent.includes("Heuristic score") && !out.textContent.includes("Risk score");
+}
+
 (async () => {
+  try { await v45Scenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
+  try { await requestBriefScenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
+  try { await liveCardScenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
+  try { await tryExampleScenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
+  try { await radarHeaderScenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
   try { protocolFilterScenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
   try { await preflightScenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
   try { await staleResponseScenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
   try { await beaconScenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
   try { await liveTimelockScenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
   try { await lateLivePayloadScenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
+  try { await basePathScenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
   try { await visitorScenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
   try { await liveRpcScenario(); } catch (e) { res.harness_error = (res.harness_error || "") + String(e && e.stack || e); }
+  res.v43_no_init_errors = INIT_ERRORS.length === 0;
+  if (INIT_ERRORS.length) res.init_errors = INIT_ERRORS.slice(0, 3);
   process.stdout.write(JSON.stringify(res));
 })();

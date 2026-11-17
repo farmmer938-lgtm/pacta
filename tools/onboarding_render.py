@@ -6,6 +6,8 @@ of observed state with the check that proves them. Nothing here is hand-typed ch
 
 import html
 
+import ui as U
+
 E = html.escape
 RPC_ENV = {"base": "$BASE_RPC_URL", "eth": "$ETH_RPC_URL"}
 CHAIN_NAME = {"base": "Base Mainnet", "eth": "Ethereum Mainnet"}
@@ -56,7 +58,7 @@ def holder_text(b, addr):
     if i["kind"] == "safe":
         return f'{i["threshold"]}-of-{len(i["owners"])} Safe'
     if i["kind"] == "eoa":
-        t = f'EOA, {i["nonce"]:,} txs' + (f', EIP-7702 → {short(i["eip7702_delegate"])}' if i.get("eip7702_delegate") else "")
+        t = f'EOA, {i["nonce"]:,} txs' + (f', EIP-7702 delegate {short(i["eip7702_delegate"])}' if i.get("eip7702_delegate") else "")
         return t + (", signer of " + ", ".join(short(x) for x in i["owner_of_safes"]) if i.get("owner_of_safes") else "")
     return f'contract, {i["code_bytes"]:,} bytes'
 
@@ -83,7 +85,7 @@ def findings(b):
                    f'{hexref(v(b, "r_gov"))}. Oracle, LTVs and caps cannot be changed by anyone.')
         out.append(f'Caps are unset and cannot be set: supply cap {cap_text(sup, 6, "USDC")}, borrow cap {cap_text(bor, 6, "USDC")}. '
                    f'Exposure limits exist only in the curator vault that allocates to this market.')
-        out.append(f'kUSD is priced at a fixed rate: <code>getQuote(1e18 kUSD → USDC)</code> = <b>{num(v(b, "o_quote"), 6)} USDC</b> from '
+        out.append(f'kUSD is priced at a fixed rate: <code>getQuote(1e18 kUSD, USDC)</code> = <b>{num(v(b, "o_quote"), 6)} USDC</b> from '
                    f'{hexref(v(b, "r_oracle"))}. Borrow / liquidation LTV {v(b, "v_ltvb") / 100:.2f}% / {v(b, "v_ltvl") / 100:.2f}%. '
                    f'No market price feeds liquidations, so lender recovery depends on kUSD redemption and its backing.')
         tl = by_id(b)["tl_delay"]["to"]
@@ -98,7 +100,7 @@ def findings(b):
                    f'({str(v(b, "m_admin_tl")).lower()}). Role changes on kUSD and on the minter pass a {v(b, "tl_delay") / 3600:.0f}-hour public queue.')
         for m in b["role_maps"]:
             out.append(f'{E(m["label"])} ({m["events"]} events, blocks {m["from_block"]:,}–{m["to_block"]:,}): '
-                       + ("; ".join(f'{E(r["name"] or short(r["role"], 10, 4))} → ' + ", ".join(holder_ref(b, h) for h in r["holders"]) for r in m["roles"])
+                       + ("; ".join(f'{E(r["name"] or short(r["role"], 10, 4))}: ' + ", ".join(holder_ref(b, h) for h in r["holders"]) for r in m["roles"])
                           or "no role held") + ".")
     elif s == "efix-efixdi-base":
         sup, bor = v(b, "v_caps")
@@ -120,7 +122,7 @@ def findings(b):
                        f'three signers of the governor Safe. Calls gated only by <code>MINTER_ROLE</code> need no second signature and no delay.')
         for m in b["role_maps"]:
             out.append(f'{E(m["label"])} ({m["events"]} events, blocks {m["from_block"]:,}–{m["to_block"]:,}): '
-                       + ("; ".join(f'{E(r["name"] or short(r["role"], 10, 4))} → ' + ", ".join(holder_ref(b, h) for h in r["holders"]) for r in m["roles"])
+                       + ("; ".join(f'{E(r["name"] or short(r["role"], 10, 4))}: ' + ", ".join(holder_ref(b, h) for h in r["holders"]) for r in m["roles"])
                           or "no role held") + ".")
         own = b["accounts"].get("efix_owner") or {}
         code = by_id(b)["e_owner_code"]
@@ -150,7 +152,7 @@ def findings(b):
                    f'Owner-only changes (including <code>setManageRoot</code>, which no role holds) therefore wait at least 24 hours.')
         if tl:
             out.append("Timelock roles (" + f'{tl["events"]} events replayed): ' + "; ".join(
-                f'{r["name"] or short(r["role"], 10, 4)} → ' + ", ".join(hexref(h) for h in r["holders"]) for r in tl["roles"]) + ".")
+                f'{r["name"] or short(r["role"], 10, 4)}: ' + ", ".join(hexref(h) for h in r["holders"]) for r in tl["roles"]) + ".")
         out.append(f'Capabilities granted through the RolesAuthority execute with no delay. '
                    f'<code>updateExchangeRate</code> is held by the {v(b, "safe_threshold")}-of-{len(v(b, "safe_owners"))} Safe '
                    f'{hexref(by_id(b)["safe_threshold"]["to"])} and by {hexref(by_id(b)["eoa_nonce"]["to"])} '
@@ -161,7 +163,7 @@ def findings(b):
                    f'minimum delay stores the new rate and pauses the accountant instead of reverting (the deployed bytecode was not '
                    f'compared with that source here).')
         if auth:
-            out.append(f'Full role → capability → holder map below, replayed from {auth["events"]} RolesAuthority events '
+            out.append(f'Full role, capability and holder map below, replayed from {auth["events"]} RolesAuthority events '
                        f'(blocks {auth["from_block"]:,}–{auth["to_block"]:,}). Selectors without a public signature are shown as raw 4-byte values.')
         out.append(f'Teller {hexref(by_id(b)["te_paused"]["to"])}: <code>isPaused()</code> = {str(v(b, "te_paused")).lower()}, '
                    f'<code>shareLockPeriod()</code> = {v(b, "te_lock")}s. The previous teller {hexref(by_id(b)["old_paused"]["to"])} is paused '
@@ -238,7 +240,7 @@ def display(c):
     if isinstance(val, list):
         return f"[{len(val)}] " + ", ".join(val) if val and isinstance(val[0], str) else ", ".join(str(x) for x in val)
     if c["kind"] == "eth_getCode":
-        return f'{c["code_bytes"]:,} bytes' + (f' · EIP-7702 → {c["eip7702_delegate"]}' if c.get("eip7702_delegate") else "")
+        return f'{c["code_bytes"]:,} bytes' + (f' · EIP-7702 delegate {c["eip7702_delegate"]}' if c.get("eip7702_delegate") else "")
     return str(val)
 
 
@@ -279,7 +281,7 @@ def content(b, term_html, price="$5,000 USDC"):
     return f"""<header>
   <div><span class="badge badge-cyan">Onboarding verification brief</span><span class="badge badge-amber">{E(b["forum"]["name"])} #{b["forum"]["topic"]}</span></div>
   <h1>{E(b["asset"])}: control-plane state at {E(CHAIN_NAME[b["chain"]])} block {pin["number"]:,}</h1>
-  <p>Read-only verification of who can change {E(b["asset"])} and the {E(b["venue"])} it is proposed for, pinned to a canonical block and reproducible on any archive node. Forum thread: <a href="{E(b["forum"]["url"])}" target="_blank" rel="noopener">{E(b["forum"]["title"])} ↗</a>.</p>
+  <p>Read-only verification of who can change {E(b["asset"])} and the {E(b["venue"])} it is proposed for, pinned to a canonical block and reproducible on any archive node. Forum thread: <a href="{E(b["forum"]["url"])}" target="_blank" rel="noopener">{E(b["forum"]["title"])}{U.arrow("up-right")}</a>.</p>
 </header>
 
 <div class="meta-grid">{k}</div>
@@ -304,9 +306,9 @@ def content(b, term_html, price="$5,000 USDC"):
 def homepage_rows(data, prefix=""):
     return "".join(
         f'<tr><td><b>{E(b["asset"])}</b><span class="sub">{E(b["venue"])}</span></td>'
-        f'<td><a href="{E(b["forum"]["url"])}" target="_blank" rel="noopener">{E(b["forum"]["name"])} #{b["forum"]["topic"]} ↗</a></td>'
+        f'<td><a href="{E(b["forum"]["url"])}" target="_blank" rel="noopener">{E(b["forum"]["name"])} #{b["forum"]["topic"]}{U.arrow("up-right")}</a></td>'
         f'<td class="hide-m">{E(CHAIN_NAME[b["chain"]])} #{b["pin"]["number"]:,}</td>'
-        f'<td class="r"><a href="{prefix}briefs/{E(b["slug"])}/">Read the brief →</a></td></tr>' for b in data["briefs"])
+        f'<td class="r"><a href="{prefix}briefs/{E(b["slug"])}/">Read the brief{U.arrow()}</a></td></tr>' for b in data["briefs"])
 
 
 def summary(b):

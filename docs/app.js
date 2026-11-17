@@ -9,6 +9,16 @@ Object.keys(attrs || {}).forEach(function (k) { if (k === "text") n.textContent 
 return n;
 }
 function short(h, a, b) { return h.slice(0, a) + "…" + h.slice(-b); }
+var ARROW_D = { right: "M5 12h14M12 5l7 7-7 7", "up-right": "M7 7h10v10M7 17 17 7" };
+function arrowIcon(kind) {
+var s = document.createElementNS("http://www.w3.org/2000/svg", "svg"), p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+s.setAttribute("class", "i ia"); s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("aria-hidden", "true");
+p.setAttribute("d", ARROW_D[kind] || ARROW_D.right); s.appendChild(p);
+return s;
+}
+function arrowLink(attrs, label, kind) { return el("a", attrs, [String(label), arrowIcon(kind)]); }
+var BASE = (function () { var b = document.documentElement.getAttribute("data-base-path") || ""; return /^(?:\/(?!\.{1,2}(?:\/|$))[A-Za-z0-9._-]+)+$/.test(b) ? b : ""; })();
+function siteUrl(u) { var m = /^https:\/\/pacta\.wtf(\/[^\s"<>]*)$/.exec(String(u)); return BASE && m ? BASE + m[1] : String(u); }
 function num(n) { return Number(n).toLocaleString("en-US"); }
 function applyTheme(pref) {
 var dark = pref === "dark" || (pref === "system" && systemDark());
@@ -122,6 +132,11 @@ return blk;
 }
 var RADAR_ORDER = ["ready", "pending", "mixed", "unknown", "executed"];
 var RADAR_WORD = { ready: "ready", pending: "pending", mixed: "mixed", unknown: "cancelled or unknown", executed: "executed" };
+function opsWord(n) { return n + (n === 1 ? " op" : " ops"); }
+function radarPart(s, rows, ops) {
+if (s === "executed") return "Executed (" + opsWord(ops) + ")";
+return rows + " " + RADAR_WORD[s] + (ops !== rows ? " (" + opsWord(ops) + ")" : "");
+}
 function radarCounts() {
 var out = $("[data-radar-counts]"); if (!out) return;
 var by = {}, ops = {};
@@ -132,9 +147,7 @@ if (!RADAR_WORD[st]) st = "unknown";
 tr.setAttribute("data-radar-row", st); tr.classList.toggle("is-executed", st === "executed");
 by[st] = (by[st] || 0) + 1; ops[st] = (ops[st] || 0) + n;
 });
-out.textContent = RADAR_ORDER.filter(function (s) { return by[s]; }).map(function (s) {
-return by[s] + " " + RADAR_WORD[s] + (ops[s] !== by[s] ? " (" + ops[s] + " operations)" : "");
-}).join(" · ");
+out.textContent = RADAR_ORDER.filter(function (s) { return by[s]; }).map(function (s) { return radarPart(s, by[s], ops[s]); }).join(" · ");
 }
 function initLiveTimelocks() {
 var host = $("[data-live-timelocks]");
@@ -266,7 +279,7 @@ el("div", {}, [scEvidence(card), factorList(card)]),
 el("p", { "class": "sc-meta", text: (eas ? "Base EAS attested" : "RPC-observed, not EAS-attested") + " · " + n + " " + noun + " · pinned block #" + num(card.pinnedBlock) }),
 live]);
 if (p.target_contract) dr.appendChild(term(castCmd(p), "Reproduce on any archive node", "Copy the cast reproduction for " + String(card.name)));
-dr.appendChild(el("p", { "class": "links" }, [el("a", { href: pre + "protocols/" + slug + "/", text: "Full scorecard for " + String(card.name) + " →" })]));
+dr.appendChild(el("p", { "class": "links" }, [arrowLink({ href: pre + "protocols/" + slug + "/" }, "Full scorecard for " + String(card.name))]));
 var drawer = el("tr", { "class": "sc-drawer", id: did, hidden: "" }, [el("td", { colspan: "5" }, [dr])]);
 return [row, drawer];
 }
@@ -313,7 +326,7 @@ return true;
 }).catch(function () { loading = null; return false; });
 return loading;
 }
-function then(fn) { return function () { var a = arguments; hydrate().then(function () { fn.apply(null, a); }); }; }
+function then(fn) { return function () { var a = arguments; body.setAttribute("data-all", ""); hydrate().then(function () { fn.apply(null, a); }); }; }
 body.addEventListener("click", function (ev) {
 var t = ev.target; if (!t || !t.closest) return;
 var r = t.closest("tr.sc-row"); if (!r || t.closest("a")) return;
@@ -341,11 +354,22 @@ $$("[data-sc-f]", root).forEach(function (o) { o.setAttribute("aria-pressed", St
 apply();
 });
 }
+function tryReceipt(b) {
+var form = $("#pf-form"), a = b.getAttribute("data-pf-address") || "";
+if (!form || !ADDR_RE.test(a)) return;
+var ch = $('select[name="chain"]', form), ad = $('input[name="address"]', form), err = $("#pf-addr-error");
+if (ch) ch.value = b.getAttribute("data-pf-chain") === "base" ? "base" : "ethereum";
+if (ad) { ad.value = a; ad.setAttribute("value", a); ad.removeAttribute("aria-invalid"); }
+if (err) { err.textContent = ""; err.hidden = true; }
+form.dispatchEvent(new Event("submit", { cancelable: true }));
+if (form.scrollIntoView) { try { form.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {  } }
+}
 function initReceipts() {
 var card = $("[data-proof-card]"), chips = $$("[data-receipt]");
 chips.forEach(function (b) {
 b.addEventListener("click", function () {
 chips.forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+tryReceipt(b);
 if (!card) return;
 var set = function (sel, v) { var n = $(sel, card); if (n) n.textContent = v; };
 set("[data-pc-name]", b.getAttribute("data-r-name") || "");
@@ -419,6 +443,7 @@ if (!b) return;
 ev.preventDefault(); ev.stopPropagation();
 var src = b.hasAttribute("data-copy-term") ? $("pre", b.closest(".term")) : $("#" + b.getAttribute("data-copy-from"));
 var text = b.hasAttribute("data-copy") ? b.getAttribute("data-copy") : (src ? src.textContent : "");
+if (b.hasAttribute("data-copy-prefix")) text = b.getAttribute("data-copy-prefix") + "\n" + text;
 copyText(text).then(function () {
 flash(b, true);
 toast("Copied to clipboard");
@@ -443,14 +468,14 @@ return (b.sprint - a.sprint) || (pa < pb ? -1 : pa > pb ? 1 : 0) || (x[1] - y[1]
 }
 function explorerLink(e) {
 var x = EXPL[chainOf(e)];
-return el("a", { href: x[1] + "/block/" + e.block_number, target: "_blank", rel: "noopener", text: x[0] + " ↗" });
+return arrowLink({ href: x[1] + "/block/" + e.block_number, target: "_blank", rel: "noopener" }, x[0], "up-right");
 }
 function searchText(e) {
 return ["protocol", "category", "surface", "target_contract", "target_label", "onchain_observed", "classification", "sprint"]
 .map(function (k) { return e[k] === undefined || e[k] === null ? "" : String(e[k]); }).join(" ").toLowerCase();
 }
 function indexRow(e) {
-var proofEl = e.base_eas_uid ? el("a", { href: "https://base.easscan.org/attestation/view/" + e.base_eas_uid, target: "_blank", rel: "noopener", text: "EAS ↗" })
+var proofEl = e.base_eas_uid ? arrowLink({ href: "https://base.easscan.org/attestation/view/" + e.base_eas_uid, target: "_blank", rel: "noopener" }, "EAS", "up-right")
 : el("span", { "class": "muted", text: "Hash-pinned" });
 var row = el("tr", { "data-class": e.classification, "class": "rec", "data-id": e.id, "data-search": searchText(e) }, [
 el("td", {}, [el("b", { "class": "ell", text: e.protocol }), el("span", { "class": "sub ell", text: e.category })]),
@@ -463,7 +488,7 @@ var repo = "https://github.com/Fractal-Neurons/pacta/blob/main/";
 var kv = el("dl", { "class": "kv" }, [
 el("dt", { text: "Pinned block" }), el("dd", {}, [CHAIN_LABEL[chainOf(e)] + " ", el("span", { "class": "num", text: "#" + num(e.block_number) }), " · ", explorerLink(e), " · "].concat(hexref(e.block_hash, 8, 6))),
 el("dt", { text: "Delay" }), el("dd", {}, [delayCmp(e)]),
-el("dt", { text: "Summary" }), el("dd", {}, [el("a", { href: repo + e.summary_doc, target: "_blank", rel: "noopener", text: "Sprint " + e.sprint + " summary ↗" })]),
+el("dt", { text: "Summary" }), el("dd", {}, [arrowLink({ href: repo + e.summary_doc, target: "_blank", rel: "noopener" }, "Sprint " + e.sprint + " summary", "up-right")]),
 el("dt", { text: "SHA-256" }), el("dd", {}, hexref(e.summary_sha256, 10, 6)),
 el("dt", { text: "Proof" }), el("dd", {}, [proof(e)])]);
 var drawer = el("tr", { "class": "drawer", id: "r-" + e.id }, [el("td", { colspan: "6" }, [el("div", { "class": "drawer-in" }, [
@@ -522,7 +547,7 @@ return el("div", { "class": "term" }, [el("div", { "class": "term-h" }, [el("spa
 el("pre", { text: cmd })]);
 }
 function proof(e) {
-if (e.base_eas_uid) return el("a", { href: "https://base.easscan.org/attestation/view/" + e.base_eas_uid, target: "_blank", rel: "noopener", text: "Base EAS attestation " + short(e.base_eas_uid, 6, 4) + " ↗" });
+if (e.base_eas_uid) return arrowLink({ href: "https://base.easscan.org/attestation/view/" + e.base_eas_uid, target: "_blank", rel: "noopener" }, "Base EAS attestation " + short(e.base_eas_uid, 6, 4), "up-right");
 return el("span", { text: "Pending Base EAS batch attestation · pinned by block hash and summary SHA-256" });
 }
 function prose(text) {
@@ -598,7 +623,7 @@ rows.push(["Pinned block", [chainOf(e) === "base" ? "Base " : "", el("span", { "
 badge(null, "Scanner-pinned (L1 finalized)", "final")]]);
 rows.push(["Canonical block hash", hexref(e.block_hash, 8, 6)]);
 rows.push(["Proof", [proof(e)]]);
-rows.push(["Summary", [el("a", { href: repo + e.summary_doc, target: "_blank", rel: "noopener", text: e.summary_doc.split("/").pop() + " ↗" }), " · SHA-256 "].concat(hexref(e.summary_sha256, 8, 4))]);
+rows.push(["Summary", [arrowLink({ href: repo + e.summary_doc, target: "_blank", rel: "noopener" }, e.summary_doc.split("/").pop(), "up-right"), " · SHA-256 "].concat(hexref(e.summary_sha256, 8, 4))]);
 var dl = el("dl", { "class": "kv" });
 rows.forEach(function (r) { dl.appendChild(el("dt", { text: r[0] })); dl.appendChild(el("dd", {}, r[1])); });
 panel.textContent = "";
@@ -808,9 +833,9 @@ community: ["Community queue (free; unscheduled, typically 6–8 weeks)", "Commu
 clearance: ["Full Protocol Control-Plane Dossier ($2,500–$5,000 USDC, 24h SLA)",
 "Full Protocol Control-Plane Dossier ($2,500–$5,000 USDC, 24h SLA)",
 "Pacta 24h dossier request", "$2,500–$5,000 USDC (24h SLA)"],
-continuous: ["Continuous Monitoring ($1,500 USDC per month)",
-"Continuous Monitoring ($1,500 USDC per month)",
-"Pacta Continuous Monitoring request", "$1,500 USDC per month"],
+continuous: ["Continuous Control-Plane Monitoring ($1,500 USDC per month)",
+"Continuous Control-Plane Monitoring ($1,500 USDC per month)",
+"Pacta Continuous Control-Plane Monitoring request", "$1,500 USDC per month"],
 api_sla: ["Enterprise / High-Throughput API SLA (priced on scope)",
 "Enterprise / High-Throughput API SLA (priced on scope)",
 "Pacta enterprise API SLA request", "the scoped amount (quoted on the invoice)"]
@@ -862,7 +887,7 @@ var t = tier(), paid = t !== "community", s = settlement(), dir = paid && s === 
 var ps = protocols(), org = val("org"), scope = val("scope"), contact = val("contact");
 var forum = val("forum"), tx = dir ? val("tx") : "", txOk = !tx || TX_RE.test(tx);
 var subj = TRACK[t][2] + (org ? " — " + org : "");
-var lines = ["To: " + REQ_TO, "Subject: " + subj, "",
+var lines = ["Subject: " + subj, "",
 "Track: " + TRACK[t][0],
 "Organization: " + (org || "(not given)"),
 "Protocols in scope: " + (ps.length ? ps.join(", ") : "(none selected)")];
@@ -896,7 +921,7 @@ if (dir && tx && txOk) p.set("payment_tx_hash", tx);
 p.set("contact_channel", contact);
 if (gh) gh.href = "https://github.com/Fractal-Neurons/pacta/issues/new?" + p.toString();
 if (gm) gm.href = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(REQ_TO) + "&su=" + encodeURIComponent(subj) +
-"&body=" + encodeURIComponent(lines.slice(3).join("\n"));
+"&body=" + encodeURIComponent(lines.slice(2).join("\n"));
 }
 function payload() {
 var t = tier(), sel = combo.values(), org = val("org"), scope = val("scope"), forum = val("forum"), contact = val("contact"), ok = true;
@@ -1095,16 +1120,55 @@ out.appendChild(el("p", { "class": "pf-assess", "data-pf-assess": "" }, [el("b",
 " · " + cov + (a.method ? " · " + String(a.method) : "")]));
 if (Array.isArray(a.limits) && a.limits.length) out.appendChild(el("p", { "class": "pf-assess", text: "Limits: " + a.limits.map(String).join(" ") }));
 }
+var DVC = { parameter_delta: ["Delta", "warning"], protective_delta: ["Protective", "info"], aligned_baseline: ["Aligned", "neutral"],
+rpc_observed: ["Observed", "outline"] };
+function docsVsChain(m) {
+var c = String(m.classification || ""), wd = m.whatDiffers || {};
+if (Object.prototype.hasOwnProperty.call(DVC, c)) return DVC[c];
+if (Array.isArray(wd.changed) && wd.changed.some(function (x) { return x && x.classification === "parameter_delta"; })) return DVC.parameter_delta;
+return null;
+}
+var WD_MAX = 140;
+function clip(s, max) {
+s = String(s); if (s.length <= max) return s;
+var c = s.slice(0, max - 1), i = c.lastIndexOf(" ");
+return (i > max / 2 ? c.slice(0, i) : c).replace(/[\s,;:(]+$/, "") + "…";
+}
+function safeLabel(value, texts) {
+var v = String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), name = "([A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+){0,3})";
+var re = new RegExp(name + " (?:Safe |multisig )?" + v + "(?![0-9])|(?:^|[^0-9])" + v + " " + name);
+for (var i = 0; i < texts.length; i++) {
+var m = re.exec(String(texts[i] || "")), n = m ? String(m[1] || m[2] || "").replace(/ (Safe|Multisig|multisig)$/, "") : "";
+if (n && !/^(Safe|The|A|An|Multisig|Gnosis)$/.test(n)) return n;
+}
+return "";
+}
+function wdTexts(wd, rid) {
+var t = [];
+(wd.changed || []).forEach(function (c) { if (c && c.recordId === rid) t.push(c.parameter, c.observed, c.documented); });
+(wd.matched || []).forEach(function (c) { if (c && c.recordId === rid && c.parameter !== "Safe threshold") t.push(c.parameter); });
+return t;
+}
+function wdLine(kind, c, wd) {
+var lbl = c.parameter === "Safe threshold" ? safeLabel(kind === "Matched" ? c.value : c.documented, wdTexts(wd, c.recordId)) : "";
+var p = lbl ? lbl + " Safe threshold" : String(c.parameter);
+var line = kind === "Changed" ? "Changed: " + p + " " + String(c.observed) + " observed vs " + String(c.documented) + " documented"
+: "Matched: " + p + (lbl ? " " : ": ") + String(c.value);
+return kind === "Changed" && line.length > WD_MAX ? clip("Changed: " + p, WD_MAX) : clip(line, WD_MAX);
+}
 function pfMatch(out, m) {
 if (!m || typeof m !== "object" || !/^https:\/\/pacta\.wtf\/protocols\/[a-z0-9-]+\/$/.test(String(m.url || ""))) return;
-var box = el("div", { "class": "pf-match", "data-pf-match": "" }, [el("p", {}, [el("b", { text: "Indexed by Pacta: " + String(m.name || m.slug) }),
-" · " + String(m.classification || "") + (m.pinnedBlock ? " · pinned block " + num(m.pinnedBlock) : "") + " · ",
-el("a", { href: String(m.url), text: "Full record →" })])]);
+var dv = docsVsChain(m);
+var head = el("p", { "class": "pf-match-head" }, [el("b", { text: "Indexed by Pacta: " + String(m.name || m.slug) })]);
+if (dv) head.appendChild(el("span", { "data-slot": "badge", "data-variant": dv[1], "data-pf-dvc": "", text: "Docs vs chain: " + dv[0] }));
+var box = el("div", { "class": "pf-match", "data-pf-match": "" }, [head]);
 var wd = m.whatDiffers;
 if (wd && Array.isArray(wd.changed)) {
-wd.changed.forEach(function (c) { box.appendChild(el("p", { text: "Changed: " + String(c.parameter) + " " + String(c.observed) + " observed vs " + String(c.documented) + " documented" })); });
-(wd.matched || []).forEach(function (c) { box.appendChild(el("p", { text: "Matched: " + String(c.parameter) + ": " + String(c.value) })); });
+wd.changed.forEach(function (c) { box.appendChild(el("p", { "data-pf-changed": "", text: wdLine("Changed", c, wd) })); });
+(wd.matched || []).forEach(function (c) { box.appendChild(el("p", { "data-pf-matched": "", text: wdLine("Matched", c, wd) })); });
 }
+box.appendChild(el("p", { "class": "pf-match-foot" }, [m.pinnedBlock ? "Record pinned at block " + num(m.pinnedBlock) + " · " : "",
+arrowLink({ href: siteUrl(m.url) }, "Full record")]));
 out.appendChild(box);
 }
 function pfFallback(out, b) {
@@ -1117,13 +1181,19 @@ card.appendChild(el("p", { text: String(b.summary || "") }));
 pfMatch(card, b.catalogMatch);
 out.appendChild(card);
 }
+var CTL_LABEL = { multisig_safe: "Safe multisig", timelock: "Timelock", eoa: "Single key (EOA)", contract: "Contract",
+access_control: "Role-based access control", none: "None" };
+function ctlLabel(kind) {
+var k = String(kind || "none");
+return Object.prototype.hasOwnProperty.call(CTL_LABEL, k) ? CTL_LABEL[k] : k.replace(/_/g, " ");
+}
 function pfRender(out, r) {
 out.textContent = "";
 var caps = r.capabilities || {}, k = r.controller || {}, v = String(r.verdict || ""), variant = VERDICT_VARIANT[v] || "warning";
 var capList = Object.keys(caps).filter(function (x) { return caps[x] === true; });
 var risk = typeof r.riskScore === "number" ? String(r.riskScore) + "/100" : "n/a";
 var a = r.assessment && typeof r.assessment === "object" ? r.assessment : {};
-var ctl = String(k.kind || "none");
+var ctl = ctlLabel(k.kind);
 if (typeof k.safeThreshold === "number") ctl += " (" + k.safeThreshold + "-of-" + (typeof k.safeOwnerCount === "number" ? k.safeOwnerCount : "?") + ")";
 if (typeof k.timelockDelaySec === "number") ctl += " (" + secs(k.timelockDelaySec) + " delay)";
 if (typeof k.roleAdminCount === "number") ctl += " (" + k.roleAdminCount + " DEFAULT_ADMIN_ROLE members)";
@@ -1133,27 +1203,32 @@ card.appendChild(el("p", { "class": "pf-section", text: "Live contract check · 
 card.appendChild(el("div", { "class": "pf-verdict-row" }, [el("span", { "data-slot": "badge", "data-variant": variant, "data-pf-badge": "", text: variant === "warning" ? "Warning" : "Result" }),
 el("p", { "class": "pf-verdict-title pf-verdict", "data-pf-verdict": "", text: verdictText(v) })]));
 card.appendChild(el("dl", { "class": "pf-metrics" }, [
-el("div", {}, [el("dt", { text: "Risk score" }), el("dd", { "data-pf-risk": "", text: risk })]),
+el("div", {}, [el("dt", { text: "Heuristic score" }), el("dd", { "data-pf-risk": "", text: risk })]),
 el("div", {}, [el("dt", { text: "Confidence" }), el("dd", { text: String(a.confidence || "n/a") })]),
 el("div", {}, [el("dt", { text: "Covers" }), el("dd", { text: "This address only" })])]));
-card.appendChild(alertBox("This rates one contract, not the protocol",
-"The verdict and the 0–100 score describe the single address you entered" + (addr ? " (" + short(addr, 6, 4) + ")" : "") +
-". A protocol's Docs-vs-chain status is on its scorecard, and a protocol can be Delta while one of its contracts has no admin."));
-if (r.summary) card.appendChild(el("p", { "class": "s", text: String(r.summary) }));
-pfAssess(card, r);
 pfMatch(card, r.catalogMatch);
+card.appendChild(el("p", { "class": "pf-scope", "data-pf-scope": "", text: "The verdict and heuristic score cover only this one contract address"
++ (addr ? " (" + short(addr, 6, 4) + ")" : "") + ", not the whole protocol." }));
+if (r.summary) card.appendChild(el("p", { "class": "s", text: String(r.summary) }));
 card.appendChild(el("dl", { "class": "pf-dl" }, [
-pfRow("Chain / block", String(r.chain) + " · block " + num(r.pinnedBlock)),
+pfRow("Chain / block", (r.chain === "base" ? "Base" : "Ethereum") + " · block " + num(r.pinnedBlock)),
 pfRow("Contract", pfAddr(r.address)),
 pfRow("Proxy", r.isProxy ? "yes" : "no"),
 pfRow("Implementation", pfAddr(r.implementation)),
 pfRow("Controller", ADDR_RE.test(String(k.address || "")) ? el("span", {}, [ctl + " ", pfAddr(k.address)]) : ctl),
 pfRow("Zero-delay upgrade", r.canUpgradeZeroDelay === true ? "yes" : r.canUpgradeZeroDelay === false ? "no" : "unknown"),
-pfRow("Capabilities", capList.length ? capList.join(", ") : "none seen"),
+pfRow("Capabilities", capList.length ? capList.map(function (x) { return String(x).replace(/_/g, " "); }).join(", ") : "none seen"),
 pfRow("Paused", r.paused === true ? "yes" : r.paused === false ? "no" : "n/a"),
 pfRow("Pinned block hash", /^0x[0-9a-f]{64}$/.test(String(r.pinnedBlockHash || "")) ? el("span", {}, hexref(r.pinnedBlockHash, 10, 6)) : "n/a"),
 pfRow("Checked at (UTC)", typeof r.checkedAt === "string" ? r.checkedAt : (typeof r.blockTimestamp === "number" ? new Date(r.blockTimestamp * 1000).toISOString() : "n/a"))]));
-var acc = el("div", { "data-slot": "accordion" });
+var acc = el("div", { "data-slot": "accordion" }), lim = el("div", { "data-slot": "accordion-content" });
+pfAssess(lim, r);
+lim.appendChild(el("p", { "class": "pf-assess", text: "A protocol's Docs-vs-chain status is on its scorecard: a protocol can be Delta while one of its "
++ "contracts has no admin, and an Aligned protocol can still have a contract a multisig can change." }));
+lim.appendChild(el("p", { "class": "pf-assess" }, [arrowLink({ href: siteUrl("https://pacta.wtf/methodology/#live-checker") },
+"How the heuristic score differs from Docs vs chain")]));
+acc.appendChild(el("details", { "class": "acc pf-limits", "data-slot": "accordion-item", "data-pf-limits": "" },
+[el("summary", { "data-slot": "accordion-trigger", text: "Methodology & single-address scope limits" }), lim]));
 if (r.isContract !== false && addr && /^\d+$/.test(String(r.pinnedBlock)))
 acc.appendChild(accItem("Reproduce with cast (pinned block)", [term(pfCasts(r).join("\n"), "Foundry cast", "Copy the cast commands for " + addr)]));
 acc.appendChild(rawDetails(r));
@@ -1164,7 +1239,7 @@ var ch = r.chain === "base" ? "base" : "ethereum", want = String(r.pinnedBlockHa
 function fail(what) { return function (e) { return what + " failed (" + String(e && e.message || e) + ")"; }; }
 var pinned = rpcCall(ch, "eth_getBlockByNumber", ["0x" + Number(r.pinnedBlock).toString(16), false]).then(function (x) {
 var h = String(x.result && x.result.hash).toLowerCase();
-return "Pinned block #" + r.pinnedBlock + " hash " + h + (want ? (h === want ? " = pinned hash ✓" : " ≠ pinned hash " + want) : "")
+return "Pinned block #" + r.pinnedBlock + " hash " + h + (want ? (h === want ? " matches the pinned hash" : " differs from the pinned hash " + want) : "")
 + " · " + x.rpc + " · " + x.ms + " ms";
 }, fail("Pinned block check"));
 var live = !addr ? Promise.resolve("Live read skipped: no contract address") : liveBlock(ch).then(function (b) {
@@ -1267,14 +1342,6 @@ else msg("Network error: could not reach the API. Retry, or use the cURL quickst
 });
 }
 form.addEventListener("submit", function (ev) { ev.preventDefault(); run(); });
-$$("[data-pf-address]").forEach(function (b) {
-b.addEventListener("click", function () {
-chainSel.value = b.getAttribute("data-pf-chain") === "base" ? "base" : "ethereum";
-addr.value = b.getAttribute("data-pf-address") || "";
-run();
-if (b.hasAttribute("data-pf-scroll")) { try { box.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {  } }
-});
-});
 }
 function initProtocolFilter() {
 var root = $("[data-pfilter-root]"), q = $("#proto-q"), count = $("#proto-count");
@@ -1454,18 +1521,18 @@ el("p", { "class": "sc-full" }, [el("b", { text: eas ? "Chain says: " : "Chain (
 }
 function liveSettled(ok, blk) {
 $$("[data-live-pending]").forEach(function (n) { n.removeAttribute("data-live-pending"); });
+if (ok && blk) {
+$$("[data-prov-pill]").forEach(function (n) { n.textContent = "Live-checked · #" + blk.toLocaleString("en-US"); n.setAttribute("data-live", "1"); });
+$$(".livebar .lb-asof").forEach(function (n) { n.hidden = true; });
+}
 $$("[data-live-status]").forEach(function (n) {
 var t = $("[data-live-status-text]", n), sp = $(".spinner", n); if (sp) sp.hidden = true;
-if (t) t.textContent = ok ? "Live state confirmed" + (blk ? " at block #" + blk.toLocaleString("en-US") : "") : "Live check unavailable: showing the pinned snapshot";
+if (t) t.textContent = ok ? "Live state confirmed" + (blk ? " at the latest block" : "") : "Live check unavailable: showing the pinned snapshot";
 });
 }
 function accItem(title, kids) {
 return el("details", { "class": "acc", "data-slot": "accordion-item" }, [el("summary", { "data-slot": "accordion-trigger", text: title }),
 el("div", { "data-slot": "accordion-content" }, kids)]);
-}
-function alertBox(title, text) {
-return el("div", { "data-slot": "alert", role: "note", "data-pf-scope": "" }, [el("p", { "data-slot": "alert-title", text: title }),
-el("div", { "data-slot": "alert-description", text: text })]);
 }
 var REQ_ENUMS = {
 requester_role: ["protocol_team", "risk_curator_analyst", "institutional_allocator", "defi_developer", "security_researcher", "individual_user", "autonomous_agent"],
@@ -1491,7 +1558,7 @@ if (!root) return none;
 var input = $("#req-proto-q", root), list = $("#req-proto-list", root), chips = $("[data-combo-chips]", root);
 if (!input || !list || !chips) return none;
 var emptyLi = $('[data-slot="command-empty"]', list), items = $$('[role="option"]', list), active = -1, selected = [];
-function visible() { return items.filter(function (i) { return !i.hidden; }); }
+function visible() { return $$('[role="option"]', list).filter(function (i) { return !i.hidden; }); }
 function setActive(i) {
 var v = visible(); items.forEach(function (x) { x.removeAttribute("data-active"); }); active = i;
 if (i >= 0 && v[i]) {
@@ -1513,12 +1580,22 @@ onChange();
 function toggle(it) { var i = selected.indexOf(it); if (i >= 0) selected.splice(i, 1); else selected.push(it); render(); }
 function open() { list.hidden = false; input.setAttribute("aria-expanded", "true"); }
 function close() { list.hidden = true; input.setAttribute("aria-expanded", "false"); setActive(-1); }
+function rank(it, t) {
+var nm = String(it.getAttribute("data-name") || "").toLowerCase(), sl = String(it.getAttribute("data-slug") || "");
+if (nm.indexOf(t) === 0 || sl.indexOf(t) === 0) return 0;
+if ((" " + nm.replace(/[^a-z0-9]+/g, " ")).indexOf(" " + t) >= 0) return 1;
+if (nm.indexOf(t) >= 0 || sl.indexOf(t) >= 0) return 2;
+if (/^0x[0-9a-f]{4,40}$/.test(t) && (" " + String(it.getAttribute("data-q") || "")).indexOf(" " + t) >= 0) return 3;
+return -1;
+}
 function filter() {
-var t = String(input.value || "").trim().toLowerCase(), n = 0;
-items.forEach(function (it) {
-var ok = !t || String(it.getAttribute("data-name") || "").toLowerCase().indexOf(t) >= 0 || String(it.getAttribute("data-slug") || "").indexOf(t) >= 0;
-it.hidden = !ok; if (ok) n++;
+var t = String(input.value || "").trim().toLowerCase(), n = 0, order = [];
+items.forEach(function (it, i) {
+var r = t ? rank(it, t) : 0;
+it.hidden = r < 0; if (r >= 0) { n++; order.push([r, i, it]); }
 });
+order.sort(function (a, b) { return a[0] - b[0] || a[1] - b[1]; });
+order.forEach(function (x) { x[2].remove(); list.appendChild(x[2]); });
 if (emptyLi) emptyLi.hidden = n !== 0;
 setActive(n ? 0 : -1);
 }
@@ -1533,7 +1610,10 @@ else if (ev.key === "Escape") { if (!list.hidden) { ev.preventDefault(); close()
 else if (ev.key === "Backspace" && !input.value && selected.length) toggle(selected[selected.length - 1]);
 });
 list.addEventListener("mousedown", function (ev) { ev.preventDefault(); });
-list.addEventListener("click", function (ev) { var it = ev.target && ev.target.closest ? ev.target.closest('[role="option"]') : null; if (it) toggle(it); });
+list.addEventListener("click", function (ev) {
+var it = ev.target && ev.target.closest ? ev.target.closest('[role="option"]') : null; if (!it) return;
+toggle(it); input.value = ""; filter(); close();
+});
 document.addEventListener("click", function (ev) { if (!root.contains(ev.target)) close(); });
 return {
 input: input,
@@ -1547,8 +1627,11 @@ return !!it;
 };
 }
 document.addEventListener("DOMContentLoaded", function () {
-initTheme(); initSheet(); initTabs(); initTooltips(); initCopy(); initBeaconHooks(); tick(); setInterval(tick, 30000);
-initIndex(); initRequest(); initInspector(); initPreflight(); initLiveTimelocks(); initProtocolFilter(); initAges(); initRefresh(); initHeroCheck(); initBadgeWidget(); initScorecards(); initReceipts();
+[initTheme, initSheet, initTabs, initTooltips, initCopy, initBeaconHooks, tick, initIndex, initRequest, initInspector, initPreflight,
+initLiveTimelocks, initProtocolFilter, initAges, initRefresh, initHeroCheck, initBadgeWidget, initScorecards, initReceipts].forEach(function (f) {
+try { f(); } catch (e) { setTimeout(function () { throw e; }, 0); }
+});
+setInterval(tick, 30000);
 setInterval(initAges, 60000);
 if ($("#insp-list")) loadData().catch(function () {  });
 });

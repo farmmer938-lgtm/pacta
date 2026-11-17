@@ -1,0 +1,5029 @@
+{
+ "schema": "pacta.x_handles.v1",
+ "rules": "A handle is read only from captured first-party bytes (twitter:site / twitter:creator meta, x.com or twitter.com profile links, GitHub organisation twitter_username), never guessed. Tooling / platform accounts are denied; a handle must name the protocol or its first-party host; it needs a source the Pacta records already cite (record / attested snapshot / named GitHub org) or two independent first-party domains; several relevant handles without a clear first-party majority -> null.",
+ "evidence": "handoff evidence/x-handles/ (raw bytes + MANIFEST.jsonl); verify with verify_x_handles_offline.py",
+ "protocols": [
+  {
+   "slug": "aave-v3-base",
+   "protocolName": "Aave V3 (Base)",
+   "xHandle": "@aave",
+   "xUrl": "https://x.com/aave",
+   "verificationSource": {
+    "evidenceId": "fc5c43946c6a9e62",
+    "url": "https://aave.com/docs",
+    "finalUrl": "https://aave.com/docs",
+    "httpStatus": 200,
+    "sha256": "d9e2ef5e1fd0c69a1e1295eac8d858364918f437cf589aa4a9dbaeea5ae25545",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "meta[twitter:site]",
+    "offset": 4055,
+    "match": "<meta name=\"twitter:site\" content=\"@aave\"/>",
+    "displayHandle": "aave"
+   },
+   "sources": [
+    {
+     "url": "https://aave.com/docs",
+     "provenance": "record"
+    },
+    {
+     "url": "gh:aave",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "fc5c43946c6a9e62",
+     "url": "https://aave.com/docs",
+     "finalUrl": "https://aave.com/docs",
+     "httpStatus": 200,
+     "sha256": "d9e2ef5e1fd0c69a1e1295eac8d858364918f437cf589aa4a9dbaeea5ae25545",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "meta[twitter:site]",
+     "offset": 4055,
+     "match": "<meta name=\"twitter:site\" content=\"@aave\"/>",
+     "displayHandle": "aave"
+    }
+   ],
+   "candidates": {
+    "aave": [
+     "aave.com"
+    ]
+   }
+  },
+  {
+   "slug": "aave-v3-gho",
+   "protocolName": "Aave V3 / GHO",
+   "xHandle": "@aave",
+   "xUrl": "https://x.com/aave",
+   "verificationSource": {
+    "evidenceId": "fc5c43946c6a9e62",
+    "url": "https://aave.com/docs",
+    "finalUrl": "https://aave.com/docs",
+    "httpStatus": 200,
+    "sha256": "d9e2ef5e1fd0c69a1e1295eac8d858364918f437cf589aa4a9dbaeea5ae25545",
+    "kind": "html",
+    "provenance": "snapshot",
+    "rule": "meta[twitter:site]",
+    "offset": 4055,
+    "match": "<meta name=\"twitter:site\" content=\"@aave\"/>",
+    "displayHandle": "aave"
+   },
+   "sources": [
+    {
+     "url": "https://aave.com/docs",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "gh:aave",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "fc5c43946c6a9e62",
+     "url": "https://aave.com/docs",
+     "finalUrl": "https://aave.com/docs",
+     "httpStatus": 200,
+     "sha256": "d9e2ef5e1fd0c69a1e1295eac8d858364918f437cf589aa4a9dbaeea5ae25545",
+     "kind": "html",
+     "provenance": "snapshot",
+     "rule": "meta[twitter:site]",
+     "offset": 4055,
+     "match": "<meta name=\"twitter:site\" content=\"@aave\"/>",
+     "displayHandle": "aave"
+    }
+   ],
+   "candidates": {
+    "aave": [
+     "aave.com"
+    ]
+   }
+  },
+  {
+   "slug": "across-protocol-hubpool",
+   "protocolName": "Across Protocol (HubPool)",
+   "xHandle": "@AcrossProtocol",
+   "xUrl": "https://x.com/AcrossProtocol",
+   "verificationSource": {
+    "evidenceId": "1d9595dbdcd090de",
+    "url": "https://across.to/",
+    "finalUrl": "https://across.to/",
+    "httpStatus": 200,
+    "sha256": "297925aa033052f311ed48240efe38654e19e6c0b7e9ee563e26b9dfb4509c86",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "meta[twitter:creator]",
+    "offset": 1839,
+    "match": "<meta name=\"twitter:creator\" content=\"@AcrossProtocol\"/>",
+    "displayHandle": "AcrossProtocol"
+   },
+   "sources": [
+    {
+     "url": "https://docs.across.to/",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "https://across.to/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:across-protocol",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "1d9595dbdcd090de",
+     "url": "https://across.to/",
+     "finalUrl": "https://across.to/",
+     "httpStatus": 200,
+     "sha256": "297925aa033052f311ed48240efe38654e19e6c0b7e9ee563e26b9dfb4509c86",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:creator]",
+     "offset": 1839,
+     "match": "<meta name=\"twitter:creator\" content=\"@AcrossProtocol\"/>",
+     "displayHandle": "AcrossProtocol"
+    }
+   ],
+   "candidates": {
+    "acrossprotocol": [
+     "across.to"
+    ]
+   }
+  },
+  {
+   "slug": "aerodrome-finance-base",
+   "protocolName": "Aerodrome Finance (Base)",
+   "xHandle": "@aerodromefi",
+   "xUrl": "https://x.com/aerodromefi",
+   "verificationSource": {
+    "evidenceId": "9850658ddfc91a8f",
+    "url": "https://api.github.com/orgs/aerodrome-finance",
+    "finalUrl": "https://api.github.com/orgs/aerodrome-finance",
+    "httpStatus": 200,
+    "sha256": "51934b2fb0cfdc097286a1572242be16ee1514394c28bb1d76523cd6862ace62",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 810,
+    "match": "\"twitter_username\":\"aerodromefi\"",
+    "displayHandle": "aerodromefi"
+   },
+   "sources": [
+    {
+     "url": "https://github.com/aerodrome-finance/contracts",
+     "provenance": "record"
+    },
+    {
+     "url": "gh:aerodrome-finance",
+     "provenance": "github"
+    },
+    {
+     "url": "https://aerodrome.finance/",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "9850658ddfc91a8f",
+     "url": "https://api.github.com/orgs/aerodrome-finance",
+     "finalUrl": "https://api.github.com/orgs/aerodrome-finance",
+     "httpStatus": 200,
+     "sha256": "51934b2fb0cfdc097286a1572242be16ee1514394c28bb1d76523cd6862ace62",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 810,
+     "match": "\"twitter_username\":\"aerodromefi\"",
+     "displayHandle": "aerodromefi"
+    }
+   ],
+   "candidates": {
+    "aerodromefi": [
+     "gh:aerodrome-finance"
+    ]
+   }
+  },
+  {
+   "slug": "aerodrome-slipstream-base",
+   "protocolName": "Aerodrome Slipstream (Base)",
+   "xHandle": "@aerodromefi",
+   "xUrl": "https://x.com/aerodromefi",
+   "verificationSource": {
+    "evidenceId": "9850658ddfc91a8f",
+    "url": "https://api.github.com/orgs/aerodrome-finance",
+    "finalUrl": "https://api.github.com/orgs/aerodrome-finance",
+    "httpStatus": 200,
+    "sha256": "51934b2fb0cfdc097286a1572242be16ee1514394c28bb1d76523cd6862ace62",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 810,
+    "match": "\"twitter_username\":\"aerodromefi\"",
+    "displayHandle": "aerodromefi"
+   },
+   "sources": [
+    {
+     "url": "https://github.com/aerodrome-finance/contracts",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "gh:aerodrome-finance",
+     "provenance": "github"
+    },
+    {
+     "url": "https://aerodrome.finance/",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "9850658ddfc91a8f",
+     "url": "https://api.github.com/orgs/aerodrome-finance",
+     "finalUrl": "https://api.github.com/orgs/aerodrome-finance",
+     "httpStatus": 200,
+     "sha256": "51934b2fb0cfdc097286a1572242be16ee1514394c28bb1d76523cd6862ace62",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 810,
+     "match": "\"twitter_username\":\"aerodromefi\"",
+     "displayHandle": "aerodromefi"
+    }
+   ],
+   "candidates": {
+    "aerodromefi": [
+     "gh:aerodrome-finance"
+    ]
+   }
+  },
+  {
+   "slug": "axelar-network",
+   "protocolName": "Axelar Network",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.axelar.dev/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.axelar.network/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:axelarnetwork",
+     "provenance": "github"
+    }
+   ],
+   "reason": "ambiguous: several relevant handles",
+   "candidates": {
+    "axelar": [
+     "axelar.network"
+    ],
+    "axelarnetwork": [
+     "gh:axelarnetwork"
+    ]
+   }
+  },
+  {
+   "slug": "balancer-v2-vault-timelock",
+   "protocolName": "Balancer V2 Vault & TimelockAuthorizer",
+   "xHandle": "@Balancer",
+   "xUrl": "https://x.com/Balancer",
+   "verificationSource": {
+    "evidenceId": "d614a18f4b986ca6",
+    "url": "https://docs.balancer.fi/",
+    "finalUrl": "https://docs.balancer.fi/",
+    "httpStatus": 200,
+    "sha256": "f1c4ecba0b36e1d9e8685e6ce8ff7f49b53a5b3cd388d9c8de6a827ac82ce9ee",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 45396,
+    "match": "https://x.com/Balancer",
+    "displayHandle": "Balancer"
+   },
+   "sources": [
+    {
+     "url": "https://docs.balancer.fi/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://balancer.fi/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:balancer",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "d614a18f4b986ca6",
+     "url": "https://docs.balancer.fi/",
+     "finalUrl": "https://docs.balancer.fi/",
+     "httpStatus": 200,
+     "sha256": "f1c4ecba0b36e1d9e8685e6ce8ff7f49b53a5b3cd388d9c8de6a827ac82ce9ee",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 45396,
+     "match": "https://x.com/Balancer",
+     "displayHandle": "Balancer"
+    }
+   ],
+   "candidates": {
+    "balancer": [
+     "balancer.fi"
+    ]
+   }
+  },
+  {
+   "slug": "bedrock-unieth",
+   "protocolName": "Bedrock (uniETH)",
+   "xHandle": "@Bedrock_DeFi",
+   "xUrl": "https://x.com/Bedrock_DeFi",
+   "verificationSource": {
+    "evidenceId": "fa3dc722b2e73ff8",
+    "url": "https://www.bedrock.technology/",
+    "finalUrl": "https://www.bedrock.technology/",
+    "httpStatus": 200,
+    "sha256": "9a52b2d803ae3688a95da31d0ab5d15a7e22f52bea08df15c9c7b4d85bd0d181",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "meta[twitter:site]",
+    "offset": 1675,
+    "match": "<meta name=\"twitter:site\" content=\"@Bedrock_DeFi\"/>",
+    "displayHandle": "Bedrock_DeFi"
+   },
+   "sources": [
+    {
+     "url": "https://docs.bedrock.technology/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.bedrock.technology/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:Bedrock-Technology",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "fa3dc722b2e73ff8",
+     "url": "https://www.bedrock.technology/",
+     "finalUrl": "https://www.bedrock.technology/",
+     "httpStatus": 200,
+     "sha256": "9a52b2d803ae3688a95da31d0ab5d15a7e22f52bea08df15c9c7b4d85bd0d181",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 1675,
+     "match": "<meta name=\"twitter:site\" content=\"@Bedrock_DeFi\"/>",
+     "displayHandle": "Bedrock_DeFi"
+    }
+   ],
+   "candidates": {
+    "bedrock_defi": [
+     "bedrock.technology"
+    ]
+   }
+  },
+  {
+   "slug": "beefy-finance-base",
+   "protocolName": "Beefy Finance (Base)",
+   "xHandle": "@beefyfinance",
+   "xUrl": "https://x.com/beefyfinance",
+   "verificationSource": {
+    "evidenceId": "dbe4d770611b83fa",
+    "url": "https://api.github.com/orgs/beefyfinance",
+    "finalUrl": "https://api.github.com/orgs/beefyfinance",
+    "httpStatus": 200,
+    "sha256": "01eb2a063e61691af88ce2dd206e61fe844daca6678c211fb507ec89873c7414",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 743,
+    "match": "\"twitter_username\":\"beefyfinance\"",
+    "displayHandle": "beefyfinance"
+   },
+   "sources": [
+    {
+     "url": "https://docs.beefy.finance/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://beefy.com/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:beefyfinance",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "dbe4d770611b83fa",
+     "url": "https://api.github.com/orgs/beefyfinance",
+     "finalUrl": "https://api.github.com/orgs/beefyfinance",
+     "httpStatus": 200,
+     "sha256": "01eb2a063e61691af88ce2dd206e61fe844daca6678c211fb507ec89873c7414",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 743,
+     "match": "\"twitter_username\":\"beefyfinance\"",
+     "displayHandle": "beefyfinance"
+    },
+    {
+     "evidenceId": "1c6dada6b212fc28",
+     "url": "https://docs.beefy.finance/",
+     "finalUrl": "https://docs.beefy.finance/",
+     "httpStatus": 200,
+     "sha256": "d9617f6be1f6316aa1df77cd2e4b1576a2c717c50d2b07a44dad15b55e7e6f7d",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 165962,
+     "match": "https://twitter.com/beefyfinance",
+     "displayHandle": "beefyfinance"
+    },
+    {
+     "evidenceId": "2015179ed0f742fb",
+     "url": "https://beefy.com/",
+     "finalUrl": "https://beefy.com/",
+     "httpStatus": 200,
+     "sha256": "ffae135ce17b9175ae6dfe4709c565da763c4c69fd32bc2e7d4722e4ddd69288",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "meta[twitter:site]",
+     "offset": 1366,
+     "match": "<meta name=\"twitter:site\" content=\"@beefyfinance\" data-gatsby-head=\"true\"/>",
+     "displayHandle": "beefyfinance"
+    }
+   ],
+   "candidates": {
+    "beefyfinance": [
+     "beefy.com",
+     "beefy.finance",
+     "gh:beefyfinance"
+    ]
+   }
+  },
+  {
+   "slug": "cap",
+   "protocolName": "Cap",
+   "xHandle": "@CapApp",
+   "xUrl": "https://x.com/CapApp",
+   "verificationSource": {
+    "evidenceId": "fc28b97c3cb591d7",
+    "url": "https://cap.app/",
+    "finalUrl": "https://www.cap.app/",
+    "httpStatus": 200,
+    "sha256": "f64ca58300a39c7b5fb9d0c00bd12a6401d0d9937aba3058beb3f47ba629b373",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 988241,
+    "match": "https://x.com/CapApp",
+    "displayHandle": "CapApp"
+   },
+   "sources": [
+    {
+     "url": "https://docs.cap.app/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://cap.app/",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "fc28b97c3cb591d7",
+     "url": "https://cap.app/",
+     "finalUrl": "https://www.cap.app/",
+     "httpStatus": 200,
+     "sha256": "f64ca58300a39c7b5fb9d0c00bd12a6401d0d9937aba3058beb3f47ba629b373",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 988241,
+     "match": "https://x.com/CapApp",
+     "displayHandle": "CapApp"
+    }
+   ],
+   "candidates": {
+    "capapp": [
+     "cap.app"
+    ]
+   }
+  },
+  {
+   "slug": "centrifuge-liquidity-pools-base",
+   "protocolName": "Centrifuge V3 Root (Base)",
+   "xHandle": "@centrifuge",
+   "xUrl": "https://x.com/centrifuge",
+   "verificationSource": {
+    "evidenceId": "1ad3ebb75b85bc89",
+    "url": "https://api.github.com/orgs/centrifuge",
+    "finalUrl": "https://api.github.com/orgs/centrifuge",
+    "httpStatus": 200,
+    "sha256": "f17504ad81514515fad2ba06de5d44baf9e93a4ab6bf51eee76923541ed75994",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 768,
+    "match": "\"twitter_username\":\"centrifuge\"",
+    "displayHandle": "centrifuge"
+   },
+   "sources": [
+    {
+     "url": "https://docs.centrifuge.io/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://centrifuge.io/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:centrifuge",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "1ad3ebb75b85bc89",
+     "url": "https://api.github.com/orgs/centrifuge",
+     "finalUrl": "https://api.github.com/orgs/centrifuge",
+     "httpStatus": 200,
+     "sha256": "f17504ad81514515fad2ba06de5d44baf9e93a4ab6bf51eee76923541ed75994",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 768,
+     "match": "\"twitter_username\":\"centrifuge\"",
+     "displayHandle": "centrifuge"
+    },
+    {
+     "evidenceId": "8d4d324b76e33d3d",
+     "url": "https://centrifuge.io/",
+     "finalUrl": "https://centrifuge.io/",
+     "httpStatus": 200,
+     "sha256": "337e77800bc008eb5ffb67fb54c935c1728c72f6ba93ae7fc788823c20a15123",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 30743,
+     "match": "https://twitter.com/centrifuge",
+     "displayHandle": "centrifuge"
+    }
+   ],
+   "candidates": {
+    "centrifuge": [
+     "centrifuge.io",
+     "gh:centrifuge"
+    ]
+   }
+  },
+  {
+   "slug": "chainlink-ccip",
+   "protocolName": "Chainlink CCIP",
+   "xHandle": "@chainlink",
+   "xUrl": "https://x.com/chainlink",
+   "verificationSource": {
+    "evidenceId": "3207eff0cee1be0e",
+    "url": "https://docs.chain.link/",
+    "finalUrl": "https://docs.chain.link/",
+    "httpStatus": 200,
+    "sha256": "66fa47c08a79391da639494a6ac7d9af9a67f318d311e2cf0e69440f7bcac637",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "meta[twitter:site]",
+    "offset": 8831,
+    "match": "<meta name=\"twitter:site\" content=\"@chainlink\">",
+    "displayHandle": "chainlink"
+   },
+   "sources": [
+    {
+     "url": "https://docs.chain.link/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://chain.link/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:smartcontractkit",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "3207eff0cee1be0e",
+     "url": "https://docs.chain.link/",
+     "finalUrl": "https://docs.chain.link/",
+     "httpStatus": 200,
+     "sha256": "66fa47c08a79391da639494a6ac7d9af9a67f318d311e2cf0e69440f7bcac637",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "meta[twitter:site]",
+     "offset": 8831,
+     "match": "<meta name=\"twitter:site\" content=\"@chainlink\">",
+     "displayHandle": "chainlink"
+    },
+    {
+     "evidenceId": "56a6d3c80707d294",
+     "url": "https://chain.link/",
+     "finalUrl": "https://chain.link/",
+     "httpStatus": 200,
+     "sha256": "12c41a1d3b39c963f650ef376224702f06ac76e5e3089644f66932eab8e6f778",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 7873,
+     "match": "https://x.com/chainlink",
+     "displayHandle": "chainlink"
+    },
+    {
+     "evidenceId": "07ec314f9c189a44",
+     "url": "https://api.github.com/orgs/smartcontractkit",
+     "finalUrl": "https://api.github.com/orgs/smartcontractkit",
+     "httpStatus": 200,
+     "sha256": "ddb3d1704a6d66001efc3b45f3ce4f2af8d8cb931e798b2b13eba042f2c745be",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 755,
+     "match": "\"twitter_username\":\"chainlink\"",
+     "displayHandle": "chainlink"
+    }
+   ],
+   "candidates": {
+    "chainlink": [
+     "chain.link",
+     "gh:smartcontractkit"
+    ]
+   }
+  },
+  {
+   "slug": "circle-usdc",
+   "protocolName": "Circle USDC",
+   "xHandle": "@circle",
+   "xUrl": "https://x.com/circle",
+   "verificationSource": {
+    "evidenceId": "70136576bd4dfab4",
+    "url": "https://developers.circle.com/",
+    "finalUrl": "https://developers.circle.com/",
+    "httpStatus": 200,
+    "sha256": "12f2ade94429a1066d263d0170ee1f74cc949da7c2ae9468883162b49af736e1",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 92085,
+    "match": "https://twitter.com/circle",
+    "displayHandle": "circle"
+   },
+   "sources": [
+    {
+     "url": "https://developers.circle.com/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.circle.com/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:circlefin",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "70136576bd4dfab4",
+     "url": "https://developers.circle.com/",
+     "finalUrl": "https://developers.circle.com/",
+     "httpStatus": 200,
+     "sha256": "12f2ade94429a1066d263d0170ee1f74cc949da7c2ae9468883162b49af736e1",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 92085,
+     "match": "https://twitter.com/circle",
+     "displayHandle": "circle"
+    },
+    {
+     "evidenceId": "0e56921a2faf830d",
+     "url": "https://www.circle.com/",
+     "finalUrl": "https://www.circle.com/",
+     "httpStatus": 200,
+     "sha256": "b17c4c1093addb9d2d8bcb6fdea26fb8841870e7d14a1f0fe4fac492d256a53c",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 9102,
+     "match": "https://twitter.com/circle",
+     "displayHandle": "circle"
+    }
+   ],
+   "candidates": {
+    "circle": [
+     "circle.com"
+    ]
+   }
+  },
+  {
+   "slug": "coinbase-wrapped-staked-eth",
+   "protocolName": "Coinbase Wrapped Staked ETH",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://www.coinbase.com/cbeth/whitepaper",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "gh:coinbase",
+     "provenance": "github"
+    }
+   ],
+   "reason": "no relevant first-party handle"
+  },
+  {
+   "slug": "compound-v3-base",
+   "protocolName": "Compound V3 (Base)",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.compound.finance/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://compound.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:compound-finance",
+     "provenance": "github"
+    }
+   ],
+   "reason": "no relevant first-party handle"
+  },
+  {
+   "slug": "compound-v3-comet",
+   "protocolName": "Compound V3 (Comet)",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.compound.finance/",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "https://compound.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:compound-finance",
+     "provenance": "github"
+    }
+   ],
+   "reason": "no relevant first-party handle"
+  },
+  {
+   "slug": "concrete",
+   "protocolName": "Concrete",
+   "xHandle": "@ConcreteXYZ",
+   "xUrl": "https://x.com/ConcreteXYZ",
+   "verificationSource": {
+    "evidenceId": "49da2ab4875600ca",
+    "url": "https://docs.concrete.xyz/",
+    "finalUrl": "https://docs.concrete.xyz/",
+    "httpStatus": 200,
+    "sha256": "ff7b27ed67c0413a4236a28f10bdec0d018a72d31ba5677eb26c6546766e3d6f",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 5007,
+    "match": "https://x.com/ConcreteXYZ",
+    "displayHandle": "ConcreteXYZ"
+   },
+   "sources": [
+    {
+     "url": "https://docs.concrete.xyz/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://concrete.xyz/",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "49da2ab4875600ca",
+     "url": "https://docs.concrete.xyz/",
+     "finalUrl": "https://docs.concrete.xyz/",
+     "httpStatus": 200,
+     "sha256": "ff7b27ed67c0413a4236a28f10bdec0d018a72d31ba5677eb26c6546766e3d6f",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 5007,
+     "match": "https://x.com/ConcreteXYZ",
+     "displayHandle": "ConcreteXYZ"
+    },
+    {
+     "evidenceId": "417dcabd3c44b92f",
+     "url": "https://concrete.xyz/",
+     "finalUrl": "https://concrete.xyz/",
+     "httpStatus": 200,
+     "sha256": "235aa20c6c24dedc6bd300bd60489f52962e6d9b964ce16c1846fb59fbd89840",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 3304,
+     "match": "https://x.com/ConcreteXYZ",
+     "displayHandle": "ConcreteXYZ"
+    }
+   ],
+   "candidates": {
+    "concretexyz": [
+     "concrete.xyz"
+    ]
+   }
+  },
+  {
+   "slug": "convex-finance",
+   "protocolName": "Convex Finance",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.convexfinance.com/",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://www.convexfinance.com/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:convex-eth",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single seed-only source (needs a second independent first-party source)",
+   "candidates": {
+    "convexfinance": [
+     "convexfinance.com"
+    ]
+   }
+  },
+  {
+   "slug": "curve-finance-crvusd",
+   "protocolName": "Curve Finance (crvUSD)",
+   "xHandle": "@curvefinance",
+   "xUrl": "https://x.com/curvefinance",
+   "verificationSource": {
+    "evidenceId": "4163994f6a646b57",
+    "url": "https://api.github.com/orgs/curvefi",
+    "finalUrl": "https://api.github.com/orgs/curvefi",
+    "httpStatus": 200,
+    "sha256": "2d6e7c3a92265b597bcaea1dd750420b1e4ccecbf5ce290ccc6b53cfecd234fa",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 725,
+    "match": "\"twitter_username\":\"CurveFinance\"",
+    "displayHandle": "CurveFinance"
+   },
+   "sources": [
+    {
+     "url": "gh:curvefi",
+     "provenance": "github"
+    },
+    {
+     "url": "https://docs.curve.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://www.curve.finance/",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "4163994f6a646b57",
+     "url": "https://api.github.com/orgs/curvefi",
+     "finalUrl": "https://api.github.com/orgs/curvefi",
+     "httpStatus": 200,
+     "sha256": "2d6e7c3a92265b597bcaea1dd750420b1e4ccecbf5ce290ccc6b53cfecd234fa",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 725,
+     "match": "\"twitter_username\":\"CurveFinance\"",
+     "displayHandle": "CurveFinance"
+    },
+    {
+     "evidenceId": "591b328cffdb7ffe",
+     "url": "https://docs.curve.finance/",
+     "finalUrl": "https://docs.curve.finance/",
+     "httpStatus": 200,
+     "sha256": "f6fdf719ab6f9a6360bd84e783d78ee490cfc6192a9f2e65745cdc83cb5e6200",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 7920,
+     "match": "https://x.com/curvefinance",
+     "displayHandle": "curvefinance"
+    }
+   ],
+   "candidates": {
+    "curvefinance": [
+     "curve.finance",
+     "gh:curvefi"
+    ]
+   }
+  },
+  {
+   "slug": "eigenlayer-core",
+   "protocolName": "EigenLayer Core",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "gh:Layr-Labs",
+     "provenance": "github"
+    },
+    {
+     "url": "https://docs.eigenlayer.xyz/",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://www.eigenlayer.xyz/",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "no relevant first-party handle (seen, not relevant: ['eigenlabs'])"
+  },
+  {
+   "slug": "enzyme-finance",
+   "protocolName": "Enzyme Finance",
+   "xHandle": "@enzymefinance",
+   "xUrl": "https://x.com/enzymefinance",
+   "verificationSource": {
+    "evidenceId": "c456932d5a3e3881",
+    "url": "https://docs.enzyme.finance/",
+    "finalUrl": "https://docs.enzyme.finance/",
+    "httpStatus": 200,
+    "sha256": "9bf6751daac316df4bdeae7a27c84f9a865cb08a72a1ad96bd3aed5683c1148b",
+    "kind": "html",
+    "provenance": "snapshot",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 158396,
+    "match": "https://x.com/enzymefinance",
+    "displayHandle": "enzymefinance"
+   },
+   "sources": [
+    {
+     "url": "https://specs.enzyme.finance/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://docs.enzyme.finance/",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "https://enzyme.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:enzymefinance",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "c456932d5a3e3881",
+     "url": "https://docs.enzyme.finance/",
+     "finalUrl": "https://docs.enzyme.finance/",
+     "httpStatus": 200,
+     "sha256": "9bf6751daac316df4bdeae7a27c84f9a865cb08a72a1ad96bd3aed5683c1148b",
+     "kind": "html",
+     "provenance": "snapshot",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 158396,
+     "match": "https://x.com/enzymefinance",
+     "displayHandle": "enzymefinance"
+    },
+    {
+     "evidenceId": "6df8c24a664fb396",
+     "url": "https://enzyme.finance/",
+     "finalUrl": "https://enzyme.finance/",
+     "httpStatus": 200,
+     "sha256": "a8fff04b4b10d2668dda2474a835b75e3ef3ba50021355072c32a1856ffc7265",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 132428,
+     "match": "https://x.com/enzymefinance",
+     "displayHandle": "enzymefinance"
+    }
+   ],
+   "candidates": {
+    "enzymefinance": [
+     "enzyme.finance"
+    ]
+   }
+  },
+  {
+   "slug": "ethena-usde-susde",
+   "protocolName": "Ethena (USDe / sUSDe)",
+   "xHandle": "@ethena",
+   "xUrl": "https://x.com/ethena",
+   "verificationSource": {
+    "evidenceId": "bb28943c341debcb",
+    "url": "https://docs.ethena.fi/",
+    "finalUrl": "https://docs.ethena.fi/",
+    "httpStatus": 200,
+    "sha256": "7cdf691adff3271fe4edc592eb1f4902c708f2cd625245c7d155112f58507b0d",
+    "kind": "html",
+    "provenance": "snapshot",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 225170,
+    "match": "https://x.com/ethena",
+    "displayHandle": "ethena"
+   },
+   "sources": [
+    {
+     "url": "https://docs.ethena.fi/",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "https://ethena.fi/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:ethena-labs",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "bb28943c341debcb",
+     "url": "https://docs.ethena.fi/",
+     "finalUrl": "https://docs.ethena.fi/",
+     "httpStatus": 200,
+     "sha256": "7cdf691adff3271fe4edc592eb1f4902c708f2cd625245c7d155112f58507b0d",
+     "kind": "html",
+     "provenance": "snapshot",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 225170,
+     "match": "https://x.com/ethena",
+     "displayHandle": "ethena"
+    },
+    {
+     "evidenceId": "78194150ba883195",
+     "url": "https://ethena.fi/",
+     "finalUrl": "https://ethena.fi/",
+     "httpStatus": 200,
+     "sha256": "63440be25dc38291c4996198e36a3443863c91d7f2dede0df2913c74b1e1e5c8",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 21510,
+     "match": "https://x.com/ethena",
+     "displayHandle": "ethena"
+    }
+   ],
+   "candidates": {
+    "ethena": [
+     "ethena.fi"
+    ]
+   }
+  },
+  {
+   "slug": "ethena-usdtb",
+   "protocolName": "Ethena USDtb",
+   "xHandle": "@ethena",
+   "xUrl": "https://x.com/ethena",
+   "verificationSource": {
+    "evidenceId": "bb28943c341debcb",
+    "url": "https://docs.ethena.fi/",
+    "finalUrl": "https://docs.ethena.fi/",
+    "httpStatus": 200,
+    "sha256": "7cdf691adff3271fe4edc592eb1f4902c708f2cd625245c7d155112f58507b0d",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 225170,
+    "match": "https://x.com/ethena",
+    "displayHandle": "ethena"
+   },
+   "sources": [
+    {
+     "url": "https://docs.ethena.fi/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://usdtb.money/",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "gh:ethena-labs",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "bb28943c341debcb",
+     "url": "https://docs.ethena.fi/",
+     "finalUrl": "https://docs.ethena.fi/",
+     "httpStatus": 200,
+     "sha256": "7cdf691adff3271fe4edc592eb1f4902c708f2cd625245c7d155112f58507b0d",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 225170,
+     "match": "https://x.com/ethena",
+     "displayHandle": "ethena"
+    }
+   ],
+   "candidates": {
+    "ethena": [
+     "ethena.fi"
+    ]
+   }
+  },
+  {
+   "slug": "ether-fi-core-eeth-weeth",
+   "protocolName": "ether.fi Core (eETH / weETH)",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://etherfi.gitbook.io/etherfi",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://www.ether.fi/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:etherfi-protocol",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "no relevant first-party handle"
+  },
+  {
+   "slug": "ether-fi-liquid-veda-boringvault",
+   "protocolName": "ether.fi Liquid / Veda BoringVault",
+   "xHandle": "@veda_labs",
+   "xUrl": "https://x.com/veda_labs",
+   "verificationSource": {
+    "evidenceId": "d59c273ece610bca",
+    "url": "https://api.github.com/orgs/Veda-Labs",
+    "finalUrl": "https://api.github.com/orgs/Veda-Labs",
+    "httpStatus": 200,
+    "sha256": "3940ffaddebe0dd9f4d86b4edab5066d88cd6bd1e51f43ce7424b28d79ef9e3d",
+    "kind": "github_org",
+    "provenance": "seed",
+    "rule": "github_org.twitter_username",
+    "offset": 705,
+    "match": "\"twitter_username\":\"veda_labs\"",
+    "displayHandle": "veda_labs"
+   },
+   "sources": [
+    {
+     "url": "https://docs.veda.tech/",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://veda.tech/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:Veda-Labs",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "d59c273ece610bca",
+     "url": "https://api.github.com/orgs/Veda-Labs",
+     "finalUrl": "https://api.github.com/orgs/Veda-Labs",
+     "httpStatus": 200,
+     "sha256": "3940ffaddebe0dd9f4d86b4edab5066d88cd6bd1e51f43ce7424b28d79ef9e3d",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 705,
+     "match": "\"twitter_username\":\"veda_labs\"",
+     "displayHandle": "veda_labs"
+    },
+    {
+     "evidenceId": "c4b7b9eb7ebb36e0",
+     "url": "https://veda.tech/",
+     "finalUrl": "https://veda.tech/",
+     "httpStatus": 200,
+     "sha256": "c51ad4fa5f78ce4a171857b83f2508dceb8f86ca942ace906ac8b9c893ed6b4e",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 905070,
+     "match": "https://x.com/veda_labs",
+     "displayHandle": "veda_labs"
+    }
+   ],
+   "candidates": {
+    "veda_labs": [
+     "gh:veda-labs",
+     "veda.tech"
+    ]
+   }
+  },
+  {
+   "slug": "euler-v2-evk",
+   "protocolName": "Euler V2 (EVK)",
+   "xHandle": "@eulerfinance",
+   "xUrl": "https://x.com/eulerfinance",
+   "verificationSource": {
+    "evidenceId": "834ac79ad9378574",
+    "url": "https://api.github.com/orgs/euler-xyz",
+    "finalUrl": "https://api.github.com/orgs/euler-xyz",
+    "httpStatus": 200,
+    "sha256": "563ec670f2cc85cd1dbdfe010366c68748ef0466a9d090e647d99ef4f8dd9511",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 819,
+    "match": "\"twitter_username\":\"eulerfinance\"",
+    "displayHandle": "eulerfinance"
+   },
+   "sources": [
+    {
+     "url": "https://docs.euler.finance/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.euler.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:euler-xyz",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "834ac79ad9378574",
+     "url": "https://api.github.com/orgs/euler-xyz",
+     "finalUrl": "https://api.github.com/orgs/euler-xyz",
+     "httpStatus": 200,
+     "sha256": "563ec670f2cc85cd1dbdfe010366c68748ef0466a9d090e647d99ef4f8dd9511",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 819,
+     "match": "\"twitter_username\":\"eulerfinance\"",
+     "displayHandle": "eulerfinance"
+    },
+    {
+     "evidenceId": "84e796c25495124a",
+     "url": "https://docs.euler.finance/",
+     "finalUrl": "https://docs.euler.finance/",
+     "httpStatus": 200,
+     "sha256": "125249d64cb22f42d23931e9edd91af01d0841cb2298710e2f9b5392e9f4e3f6",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 6788,
+     "match": "https://twitter.com/eulerfinance",
+     "displayHandle": "eulerfinance"
+    },
+    {
+     "evidenceId": "bd37076285103045",
+     "url": "https://www.euler.finance/",
+     "finalUrl": "https://www.euler.finance/",
+     "httpStatus": 200,
+     "sha256": "542a3e7236e192bc3bf5f5a97c54242068ea0cc45a1d4bc77396d62cb9213f38",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 5162,
+     "match": "<meta name=\"twitter:site\" content=\"@eulerfinance\"/>",
+     "displayHandle": "eulerfinance"
+    }
+   ],
+   "candidates": {
+    "eulerfinance": [
+     "euler.finance",
+     "gh:euler-xyz"
+    ]
+   }
+  },
+  {
+   "slug": "extra-finance-base",
+   "protocolName": "Extra Finance (Base)",
+   "xHandle": "@ExtraFi_io",
+   "xUrl": "https://x.com/ExtraFi_io",
+   "verificationSource": {
+    "evidenceId": "7f39e7b79f55e256",
+    "url": "https://docs.extrafi.io/",
+    "finalUrl": "https://docs.extrafi.io/extra_finance",
+    "httpStatus": 200,
+    "sha256": "6afe8e83ac1e28f6bce94ca93e9636f7d704dcb63165c6fcba9f29aac5302b45",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 155915,
+    "match": "https://twitter.com/ExtraFi_io",
+    "displayHandle": "ExtraFi_io"
+   },
+   "sources": [
+    {
+     "url": "https://docs.extrafi.io/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://extrafi.io/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:ExtraFi",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "7f39e7b79f55e256",
+     "url": "https://docs.extrafi.io/",
+     "finalUrl": "https://docs.extrafi.io/extra_finance",
+     "httpStatus": 200,
+     "sha256": "6afe8e83ac1e28f6bce94ca93e9636f7d704dcb63165c6fcba9f29aac5302b45",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 155915,
+     "match": "https://twitter.com/ExtraFi_io",
+     "displayHandle": "ExtraFi_io"
+    }
+   ],
+   "candidates": {
+    "extrafi_io": [
+     "extrafi.io"
+    ]
+   }
+  },
+  {
+   "slug": "f-x-protocol-v2",
+   "protocolName": "f(x) Protocol v2",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://fxprotocol.gitbook.io/fx-docs",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "https://fx.aladdin.club/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:AladdinDAO",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "no relevant first-party handle (seen, not relevant: ['protocol_fx'])"
+  },
+  {
+   "slug": "falcon-finance-usdf-susdf",
+   "protocolName": "Falcon Finance (USDf / sUSDf)",
+   "xHandle": "@falconfinance",
+   "xUrl": "https://x.com/falconfinance",
+   "verificationSource": {
+    "evidenceId": "f9b643643bc82471",
+    "url": "https://falcon.finance/",
+    "finalUrl": "https://falcon.finance/",
+    "httpStatus": 200,
+    "sha256": "8299bc430cbdd1669e3d870a17e51342b2efb5c143777c82e9920122cf81ad6a",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "meta[twitter:site]",
+    "offset": 3137,
+    "match": "<meta name=\"twitter:site\" content=\"@falconfinance\"/>",
+    "displayHandle": "falconfinance"
+   },
+   "sources": [
+    {
+     "url": "https://docs.falcon.finance/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://falcon.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:falconfinance",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "f9b643643bc82471",
+     "url": "https://falcon.finance/",
+     "finalUrl": "https://falcon.finance/",
+     "httpStatus": 200,
+     "sha256": "8299bc430cbdd1669e3d870a17e51342b2efb5c143777c82e9920122cf81ad6a",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 3137,
+     "match": "<meta name=\"twitter:site\" content=\"@falconfinance\"/>",
+     "displayHandle": "falconfinance"
+    }
+   ],
+   "candidates": {
+    "falconfinance": [
+     "falcon.finance"
+    ]
+   }
+  },
+  {
+   "slug": "fluid-instadapp",
+   "protocolName": "Fluid / Instadapp",
+   "xHandle": "@Instadapp",
+   "xUrl": "https://x.com/Instadapp",
+   "verificationSource": {
+    "evidenceId": "4586c3acc1c7f23e",
+    "url": "https://api.github.com/orgs/Instadapp",
+    "finalUrl": "https://api.github.com/orgs/Instadapp",
+    "httpStatus": 200,
+    "sha256": "388d2bc8b997064e0980fbf24f62004236b32d68b46db84d02f34296dc5621c9",
+    "kind": "github_org",
+    "provenance": "seed",
+    "rule": "github_org.twitter_username",
+    "offset": 769,
+    "match": "\"twitter_username\":\"instadapp\"",
+    "displayHandle": "instadapp"
+   },
+   "sources": [
+    {
+     "url": "https://docs.fluid.instadapp.io/",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://fluid.io/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:Instadapp",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "several relevant handles; the GitHub organisation's twitter_username decides",
+   "proofs": [
+    {
+     "evidenceId": "4586c3acc1c7f23e",
+     "url": "https://api.github.com/orgs/Instadapp",
+     "finalUrl": "https://api.github.com/orgs/Instadapp",
+     "httpStatus": 200,
+     "sha256": "388d2bc8b997064e0980fbf24f62004236b32d68b46db84d02f34296dc5621c9",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 769,
+     "match": "\"twitter_username\":\"instadapp\"",
+     "displayHandle": "instadapp"
+    },
+    {
+     "evidenceId": "e71114ae8e12e39d",
+     "url": "https://docs.fluid.instadapp.io/",
+     "finalUrl": "https://docs.fluid.instadapp.io/",
+     "httpStatus": 200,
+     "sha256": "1689ef5b3f4445c532f1cf79d4a867956672d5d995be46cb2f69848f3ed01b4f",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 3612,
+     "match": "https://x.com/Instadapp",
+     "displayHandle": "Instadapp"
+    }
+   ],
+   "candidates": {
+    "instadapp": [
+     "gh:instadapp",
+     "instadapp.io"
+    ],
+    "0xfluid": [
+     "fluid.io"
+    ]
+   }
+  },
+  {
+   "slug": "frax-ether-sfrxeth",
+   "protocolName": "Frax Ether (frxETH / sfrxETH)",
+   "xHandle": "@fraxfinance",
+   "xUrl": "https://x.com/fraxfinance",
+   "verificationSource": {
+    "evidenceId": "cdb38d2d70eef194",
+    "url": "https://api.github.com/orgs/FraxFinance",
+    "finalUrl": "https://api.github.com/orgs/FraxFinance",
+    "httpStatus": 200,
+    "sha256": "63cee09bbce7cfadc508ce2f68886ae12e23e30214df7b074e0c9fde96f2e45a",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 715,
+    "match": "\"twitter_username\":\"fraxfinance\"",
+    "displayHandle": "fraxfinance"
+   },
+   "sources": [
+    {
+     "url": "https://docs.frax.com/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://frax.com/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:FraxFinance",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "cdb38d2d70eef194",
+     "url": "https://api.github.com/orgs/FraxFinance",
+     "finalUrl": "https://api.github.com/orgs/FraxFinance",
+     "httpStatus": 200,
+     "sha256": "63cee09bbce7cfadc508ce2f68886ae12e23e30214df7b074e0c9fde96f2e45a",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 715,
+     "match": "\"twitter_username\":\"fraxfinance\"",
+     "displayHandle": "fraxfinance"
+    },
+    {
+     "evidenceId": "4f6535a87300c9e6",
+     "url": "https://docs.frax.com/",
+     "finalUrl": "https://docs.frax.com/",
+     "httpStatus": 200,
+     "sha256": "7c6d2b0f17fe698f3bb612f31d207c6feba7414755dbb9e4acca610837f97ad7",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "meta[twitter:site]",
+     "offset": 900,
+     "match": "<meta name=\"twitter:site\" content=\"@fraxfinance\"/>",
+     "displayHandle": "fraxfinance"
+    },
+    {
+     "evidenceId": "ab267a4e0dac5ce3",
+     "url": "https://frax.com/",
+     "finalUrl": "https://frax.com/",
+     "httpStatus": 200,
+     "sha256": "6eb5875e803a7394ca718f2eb481f6e7ec6b33b1f7b26ee1f9c022cf7a695a04",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:creator]",
+     "offset": 967,
+     "match": "<meta name=\"twitter:creator\" content=\"@fraxfinance\" />",
+     "displayHandle": "fraxfinance"
+    }
+   ],
+   "candidates": {
+    "fraxfinance": [
+     "frax.com",
+     "gh:fraxfinance"
+    ]
+   }
+  },
+  {
+   "slug": "frax-usd-frxusd",
+   "protocolName": "Frax USD (frxUSD)",
+   "xHandle": "@fraxfinance",
+   "xUrl": "https://x.com/fraxfinance",
+   "verificationSource": {
+    "evidenceId": "cdb38d2d70eef194",
+    "url": "https://api.github.com/orgs/FraxFinance",
+    "finalUrl": "https://api.github.com/orgs/FraxFinance",
+    "httpStatus": 200,
+    "sha256": "63cee09bbce7cfadc508ce2f68886ae12e23e30214df7b074e0c9fde96f2e45a",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 715,
+    "match": "\"twitter_username\":\"fraxfinance\"",
+    "displayHandle": "fraxfinance"
+   },
+   "sources": [
+    {
+     "url": "https://docs.frax.com/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://frax.com/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:FraxFinance",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "cdb38d2d70eef194",
+     "url": "https://api.github.com/orgs/FraxFinance",
+     "finalUrl": "https://api.github.com/orgs/FraxFinance",
+     "httpStatus": 200,
+     "sha256": "63cee09bbce7cfadc508ce2f68886ae12e23e30214df7b074e0c9fde96f2e45a",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 715,
+     "match": "\"twitter_username\":\"fraxfinance\"",
+     "displayHandle": "fraxfinance"
+    },
+    {
+     "evidenceId": "4f6535a87300c9e6",
+     "url": "https://docs.frax.com/",
+     "finalUrl": "https://docs.frax.com/",
+     "httpStatus": 200,
+     "sha256": "7c6d2b0f17fe698f3bb612f31d207c6feba7414755dbb9e4acca610837f97ad7",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "meta[twitter:site]",
+     "offset": 900,
+     "match": "<meta name=\"twitter:site\" content=\"@fraxfinance\"/>",
+     "displayHandle": "fraxfinance"
+    },
+    {
+     "evidenceId": "ab267a4e0dac5ce3",
+     "url": "https://frax.com/",
+     "finalUrl": "https://frax.com/",
+     "httpStatus": 200,
+     "sha256": "6eb5875e803a7394ca718f2eb481f6e7ec6b33b1f7b26ee1f9c022cf7a695a04",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:creator]",
+     "offset": 967,
+     "match": "<meta name=\"twitter:creator\" content=\"@fraxfinance\" />",
+     "displayHandle": "fraxfinance"
+    }
+   ],
+   "candidates": {
+    "fraxfinance": [
+     "frax.com",
+     "gh:fraxfinance"
+    ]
+   }
+  },
+  {
+   "slug": "gearbox-v3-v3-1",
+   "protocolName": "Gearbox V3 / V3.1",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.gearbox.finance/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://gearbox.fi/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:Gearbox-protocol",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single seed-only source (needs a second independent first-party source)",
+   "candidates": {
+    "gearboxprotocol": [
+     "gh:gearbox-protocol"
+    ]
+   }
+  },
+  {
+   "slug": "grove-finance",
+   "protocolName": "Grove Finance",
+   "xHandle": "@grovedotfinance",
+   "xUrl": "https://x.com/grovedotfinance",
+   "verificationSource": {
+    "evidenceId": "ed6fc03f5651c47c",
+    "url": "https://docs.grove.finance/",
+    "finalUrl": "https://docs.grove.finance/",
+    "httpStatus": 200,
+    "sha256": "aa95dd165708e3855a2ea9faf09c901a6ba488c33fbb6a3b54df7c858c7c851c",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 4234,
+    "match": "https://x.com/grovedotfinance",
+    "displayHandle": "grovedotfinance"
+   },
+   "sources": [
+    {
+     "url": "https://docs.grove.finance/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://grove.finance/",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "ed6fc03f5651c47c",
+     "url": "https://docs.grove.finance/",
+     "finalUrl": "https://docs.grove.finance/",
+     "httpStatus": 200,
+     "sha256": "aa95dd165708e3855a2ea9faf09c901a6ba488c33fbb6a3b54df7c858c7c851c",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 4234,
+     "match": "https://x.com/grovedotfinance",
+     "displayHandle": "grovedotfinance"
+    },
+    {
+     "evidenceId": "e454f274b4d277c5",
+     "url": "https://grove.finance/",
+     "finalUrl": "https://grove.finance/",
+     "httpStatus": 200,
+     "sha256": "7e1be9209ce4c4c5ab864fbc4f9c7a3dc5dfa08354521a511c41878cf1a4f10d",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 15874,
+     "match": "<meta name=\"twitter:site\" content=\"@grovedotfinance\"/>",
+     "displayHandle": "grovedotfinance"
+    }
+   ],
+   "candidates": {
+    "grovedotfinance": [
+     "grove.finance"
+    ]
+   }
+  },
+  {
+   "slug": "infinifi",
+   "protocolName": "infiniFi",
+   "xHandle": "@infinifi",
+   "xUrl": "https://x.com/infinifi",
+   "verificationSource": {
+    "evidenceId": "b24a144a2dabebd8",
+    "url": "https://docs.infinifi.xyz/",
+    "finalUrl": "https://docs.infinifi.xyz/",
+    "httpStatus": 200,
+    "sha256": "f2f907bb8bcfc3fd147160688201ea04c759412306c481aad279c0f727233e82",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 107678,
+    "match": "https://x.com/infinifi",
+    "displayHandle": "infinifi"
+   },
+   "sources": [
+    {
+     "url": "https://docs.infinifi.xyz/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://infinifi.xyz/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:InfiniFi-Labs",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "b24a144a2dabebd8",
+     "url": "https://docs.infinifi.xyz/",
+     "finalUrl": "https://docs.infinifi.xyz/",
+     "httpStatus": 200,
+     "sha256": "f2f907bb8bcfc3fd147160688201ea04c759412306c481aad279c0f727233e82",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 107678,
+     "match": "https://x.com/infinifi",
+     "displayHandle": "infinifi"
+    },
+    {
+     "evidenceId": "65791a0ee1ba056b",
+     "url": "https://infinifi.xyz/",
+     "finalUrl": "https://infinifi.xyz/",
+     "httpStatus": 200,
+     "sha256": "79ebc1ddeaeb8366cb5d65757f9e9a1cdc9dbaceaac84e34199591f49b911ce2",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 4853,
+     "match": "<meta name=\"twitter:site\" content=\"@infinifi\"/>",
+     "displayHandle": "infinifi"
+    }
+   ],
+   "candidates": {
+    "infinifi": [
+     "infinifi.xyz"
+    ]
+   }
+  },
+  {
+   "slug": "inverse-finance-firm",
+   "protocolName": "Inverse Finance (FiRM)",
+   "xHandle": "@InverseFinance",
+   "xUrl": "https://x.com/InverseFinance",
+   "verificationSource": {
+    "evidenceId": "9b5df71356917ffb",
+    "url": "https://api.github.com/orgs/InverseFinance",
+    "finalUrl": "https://api.github.com/orgs/InverseFinance",
+    "httpStatus": 200,
+    "sha256": "821c305b1c1f5dbab020aa697e08bca509cbaf89f81336f58cde2b0d7da56564",
+    "kind": "github_org",
+    "provenance": "seed",
+    "rule": "github_org.twitter_username",
+    "offset": 745,
+    "match": "\"twitter_username\":\"InverseFinance\"",
+    "displayHandle": "InverseFinance"
+   },
+   "sources": [
+    {
+     "url": "https://docs.inverse.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://www.inverse.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:InverseFinance",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "9b5df71356917ffb",
+     "url": "https://api.github.com/orgs/InverseFinance",
+     "finalUrl": "https://api.github.com/orgs/InverseFinance",
+     "httpStatus": 200,
+     "sha256": "821c305b1c1f5dbab020aa697e08bca509cbaf89f81336f58cde2b0d7da56564",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 745,
+     "match": "\"twitter_username\":\"InverseFinance\"",
+     "displayHandle": "InverseFinance"
+    },
+    {
+     "evidenceId": "588b0daf47a2b068",
+     "url": "https://docs.inverse.finance/",
+     "finalUrl": "https://docs.inverse.finance/inverse-finance",
+     "httpStatus": 200,
+     "sha256": "fc4466e75635d339cf8c7e492d84993b9c6732116d0d3624e2514fb1740169a9",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 180015,
+     "match": "https://x.com/InverseFinance",
+     "displayHandle": "InverseFinance"
+    },
+    {
+     "evidenceId": "b68a5e9289e92fe5",
+     "url": "https://www.inverse.finance/",
+     "finalUrl": "https://www.inverse.finance/",
+     "httpStatus": 200,
+     "sha256": "bba6ca59993d31dc852ccaed3f1c141c7b94bc1b83938170de1c2ff7cc5f55fa",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "meta[twitter:site]",
+     "offset": 961,
+     "match": "<meta name=\"twitter:site\" content=\"@InverseFinance\"/>",
+     "displayHandle": "InverseFinance"
+    }
+   ],
+   "candidates": {
+    "inversefinance": [
+     "gh:inversefinance",
+     "inverse.finance"
+    ]
+   }
+  },
+  {
+   "slug": "kelp-dao-rseth",
+   "protocolName": "Kelp DAO (rsETH)",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://kelp.gitbook.io/kelp",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://kerneldao.com/kelp/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:Kelp-DAO",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "ambiguous: several relevant handles",
+   "candidates": {
+    "kernel_dao": [
+     "kerneldao.com"
+    ],
+    "kelpdao": [
+     "kerneldao.com"
+    ]
+   }
+  },
+  {
+   "slug": "layerzero-v2",
+   "protocolName": "LayerZero V2",
+   "xHandle": "@layerzero_core",
+   "xUrl": "https://x.com/layerzero_core",
+   "verificationSource": {
+    "evidenceId": "5d7e3f8a6de34c1e",
+    "url": "https://docs.layerzero.network/",
+    "finalUrl": "https://docs.layerzero.network/",
+    "httpStatus": 200,
+    "sha256": "37060a651fa98c2c93fefe398f2b2737e97ee2738f25d8c7ea0a911b8d891716",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 138208,
+    "match": "https://x.com/layerzero_core",
+    "displayHandle": "layerzero_core"
+   },
+   "sources": [
+    {
+     "url": "https://docs.layerzero.network/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://layerzero.network/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:LayerZero-Labs",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "5d7e3f8a6de34c1e",
+     "url": "https://docs.layerzero.network/",
+     "finalUrl": "https://docs.layerzero.network/",
+     "httpStatus": 200,
+     "sha256": "37060a651fa98c2c93fefe398f2b2737e97ee2738f25d8c7ea0a911b8d891716",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 138208,
+     "match": "https://x.com/layerzero_core",
+     "displayHandle": "layerzero_core"
+    },
+    {
+     "evidenceId": "2fe358b31168640a",
+     "url": "https://layerzero.network/",
+     "finalUrl": "https://layerzero.network/",
+     "httpStatus": 200,
+     "sha256": "9d704eb2a37209aed8486612527b7db714cf53ca1457d9f65800d284ef63352c",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 182794,
+     "match": "https://x.com/LayerZero_Core",
+     "displayHandle": "LayerZero_Core"
+    }
+   ],
+   "candidates": {
+    "layerzero_core": [
+     "layerzero.network"
+    ]
+   }
+  },
+  {
+   "slug": "lido-steth-dual-governance",
+   "protocolName": "Lido (stETH / Dual Governance)",
+   "xHandle": "@lidofinance",
+   "xUrl": "https://x.com/lidofinance",
+   "verificationSource": {
+    "evidenceId": "7e0a8cae1f8b5785",
+    "url": "https://api.github.com/orgs/lidofinance",
+    "finalUrl": "https://api.github.com/orgs/lidofinance",
+    "httpStatus": 200,
+    "sha256": "39b007596856c3210dcd07536b8c328e0ff8e27247ba35837d9291e24356f43a",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 719,
+    "match": "\"twitter_username\":\"lidofinance\"",
+    "displayHandle": "lidofinance"
+   },
+   "sources": [
+    {
+     "url": "gh:lidofinance",
+     "provenance": "github"
+    },
+    {
+     "url": "https://docs.lido.fi/",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://lido.fi/",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "7e0a8cae1f8b5785",
+     "url": "https://api.github.com/orgs/lidofinance",
+     "finalUrl": "https://api.github.com/orgs/lidofinance",
+     "httpStatus": 200,
+     "sha256": "39b007596856c3210dcd07536b8c328e0ff8e27247ba35837d9291e24356f43a",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 719,
+     "match": "\"twitter_username\":\"lidofinance\"",
+     "displayHandle": "lidofinance"
+    },
+    {
+     "evidenceId": "2a7c1ea01d83a85a",
+     "url": "https://docs.lido.fi/",
+     "finalUrl": "https://docs.lido.fi/",
+     "httpStatus": 200,
+     "sha256": "5055a3beb16955e91fcf9f8b389bce8d0128d966238857b68ff888b488e230c7",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 17270,
+     "match": "https://x.com/lidofinance",
+     "displayHandle": "lidofinance"
+    },
+    {
+     "evidenceId": "bbec2434c095e76e",
+     "url": "https://lido.fi/",
+     "finalUrl": "https://lido.fi/",
+     "httpStatus": 200,
+     "sha256": "548c0f099fd70cc82e03d31809fc555ce5cc73d8b5fb491760329ac7fa306c5b",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "meta[twitter:site]",
+     "offset": 896,
+     "match": "<meta name=\"twitter:site\" content=\"@lidofinance\"/>",
+     "displayHandle": "lidofinance"
+    }
+   ],
+   "candidates": {
+    "lidofinance": [
+     "gh:lidofinance",
+     "lido.fi"
+    ]
+   }
+  },
+  {
+   "slug": "liquid-collective-lseth",
+   "protocolName": "Liquid Collective (LsETH)",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.liquidcollective.io/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://liquidcollective.io/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:liquid-collective",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "no relevant first-party handle (seen, not relevant: ['liquid_col'])"
+  },
+  {
+   "slug": "liquity-v1-lusd",
+   "protocolName": "Liquity V1 (LUSD)",
+   "xHandle": "@LiquityProtocol",
+   "xUrl": "https://x.com/LiquityProtocol",
+   "verificationSource": {
+    "evidenceId": "62a4e9e5f9a4709e",
+    "url": "https://www.liquity.org/",
+    "finalUrl": "https://www.liquity.org/",
+    "httpStatus": 200,
+    "sha256": "6bd26af17a03a92db3c5395f0f390f44a611cebb8268e8791f6349747dbbd5ba",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 27955,
+    "match": "https://x.com/LiquityProtocol",
+    "displayHandle": "LiquityProtocol"
+   },
+   "sources": [
+    {
+     "url": "https://docs.liquity.org/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.liquity.org/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:liquity",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "62a4e9e5f9a4709e",
+     "url": "https://www.liquity.org/",
+     "finalUrl": "https://www.liquity.org/",
+     "httpStatus": 200,
+     "sha256": "6bd26af17a03a92db3c5395f0f390f44a611cebb8268e8791f6349747dbbd5ba",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 27955,
+     "match": "https://x.com/LiquityProtocol",
+     "displayHandle": "LiquityProtocol"
+    }
+   ],
+   "candidates": {
+    "liquityprotocol": [
+     "liquity.org"
+    ]
+   }
+  },
+  {
+   "slug": "liquity-v2-bold",
+   "protocolName": "Liquity V2 (BOLD)",
+   "xHandle": "@LiquityProtocol",
+   "xUrl": "https://x.com/LiquityProtocol",
+   "verificationSource": {
+    "evidenceId": "62a4e9e5f9a4709e",
+    "url": "https://www.liquity.org/",
+    "finalUrl": "https://www.liquity.org/",
+    "httpStatus": 200,
+    "sha256": "6bd26af17a03a92db3c5395f0f390f44a611cebb8268e8791f6349747dbbd5ba",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 27955,
+    "match": "https://x.com/LiquityProtocol",
+    "displayHandle": "LiquityProtocol"
+   },
+   "sources": [
+    {
+     "url": "https://docs.liquity.org/",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "https://www.liquity.org/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:liquity",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "62a4e9e5f9a4709e",
+     "url": "https://www.liquity.org/",
+     "finalUrl": "https://www.liquity.org/",
+     "httpStatus": 200,
+     "sha256": "6bd26af17a03a92db3c5395f0f390f44a611cebb8268e8791f6349747dbbd5ba",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 27955,
+     "match": "https://x.com/LiquityProtocol",
+     "displayHandle": "LiquityProtocol"
+    }
+   ],
+   "candidates": {
+    "liquityprotocol": [
+     "liquity.org"
+    ]
+   }
+  },
+  {
+   "slug": "lombard-lbtc",
+   "protocolName": "Lombard (LBTC)",
+   "xHandle": "@Lombard_Finance",
+   "xUrl": "https://x.com/Lombard_Finance",
+   "verificationSource": {
+    "evidenceId": "9b417f46e6394e7a",
+    "url": "https://docs.lombard.finance/",
+    "finalUrl": "https://docs.lombard.finance/",
+    "httpStatus": 200,
+    "sha256": "8a84bba49ab30857717930f4a5bc1263760db059e04ef1848b5cefcd04aa1d05",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 4310,
+    "match": "https://x.com/Lombard_Finance",
+    "displayHandle": "Lombard_Finance"
+   },
+   "sources": [
+    {
+     "url": "https://docs.lombard.finance/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.lombard.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:lombard-finance",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "9b417f46e6394e7a",
+     "url": "https://docs.lombard.finance/",
+     "finalUrl": "https://docs.lombard.finance/",
+     "httpStatus": 200,
+     "sha256": "8a84bba49ab30857717930f4a5bc1263760db059e04ef1848b5cefcd04aa1d05",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 4310,
+     "match": "https://x.com/Lombard_Finance",
+     "displayHandle": "Lombard_Finance"
+    },
+    {
+     "evidenceId": "f9ae00924e57c197",
+     "url": "https://www.lombard.finance/",
+     "finalUrl": "https://www.lombard.finance/",
+     "httpStatus": 200,
+     "sha256": "1c99d224d796f6260c655093f823efcfe6b83c5974205fa0505655acd09d6dfe",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 4937,
+     "match": "<meta name=\"twitter:site\" content=\"@lombard_finance\"/>",
+     "displayHandle": "lombard_finance"
+    }
+   ],
+   "candidates": {
+    "lombard_finance": [
+     "lombard.finance"
+    ]
+   }
+  },
+  {
+   "slug": "m0-protocol-m",
+   "protocolName": "M0 Protocol ($M)",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.m0.org/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.m0.org/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:m0-foundation",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "ambiguous: several relevant handles",
+   "candidates": {
+    "m0": [
+     "m0.org"
+    ],
+    "m0foundation": [
+     "m0.org"
+    ]
+   }
+  },
+  {
+   "slug": "mantle-liquid-staking-meth-cmeth",
+   "protocolName": "Mantle Liquid Staking (mETH / cmETH)",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.mantle.xyz/meth",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.methprotocol.xyz/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:mantle-lsp",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single seed-only source (needs a second independent first-party source)",
+   "candidates": {
+    "methprotocol": [
+     "methprotocol.xyz"
+    ]
+   }
+  },
+  {
+   "slug": "maple-finance-v2-syrup",
+   "protocolName": "Maple Finance V2 / Syrup",
+   "xHandle": "@maplefinance",
+   "xUrl": "https://x.com/maplefinance",
+   "verificationSource": {
+    "evidenceId": "00af52cc027e1ac9",
+    "url": "https://api.github.com/orgs/maple-labs",
+    "finalUrl": "https://api.github.com/orgs/maple-labs",
+    "httpStatus": 200,
+    "sha256": "a6d8e150c2d328c180d9e90626e1f9d87382436dab765d5625aca900baeed882",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 726,
+    "match": "\"twitter_username\":\"maplefinance\"",
+    "displayHandle": "maplefinance"
+   },
+   "sources": [
+    {
+     "url": "https://docs.maple.finance/",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "gh:maple-labs",
+     "provenance": "github"
+    },
+    {
+     "url": "https://maple.finance/",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "00af52cc027e1ac9",
+     "url": "https://api.github.com/orgs/maple-labs",
+     "finalUrl": "https://api.github.com/orgs/maple-labs",
+     "httpStatus": 200,
+     "sha256": "a6d8e150c2d328c180d9e90626e1f9d87382436dab765d5625aca900baeed882",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 726,
+     "match": "\"twitter_username\":\"maplefinance\"",
+     "displayHandle": "maplefinance"
+    },
+    {
+     "evidenceId": "bf89822150d7b93d",
+     "url": "https://docs.maple.finance/",
+     "finalUrl": "https://docs.maple.finance/",
+     "httpStatus": 200,
+     "sha256": "d0bc98a28f2be0d943aa4ad023e4346d43496bebdaaa6aed4abb050e46845da0",
+     "kind": "html",
+     "provenance": "snapshot",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 225242,
+     "match": "https://twitter.com/maplefinance",
+     "displayHandle": "maplefinance"
+    },
+    {
+     "evidenceId": "0b7f87700dcf6105",
+     "url": "https://maple.finance/",
+     "finalUrl": "https://maple.finance/",
+     "httpStatus": 200,
+     "sha256": "8aebc60c89b55d450846402eb4be3d9ddd0f3134fdfcf8381bf9e09c2a48e231",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 1484,
+     "match": "<meta name=\"twitter:site\" content=\"@maplefinance\">",
+     "displayHandle": "maplefinance"
+    }
+   ],
+   "candidates": {
+    "maplefinance": [
+     "gh:maple-labs",
+     "maple.finance"
+    ]
+   }
+  },
+  {
+   "slug": "mellow-protocol-lido-earn",
+   "protocolName": "Mellow Protocol / Lido Earn",
+   "xHandle": "@mellowprotocol",
+   "xUrl": "https://x.com/mellowprotocol",
+   "verificationSource": {
+    "evidenceId": "6264e96173f7c708",
+    "url": "https://api.github.com/orgs/mellow-finance",
+    "finalUrl": "https://api.github.com/orgs/mellow-finance",
+    "httpStatus": 200,
+    "sha256": "1dfb2d54d47f398c625a5385bc0afa15a6416aa39ca4086383f3cb8d2ee1b526",
+    "kind": "github_org",
+    "provenance": "seed",
+    "rule": "github_org.twitter_username",
+    "offset": 781,
+    "match": "\"twitter_username\":\"Mellowprotocol\"",
+    "displayHandle": "Mellowprotocol"
+   },
+   "sources": [
+    {
+     "url": "https://docs.mellow.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://mellow.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:mellow-finance",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "6264e96173f7c708",
+     "url": "https://api.github.com/orgs/mellow-finance",
+     "finalUrl": "https://api.github.com/orgs/mellow-finance",
+     "httpStatus": 200,
+     "sha256": "1dfb2d54d47f398c625a5385bc0afa15a6416aa39ca4086383f3cb8d2ee1b526",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 781,
+     "match": "\"twitter_username\":\"Mellowprotocol\"",
+     "displayHandle": "Mellowprotocol"
+    },
+    {
+     "evidenceId": "ca2f3cfe11266057",
+     "url": "https://docs.mellow.finance/",
+     "finalUrl": "https://docs.mellow.finance/",
+     "httpStatus": 200,
+     "sha256": "1b8bfe39d42f991b8d1c45d70d7c72c6f5db9fe4f7bcebfced540d6ea8fe1047",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 95041,
+     "match": "https://twitter.com/mellowprotocol",
+     "displayHandle": "mellowprotocol"
+    },
+    {
+     "evidenceId": "2e50f891589cbae7",
+     "url": "https://mellow.finance/",
+     "finalUrl": "https://mellow.finance/",
+     "httpStatus": 200,
+     "sha256": "0b75eab2b25ec976485534fe1131ac05c442dcaad8f2e71eb7f4ae1aa580f20e",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 9735,
+     "match": "https://x.com/Mellowprotocol",
+     "displayHandle": "Mellowprotocol"
+    }
+   ],
+   "candidates": {
+    "mellowprotocol": [
+     "gh:mellow-finance",
+     "mellow.finance"
+    ]
+   }
+  },
+  {
+   "slug": "metamorpho-re7-weth-vs-re7-usdt",
+   "protocolName": "MetaMorpho (Re7 WETH vs. Re7 USDT)",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.morpho.org/",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "https://re7.capital/",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "ambiguous: several relevant handles",
+   "candidates": {
+    "morpho": [
+     "morpho.org"
+    ],
+    "re7capital": [
+     "re7.capital"
+    ]
+   }
+  },
+  {
+   "slug": "moonwell-lending-base",
+   "protocolName": "Moonwell Lending (Base)",
+   "xHandle": "@MoonwellDeFi",
+   "xUrl": "https://x.com/MoonwellDeFi",
+   "verificationSource": {
+    "evidenceId": "f3e109e5f3b2f043",
+    "url": "https://api.github.com/orgs/moonwell-fi",
+    "finalUrl": "https://api.github.com/orgs/moonwell-fi",
+    "httpStatus": 200,
+    "sha256": "9f19cf376b74d8f3d57cf0f668ce2d2bffa3157dfdbdbf069bda2db071a1f6f3",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 690,
+    "match": "\"twitter_username\":\"MoonwellDeFi\"",
+    "displayHandle": "MoonwellDeFi"
+   },
+   "sources": [
+    {
+     "url": "https://docs.moonwell.fi/",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "https://moonwell.fi/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:moonwell-fi",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "f3e109e5f3b2f043",
+     "url": "https://api.github.com/orgs/moonwell-fi",
+     "finalUrl": "https://api.github.com/orgs/moonwell-fi",
+     "httpStatus": 200,
+     "sha256": "9f19cf376b74d8f3d57cf0f668ce2d2bffa3157dfdbdbf069bda2db071a1f6f3",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 690,
+     "match": "\"twitter_username\":\"MoonwellDeFi\"",
+     "displayHandle": "MoonwellDeFi"
+    }
+   ],
+   "candidates": {
+    "moonwelldefi": [
+     "gh:moonwell-fi"
+    ]
+   }
+  },
+  {
+   "slug": "morpho-blue-core",
+   "protocolName": "Morpho Blue Core",
+   "xHandle": "@Morpho",
+   "xUrl": "https://x.com/Morpho",
+   "verificationSource": {
+    "evidenceId": "dd7ef70c2a0010c9",
+    "url": "https://docs.morpho.org/",
+    "finalUrl": "https://docs.morpho.org/get-started/",
+    "httpStatus": 200,
+    "sha256": "c53603f2afbe3fd0c4737133b98b7b2d6de4bc0e2ef945422157165606094b87",
+    "kind": "html",
+    "provenance": "snapshot",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 4390,
+    "match": "https://x.com/Morpho",
+    "displayHandle": "Morpho"
+   },
+   "sources": [
+    {
+     "url": "https://docs.morpho.org/",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "https://morpho.org/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:morpho-org",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "dd7ef70c2a0010c9",
+     "url": "https://docs.morpho.org/",
+     "finalUrl": "https://docs.morpho.org/get-started/",
+     "httpStatus": 200,
+     "sha256": "c53603f2afbe3fd0c4737133b98b7b2d6de4bc0e2ef945422157165606094b87",
+     "kind": "html",
+     "provenance": "snapshot",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 4390,
+     "match": "https://x.com/Morpho",
+     "displayHandle": "Morpho"
+    },
+    {
+     "evidenceId": "ae9bdcdfc14db2c5",
+     "url": "https://morpho.org/",
+     "finalUrl": "https://morpho.org/",
+     "httpStatus": 200,
+     "sha256": "3e0a5118260c9a1849a33f6ef38121f33a0af7b5a76fd93e0c3659b68bb16ba3",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 4365,
+     "match": "<meta name=\"twitter:site\" content=\"@Morpho\"/>",
+     "displayHandle": "Morpho"
+    },
+    {
+     "evidenceId": "3986294aabb1b9e7",
+     "url": "https://api.github.com/orgs/morpho-org",
+     "finalUrl": "https://api.github.com/orgs/morpho-org",
+     "httpStatus": 200,
+     "sha256": "3570e4087cae41681a261f03b03aed46134073924acee728baddacc8953cd511",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 705,
+     "match": "\"twitter_username\":\"Morpho\"",
+     "displayHandle": "Morpho"
+    }
+   ],
+   "candidates": {
+    "morpho": [
+     "gh:morpho-org",
+     "morpho.org"
+    ]
+   }
+  },
+  {
+   "slug": "nexus-mutual",
+   "protocolName": "Nexus Mutual",
+   "xHandle": "@NexusMutual",
+   "xUrl": "https://x.com/NexusMutual",
+   "verificationSource": {
+    "evidenceId": "b808d5d993424223",
+    "url": "https://api.github.com/orgs/NexusMutual",
+    "finalUrl": "https://api.github.com/orgs/NexusMutual",
+    "httpStatus": 200,
+    "sha256": "aac423a545e801b7055652730fa4613ede18679fc4f4dd24515c45021bf1bc71",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 791,
+    "match": "\"twitter_username\":\"NexusMutual\"",
+    "displayHandle": "NexusMutual"
+   },
+   "sources": [
+    {
+     "url": "https://docs.nexusmutual.io/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://nexusmutual.io/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:NexusMutual",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "b808d5d993424223",
+     "url": "https://api.github.com/orgs/NexusMutual",
+     "finalUrl": "https://api.github.com/orgs/NexusMutual",
+     "httpStatus": 200,
+     "sha256": "aac423a545e801b7055652730fa4613ede18679fc4f4dd24515c45021bf1bc71",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 791,
+     "match": "\"twitter_username\":\"NexusMutual\"",
+     "displayHandle": "NexusMutual"
+    },
+    {
+     "evidenceId": "58f7fdd8009d549f",
+     "url": "https://docs.nexusmutual.io/",
+     "finalUrl": "https://docs.nexusmutual.io/",
+     "httpStatus": 200,
+     "sha256": "afac2db68e4c39f97ca671d8b8edffe912d3b880d98b71c5f364de5dab661e49",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 18333,
+     "match": "https://twitter.com/NexusMutual",
+     "displayHandle": "NexusMutual"
+    },
+    {
+     "evidenceId": "e796817707d79524",
+     "url": "https://nexusmutual.io/",
+     "finalUrl": "https://nexusmutual.io/",
+     "httpStatus": 200,
+     "sha256": "d11e37f222542b4c2a17079c6f6d48a140b61200d3d664dc7b3df144c5949949",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 3222,
+     "match": "https://x.com/NexusMutual",
+     "displayHandle": "NexusMutual"
+    }
+   ],
+   "candidates": {
+    "nexusmutual": [
+     "gh:nexusmutual",
+     "nexusmutual.io"
+    ]
+   }
+  },
+  {
+   "slug": "obol-network",
+   "protocolName": "Obol Network",
+   "xHandle": "@Obol_Collective",
+   "xUrl": "https://x.com/Obol_Collective",
+   "verificationSource": {
+    "evidenceId": "dbb6af467c7432b8",
+    "url": "https://docs.obol.org/",
+    "finalUrl": "https://docs.obol.org/",
+    "httpStatus": 200,
+    "sha256": "49f665f0cf24e0426d2471520b57fd1cf5dfa8cbec2455985bac221d24162cf9",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 20323,
+    "match": "https://x.com/Obol_Collective",
+    "displayHandle": "Obol_Collective"
+   },
+   "sources": [
+    {
+     "url": "https://docs.obol.org/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://obol.org/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:ObolNetwork",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "several relevant handles; the GitHub organisation's twitter_username decides",
+   "proofs": [
+    {
+     "evidenceId": "dbb6af467c7432b8",
+     "url": "https://docs.obol.org/",
+     "finalUrl": "https://docs.obol.org/",
+     "httpStatus": 200,
+     "sha256": "49f665f0cf24e0426d2471520b57fd1cf5dfa8cbec2455985bac221d24162cf9",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 20323,
+     "match": "https://x.com/Obol_Collective",
+     "displayHandle": "Obol_Collective"
+    },
+    {
+     "evidenceId": "904fac75ac6b89a5",
+     "url": "https://api.github.com/orgs/ObolNetwork",
+     "finalUrl": "https://api.github.com/orgs/ObolNetwork",
+     "httpStatus": 200,
+     "sha256": "3d85302aab225d2283d1dd51f47e244695649da0427e072082b8e577c9c9623e",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 772,
+     "match": "\"twitter_username\":\"Obol_Collective\"",
+     "displayHandle": "Obol_Collective"
+    }
+   ],
+   "candidates": {
+    "obol_collective": [
+     "gh:obolnetwork",
+     "obol.org"
+    ],
+    "obolnetwork": [
+     "obol.org"
+    ]
+   }
+  },
+  {
+   "slug": "ondo-finance-ousg-flux-finance",
+   "protocolName": "Ondo Finance (OUSG & Flux Finance)",
+   "xHandle": "@ondofinance",
+   "xUrl": "https://x.com/ondofinance",
+   "verificationSource": {
+    "evidenceId": "d0758792db5e2f67",
+    "url": "https://docs.ondo.finance/",
+    "finalUrl": "https://docs.ondo.finance/",
+    "httpStatus": 200,
+    "sha256": "2815c759872c4ea8b5938f3f10aea0dbaea25377a313e6196aa1381c6762ed77",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 138700,
+    "match": "https://x.com/ondofinance",
+    "displayHandle": "ondofinance"
+   },
+   "sources": [
+    {
+     "url": "https://docs.ondo.finance/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://ondo.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:ondoprotocol",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "several relevant handles; the GitHub organisation's twitter_username decides",
+   "proofs": [
+    {
+     "evidenceId": "d0758792db5e2f67",
+     "url": "https://docs.ondo.finance/",
+     "finalUrl": "https://docs.ondo.finance/",
+     "httpStatus": 200,
+     "sha256": "2815c759872c4ea8b5938f3f10aea0dbaea25377a313e6196aa1381c6762ed77",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 138700,
+     "match": "https://x.com/ondofinance",
+     "displayHandle": "ondofinance"
+    },
+    {
+     "evidenceId": "cf6e46d1e9b7b55f",
+     "url": "https://api.github.com/orgs/ondoprotocol",
+     "finalUrl": "https://api.github.com/orgs/ondoprotocol",
+     "httpStatus": 200,
+     "sha256": "05fd20c231eb272baaaf04d4858454297cf1de1bfb0ebc85d3889a13b953ea05",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 726,
+     "match": "\"twitter_username\":\"ondofinance\"",
+     "displayHandle": "ondofinance"
+    }
+   ],
+   "candidates": {
+    "ondofinance": [
+     "gh:ondoprotocol",
+     "ondo.finance"
+    ],
+    "ondo": [
+     "ondo.finance"
+    ]
+   }
+  },
+  {
+   "slug": "origin-superoeth-base",
+   "protocolName": "Origin Protocol (SuperOETHb Base)",
+   "xHandle": "@OriginProtocol",
+   "xUrl": "https://x.com/OriginProtocol",
+   "verificationSource": {
+    "evidenceId": "bdbaf302c2c1fe0e",
+    "url": "https://docs.originprotocol.com/",
+    "finalUrl": "https://docs.originprotocol.com/",
+    "httpStatus": 200,
+    "sha256": "e8d4cc3a1f573e22082c7f424ede3196dfc306d25622e3f22a613427a9fe1494",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 134680,
+    "match": "https://x.com/OriginProtocol",
+    "displayHandle": "OriginProtocol"
+   },
+   "sources": [
+    {
+     "url": "https://docs.originprotocol.com/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.originprotocol.com/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:OriginProtocol",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "bdbaf302c2c1fe0e",
+     "url": "https://docs.originprotocol.com/",
+     "finalUrl": "https://docs.originprotocol.com/",
+     "httpStatus": 200,
+     "sha256": "e8d4cc3a1f573e22082c7f424ede3196dfc306d25622e3f22a613427a9fe1494",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 134680,
+     "match": "https://x.com/OriginProtocol",
+     "displayHandle": "OriginProtocol"
+    },
+    {
+     "evidenceId": "452b12abc83c0f88",
+     "url": "https://www.originprotocol.com/",
+     "finalUrl": "https://www.originprotocol.com/",
+     "httpStatus": 200,
+     "sha256": "935fe4d55681cad83ab6daf02f17fc0d6c262353c6ca5edddca5ec19bbf65b82",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 1548,
+     "match": "<meta name=\"twitter:site\" content=\"@originprotocol\"/>",
+     "displayHandle": "originprotocol"
+    },
+    {
+     "evidenceId": "a79c6139c259177f",
+     "url": "https://api.github.com/orgs/OriginProtocol",
+     "finalUrl": "https://api.github.com/orgs/OriginProtocol",
+     "httpStatus": 200,
+     "sha256": "c9b0d12a3c5113fa8925f5bed9300157e85ac6978b729b64b0cc0f41a9297474",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 806,
+     "match": "\"twitter_username\":\"originprotocol\"",
+     "displayHandle": "originprotocol"
+    }
+   ],
+   "candidates": {
+    "originprotocol": [
+     "gh:originprotocol",
+     "originprotocol.com"
+    ]
+   }
+  },
+  {
+   "slug": "paypal-usd-pyusd",
+   "protocolName": "PayPal USD (PYUSD)",
+   "xHandle": "@Paxos",
+   "xUrl": "https://x.com/Paxos",
+   "verificationSource": {
+    "evidenceId": "7d9706319c7e8a70",
+    "url": "https://docs.paxos.com/",
+    "finalUrl": "https://docs.paxos.com/welcome",
+    "httpStatus": 200,
+    "sha256": "3ffac087c5048e7b48dd82fb55722e0cb645cb04157d9ec93ebcc67d9e8556d7",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 120812,
+    "match": "https://x.com/Paxos",
+    "displayHandle": "Paxos"
+   },
+   "sources": [
+    {
+     "url": "https://docs.paxos.com/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.paxos.com/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:paxosglobal",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "7d9706319c7e8a70",
+     "url": "https://docs.paxos.com/",
+     "finalUrl": "https://docs.paxos.com/welcome",
+     "httpStatus": 200,
+     "sha256": "3ffac087c5048e7b48dd82fb55722e0cb645cb04157d9ec93ebcc67d9e8556d7",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 120812,
+     "match": "https://x.com/Paxos",
+     "displayHandle": "Paxos"
+    },
+    {
+     "evidenceId": "2ca572d5d177c035",
+     "url": "https://www.paxos.com/",
+     "finalUrl": "https://www.paxos.com/",
+     "httpStatus": 200,
+     "sha256": "927e6968c35309b5c93424c2602555ed5f2abff4dcdc19aacf077089380086b8",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 605196,
+     "match": "https://x.com/Paxos",
+     "displayHandle": "Paxos"
+    }
+   ],
+   "candidates": {
+    "paxos": [
+     "paxos.com"
+    ]
+   }
+  },
+  {
+   "slug": "pendle-finance-v2",
+   "protocolName": "Pendle Finance V2",
+   "xHandle": "@pendle_fi",
+   "xUrl": "https://x.com/pendle_fi",
+   "verificationSource": {
+    "evidenceId": "f9c9ea64c8d697b2",
+    "url": "https://www.pendle.finance/",
+    "finalUrl": "https://www.pendle.finance/",
+    "httpStatus": 200,
+    "sha256": "5ca6288cbba91916974c0624462f1da36598008d023b7e652ba4d53c281f9909",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "meta[twitter:site]",
+    "offset": 4280,
+    "match": "<meta name=\"twitter:site\" content=\"@pendle_fi\">",
+    "displayHandle": "pendle_fi"
+   },
+   "sources": [
+    {
+     "url": "https://docs.pendle.finance/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.pendle.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:pendle-finance",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "f9c9ea64c8d697b2",
+     "url": "https://www.pendle.finance/",
+     "finalUrl": "https://www.pendle.finance/",
+     "httpStatus": 200,
+     "sha256": "5ca6288cbba91916974c0624462f1da36598008d023b7e652ba4d53c281f9909",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 4280,
+     "match": "<meta name=\"twitter:site\" content=\"@pendle_fi\">",
+     "displayHandle": "pendle_fi"
+    },
+    {
+     "evidenceId": "3313137eb9c7a357",
+     "url": "https://api.github.com/orgs/pendle-finance",
+     "finalUrl": "https://api.github.com/orgs/pendle-finance",
+     "httpStatus": 200,
+     "sha256": "bbf4cdf116e4d48af48e7b209d3d1edd811ba8affd81710d39f7043a54b36ece",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 881,
+     "match": "\"twitter_username\":\"pendle_fi\"",
+     "displayHandle": "pendle_fi"
+    }
+   ],
+   "candidates": {
+    "pendle_fi": [
+     "gh:pendle-finance",
+     "pendle.finance"
+    ]
+   }
+  },
+  {
+   "slug": "puffer-finance-pufeth",
+   "protocolName": "Puffer Finance (pufETH)",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.puffer.fi/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.puffer.fi/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:PufferFinance",
+     "provenance": "github"
+    }
+   ],
+   "reason": "ambiguous: several relevant handles",
+   "candidates": {
+    "puffer_finance": [
+     "puffer.fi"
+    ],
+    "pufferfi_cn": [
+     "puffer.fi"
+    ]
+   }
+  },
+  {
+   "slug": "railgun",
+   "protocolName": "RAILGUN",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.railgun.org/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.railgun.org/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:Railgun-Privacy",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "no relevant first-party handle"
+  },
+  {
+   "slug": "re",
+   "protocolName": "Re Protocol (reUSD / reUSDe)",
+   "xHandle": "@re",
+   "xUrl": "https://x.com/re",
+   "verificationSource": {
+    "evidenceId": "acced2fd110b8d8b",
+    "url": "https://re.xyz/",
+    "finalUrl": "https://re.xyz/",
+    "httpStatus": 200,
+    "sha256": "641a977cc26cb242e5544bcdc12bfb215ee4d18ff1a1d77a5fe3f2ee009bb6a6",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "meta[twitter:site]",
+    "offset": 2797,
+    "match": "<meta name=\"twitter:site\" content=\"@re\"/>",
+    "displayHandle": "re"
+   },
+   "sources": [
+    {
+     "url": "https://docs.re.xyz/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://re.xyz/",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "acced2fd110b8d8b",
+     "url": "https://re.xyz/",
+     "finalUrl": "https://re.xyz/",
+     "httpStatus": 200,
+     "sha256": "641a977cc26cb242e5544bcdc12bfb215ee4d18ff1a1d77a5fe3f2ee009bb6a6",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 2797,
+     "match": "<meta name=\"twitter:site\" content=\"@re\"/>",
+     "displayHandle": "re"
+    }
+   ],
+   "candidates": {
+    "re": [
+     "re.xyz"
+    ]
+   }
+  },
+  {
+   "slug": "renzo-protocol-ezeth",
+   "protocolName": "Renzo Protocol (ezETH)",
+   "xHandle": "@renzoai",
+   "xUrl": "https://x.com/renzoai",
+   "verificationSource": {
+    "evidenceId": "77eb6bb9e29f1a84",
+    "url": "https://www.renzoprotocol.com/",
+    "finalUrl": "https://www.renzoprotocol.com/",
+    "httpStatus": 200,
+    "sha256": "f7fa16ad9c91ef4d9524aef667bb14b149e3fee107c068028556e10ca6a60a32",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "meta[twitter:site]",
+    "offset": 2914,
+    "match": "<meta name=\"twitter:site\" content=\"@renzoai\"/>",
+    "displayHandle": "renzoai"
+   },
+   "sources": [
+    {
+     "url": "https://docs.renzoprotocol.com/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.renzoprotocol.com/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:Renzo-Protocol",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "77eb6bb9e29f1a84",
+     "url": "https://www.renzoprotocol.com/",
+     "finalUrl": "https://www.renzoprotocol.com/",
+     "httpStatus": 200,
+     "sha256": "f7fa16ad9c91ef4d9524aef667bb14b149e3fee107c068028556e10ca6a60a32",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 2914,
+     "match": "<meta name=\"twitter:site\" content=\"@renzoai\"/>",
+     "displayHandle": "renzoai"
+    }
+   ],
+   "candidates": {
+    "renzoai": [
+     "renzoprotocol.com"
+    ]
+   }
+  },
+  {
+   "slug": "reserve-protocol-rtoken",
+   "protocolName": "Reserve Protocol (eUSD RToken)",
+   "xHandle": "@reserveprotocol",
+   "xUrl": "https://x.com/reserveprotocol",
+   "verificationSource": {
+    "evidenceId": "432861386697ac96",
+    "url": "https://reserve.org/",
+    "finalUrl": "https://reserve.org/",
+    "httpStatus": 200,
+    "sha256": "fcef49b81fdaa80c23d3ca582e91571ce0d16fa8efaed8f7f4247cc422bc4d9a",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 23631,
+    "match": "https://x.com/reserveprotocol",
+    "displayHandle": "reserveprotocol"
+   },
+   "sources": [
+    {
+     "url": "https://docs.reserve.org/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://reserve.org/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:reserve-protocol",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "432861386697ac96",
+     "url": "https://reserve.org/",
+     "finalUrl": "https://reserve.org/",
+     "httpStatus": 200,
+     "sha256": "fcef49b81fdaa80c23d3ca582e91571ce0d16fa8efaed8f7f4247cc422bc4d9a",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 23631,
+     "match": "https://x.com/reserveprotocol",
+     "displayHandle": "reserveprotocol"
+    },
+    {
+     "evidenceId": "ac8a644db30b9af6",
+     "url": "https://api.github.com/orgs/reserve-protocol",
+     "finalUrl": "https://api.github.com/orgs/reserve-protocol",
+     "httpStatus": 200,
+     "sha256": "db376dbbb9c6fd6d5f10bf40da48dc5d97caa319e9c26bf102247b5e94df91ed",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 890,
+     "match": "\"twitter_username\":\"reserveprotocol\"",
+     "displayHandle": "reserveprotocol"
+    }
+   ],
+   "candidates": {
+    "reserveprotocol": [
+     "gh:reserve-protocol",
+     "reserve.org"
+    ]
+   }
+  },
+  {
+   "slug": "resolv-usr-rlp",
+   "protocolName": "Resolv (USR / RLP)",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.resolv.xyz/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://resolv.xyz/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:resolv-im",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "no relevant first-party handle"
+  },
+  {
+   "slug": "resupply",
+   "protocolName": "Resupply",
+   "xHandle": "@ResupplyFi",
+   "xUrl": "https://x.com/ResupplyFi",
+   "verificationSource": {
+    "evidenceId": "4c3012b6e09e8120",
+    "url": "https://docs.resupply.finance/",
+    "finalUrl": "https://docs.resupply.finance/",
+    "httpStatus": 200,
+    "sha256": "9a322d270698c7cc513cde989850e471d35237426e695c93cc6ed29db3919e07",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 116367,
+    "match": "https://x.com/ResupplyFi",
+    "displayHandle": "ResupplyFi"
+   },
+   "sources": [
+    {
+     "url": "https://docs.resupply.finance/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://resupply.fi/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:resupplyfi",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "4c3012b6e09e8120",
+     "url": "https://docs.resupply.finance/",
+     "finalUrl": "https://docs.resupply.finance/",
+     "httpStatus": 200,
+     "sha256": "9a322d270698c7cc513cde989850e471d35237426e695c93cc6ed29db3919e07",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 116367,
+     "match": "https://x.com/ResupplyFi",
+     "displayHandle": "ResupplyFi"
+    }
+   ],
+   "candidates": {
+    "resupplyfi": [
+     "resupply.finance"
+    ]
+   }
+  },
+  {
+   "slug": "rocket-pool-reth",
+   "protocolName": "Rocket Pool (rETH)",
+   "xHandle": "@Rocket_Pool",
+   "xUrl": "https://x.com/Rocket_Pool",
+   "verificationSource": {
+    "evidenceId": "59120add26dbcf6c",
+    "url": "https://rpips.rocketpool.net/",
+    "finalUrl": "https://rpips.rocketpool.net/",
+    "httpStatus": 200,
+    "sha256": "55f3b44a678d5263cf650179761a333aff07c6f753e58e6441f8ad21765e549f",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 41663,
+    "match": "https://twitter.com/Rocket_Pool",
+    "displayHandle": "Rocket_Pool"
+   },
+   "sources": [
+    {
+     "url": "https://docs.rocketpool.net/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://rpips.rocketpool.net/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://rocketpool.net/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:rocket-pool",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "59120add26dbcf6c",
+     "url": "https://rpips.rocketpool.net/",
+     "finalUrl": "https://rpips.rocketpool.net/",
+     "httpStatus": 200,
+     "sha256": "55f3b44a678d5263cf650179761a333aff07c6f753e58e6441f8ad21765e549f",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 41663,
+     "match": "https://twitter.com/Rocket_Pool",
+     "displayHandle": "Rocket_Pool"
+    },
+    {
+     "evidenceId": "5d4d2a5b4ee4eeab",
+     "url": "https://rocketpool.net/",
+     "finalUrl": "https://rocketpool.net/",
+     "httpStatus": 200,
+     "sha256": "8d5575da0d589e880dc6fa5e81094428b9107bfa71c93be8911f3f1b56339a45",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 831,
+     "match": "<meta name=\"twitter:site\" content=\"@rocket_pool\"/>",
+     "displayHandle": "rocket_pool"
+    },
+    {
+     "evidenceId": "d20c5c074d63c958",
+     "url": "https://api.github.com/orgs/rocket-pool",
+     "finalUrl": "https://api.github.com/orgs/rocket-pool",
+     "httpStatus": 200,
+     "sha256": "2c913e3fbe997fd2cc0ba4953b9f04089522b699691f419d266f1067bc1b3e88",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 776,
+     "match": "\"twitter_username\":\"Rocket_Pool\"",
+     "displayHandle": "Rocket_Pool"
+    }
+   ],
+   "candidates": {
+    "rocket_pool": [
+     "gh:rocket-pool",
+     "rocketpool.net"
+    ]
+   }
+  },
+  {
+   "slug": "safe-singleton-core",
+   "protocolName": "Safe Smart Account (v1.4.1 Singleton)",
+   "xHandle": "@SafeLabs_",
+   "xUrl": "https://x.com/SafeLabs_",
+   "verificationSource": {
+    "evidenceId": "f49472014814ab15",
+    "url": "https://api.github.com/orgs/safe-global",
+    "finalUrl": "https://api.github.com/orgs/safe-global",
+    "httpStatus": 200,
+    "sha256": "cff3020023e7859e03c9299b0e5cf3bc33bbd5248c421b45da4db4cbfd6023ce",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 756,
+    "match": "\"twitter_username\":\"safelabs_\"",
+    "displayHandle": "safelabs_"
+   },
+   "sources": [
+    {
+     "url": "https://docs.safe.global/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://safe.global/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:safe-global",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "f49472014814ab15",
+     "url": "https://api.github.com/orgs/safe-global",
+     "finalUrl": "https://api.github.com/orgs/safe-global",
+     "httpStatus": 200,
+     "sha256": "cff3020023e7859e03c9299b0e5cf3bc33bbd5248c421b45da4db4cbfd6023ce",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 756,
+     "match": "\"twitter_username\":\"safelabs_\"",
+     "displayHandle": "safelabs_"
+    },
+    {
+     "evidenceId": "85d7b98bbfb633e9",
+     "url": "https://safe.global/",
+     "finalUrl": "https://safe.global/",
+     "httpStatus": 200,
+     "sha256": "c5f7bc7f8f0e1b4243794250147012ce34d50ab651f7cae3143a0b590fa9a655",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 32714,
+     "match": "https://x.com/SafeLabs_",
+     "displayHandle": "SafeLabs_"
+    }
+   ],
+   "candidates": {
+    "safelabs_": [
+     "gh:safe-global",
+     "safe.global"
+    ]
+   }
+  },
+  {
+   "slug": "seamless-protocol-base",
+   "protocolName": "Seamless Protocol (Base)",
+   "xHandle": "@SeamlessFi",
+   "xUrl": "https://x.com/SeamlessFi",
+   "verificationSource": {
+    "evidenceId": "25c7d84dfe239046",
+    "url": "https://api.github.com/orgs/seamless-protocol",
+    "finalUrl": "https://api.github.com/orgs/seamless-protocol",
+    "httpStatus": 200,
+    "sha256": "d4dcc428fe1f7fb9b0fcb580416a819a993037a57ab89f6868b3a4b3974f063f",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 796,
+    "match": "\"twitter_username\":\"SeamlessFi\"",
+    "displayHandle": "SeamlessFi"
+   },
+   "sources": [
+    {
+     "url": "https://seamlessprotocol.com/",
+     "provenance": "record"
+    },
+    {
+     "url": "gh:seamless-protocol",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "25c7d84dfe239046",
+     "url": "https://api.github.com/orgs/seamless-protocol",
+     "finalUrl": "https://api.github.com/orgs/seamless-protocol",
+     "httpStatus": 200,
+     "sha256": "d4dcc428fe1f7fb9b0fcb580416a819a993037a57ab89f6868b3a4b3974f063f",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 796,
+     "match": "\"twitter_username\":\"SeamlessFi\"",
+     "displayHandle": "SeamlessFi"
+    }
+   ],
+   "candidates": {
+    "seamlessfi": [
+     "gh:seamless-protocol"
+    ]
+   }
+  },
+  {
+   "slug": "solv-protocol-solvbtc",
+   "protocolName": "Solv Protocol (SolvBTC)",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.solv.finance/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://solv.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:solv-finance",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "no relevant first-party handle"
+  },
+  {
+   "slug": "spark-sky",
+   "protocolName": "Spark / Sky",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.spark.fi/",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://spark.fi/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:marsfoundation",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "no relevant first-party handle"
+  },
+  {
+   "slug": "ssv-network",
+   "protocolName": "SSV Network",
+   "xHandle": "@ssv_network",
+   "xUrl": "https://x.com/ssv_network",
+   "verificationSource": {
+    "evidenceId": "6013e165dd77bd5c",
+    "url": "https://docs.ssv.network/",
+    "finalUrl": "https://docs.ssv.network/",
+    "httpStatus": 200,
+    "sha256": "f6d1803ea70857e4338cfad7c48067f39768a6d5f8cdfcd006092f0ba5086767",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 29363,
+    "match": "https://x.com/ssv_network",
+    "displayHandle": "ssv_network"
+   },
+   "sources": [
+    {
+     "url": "https://docs.ssv.network/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://ssv.network/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:ssvlabs",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "6013e165dd77bd5c",
+     "url": "https://docs.ssv.network/",
+     "finalUrl": "https://docs.ssv.network/",
+     "httpStatus": 200,
+     "sha256": "f6d1803ea70857e4338cfad7c48067f39768a6d5f8cdfcd006092f0ba5086767",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 29363,
+     "match": "https://x.com/ssv_network",
+     "displayHandle": "ssv_network"
+    },
+    {
+     "evidenceId": "f718172cd058d75b",
+     "url": "https://ssv.network/",
+     "finalUrl": "https://ssv.network/",
+     "httpStatus": 200,
+     "sha256": "5122cefb44fbcf81fcad4cbd9f98bfa14e92f3bbb4e9773fcca97f74359da307",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 451915,
+     "match": "https://x.com/ssv_network",
+     "displayHandle": "ssv_network"
+    },
+    {
+     "evidenceId": "dacb1b76f1ce30f3",
+     "url": "https://api.github.com/orgs/ssvlabs",
+     "finalUrl": "https://api.github.com/orgs/ssvlabs",
+     "httpStatus": 200,
+     "sha256": "c7841b2dfdcce7354a27f1ff722447a98e8315f9128809aa6e3eef92da95ddb7",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 817,
+     "match": "\"twitter_username\":\"ssv_network\"",
+     "displayHandle": "ssv_network"
+    }
+   ],
+   "candidates": {
+    "ssv_network": [
+     "gh:ssvlabs",
+     "ssv.network"
+    ]
+   }
+  },
+  {
+   "slug": "stader-labs-ethx",
+   "protocolName": "Stader Labs (ETHx)",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://staderlabs.gitbook.io/ethereum",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.staderlabs.com/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:stader-labs",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single seed-only source (needs a second independent first-party source)",
+   "candidates": {
+    "staderlabs": [
+     "staderlabs.com"
+    ]
+   }
+  },
+  {
+   "slug": "stake-dao",
+   "protocolName": "Stake DAO",
+   "xHandle": "@StakeDAOHQ",
+   "xUrl": "https://x.com/StakeDAOHQ",
+   "verificationSource": {
+    "evidenceId": "c85ba832dbedd111",
+    "url": "https://docs.stakedao.org/",
+    "finalUrl": "https://docs.stakedao.org/",
+    "httpStatus": 200,
+    "sha256": "49a308439b20de4c301f149cd4a154ec84d0acc341f86b399f3172f6415b6261",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 49935,
+    "match": "https://twitter.com/StakeDAOHQ",
+    "displayHandle": "StakeDAOHQ"
+   },
+   "sources": [
+    {
+     "url": "https://docs.stakedao.org/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://stakedao.org/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:stake-dao",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "c85ba832dbedd111",
+     "url": "https://docs.stakedao.org/",
+     "finalUrl": "https://docs.stakedao.org/",
+     "httpStatus": 200,
+     "sha256": "49a308439b20de4c301f149cd4a154ec84d0acc341f86b399f3172f6415b6261",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 49935,
+     "match": "https://twitter.com/StakeDAOHQ",
+     "displayHandle": "StakeDAOHQ"
+    },
+    {
+     "evidenceId": "3c2334ec9847deec",
+     "url": "https://stakedao.org/",
+     "finalUrl": "https://www.stakedao.org/",
+     "httpStatus": 200,
+     "sha256": "d60746cc5c289b7ccf798f5f8ef16420dc163549ca989f55d6543b0d5152f648",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 2647,
+     "match": "<meta name=\"twitter:site\" content=\"@StakeDAOHQ\"/>",
+     "displayHandle": "StakeDAOHQ"
+    },
+    {
+     "evidenceId": "1123a7d198800962",
+     "url": "https://api.github.com/orgs/stake-dao",
+     "finalUrl": "https://api.github.com/orgs/stake-dao",
+     "httpStatus": 200,
+     "sha256": "07ed80d5b83a1ed523d05014783e6426a961d2540ab5c5a7de1ab6a729caff76",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 718,
+     "match": "\"twitter_username\":\"StakeDAOHQ\"",
+     "displayHandle": "StakeDAOHQ"
+    }
+   ],
+   "candidates": {
+    "stakedaohq": [
+     "gh:stake-dao",
+     "stakedao.org"
+    ]
+   }
+  },
+  {
+   "slug": "stake-link",
+   "protocolName": "stake.link",
+   "xHandle": "@stakedotlink",
+   "xUrl": "https://x.com/stakedotlink",
+   "verificationSource": {
+    "evidenceId": "305cb2f79e28c204",
+    "url": "https://docs.stake.link/",
+    "finalUrl": "https://docs.stake.link/",
+    "httpStatus": 200,
+    "sha256": "240c1112583069ee1215318cfa8ab4f1cb99adb9716b925def28c056807c04da",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "meta[twitter:site]",
+    "offset": 6137,
+    "match": "<meta name=\"twitter:site\" content=\"@stakedotlink\"/>",
+    "displayHandle": "stakedotlink"
+   },
+   "sources": [
+    {
+     "url": "https://docs.stake.link/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://stake.link/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:stakedotlink",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "305cb2f79e28c204",
+     "url": "https://docs.stake.link/",
+     "finalUrl": "https://docs.stake.link/",
+     "httpStatus": 200,
+     "sha256": "240c1112583069ee1215318cfa8ab4f1cb99adb9716b925def28c056807c04da",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "meta[twitter:site]",
+     "offset": 6137,
+     "match": "<meta name=\"twitter:site\" content=\"@stakedotlink\"/>",
+     "displayHandle": "stakedotlink"
+    },
+    {
+     "evidenceId": "f0a231eb3ce66192",
+     "url": "https://stake.link/",
+     "finalUrl": "https://stake.link/",
+     "httpStatus": 200,
+     "sha256": "2bcca8b7e1371adb993be109f6d2c3c308ef4044efb0bbd7772983cbfb6cfcdc",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 6800,
+     "match": "<meta name=\"twitter:site\" content=\"@stakedotlink\">",
+     "displayHandle": "stakedotlink"
+    },
+    {
+     "evidenceId": "2e344febab2273b2",
+     "url": "https://api.github.com/orgs/stakedotlink",
+     "finalUrl": "https://api.github.com/orgs/stakedotlink",
+     "httpStatus": 200,
+     "sha256": "487165905cc66988e9c48164f3982ac23b0b344d29c7551e7d4db61032028dbf",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 844,
+     "match": "\"twitter_username\":\"stakedotlink\"",
+     "displayHandle": "stakedotlink"
+    }
+   ],
+   "candidates": {
+    "stakedotlink": [
+     "gh:stakedotlink",
+     "stake.link"
+    ]
+   }
+  },
+  {
+   "slug": "stakewise-v3-oseth",
+   "protocolName": "StakeWise V3 (osETH)",
+   "xHandle": "@stakewise_io",
+   "xUrl": "https://x.com/stakewise_io",
+   "verificationSource": {
+    "evidenceId": "753fc1d8c42c22eb",
+    "url": "https://docs.stakewise.io/",
+    "finalUrl": "https://docs.stakewise.io/",
+    "httpStatus": 200,
+    "sha256": "6f76da499dc9afe2685733444505f212bf3b3f187c2493702df1665fcedb237d",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "meta[twitter:site]",
+    "offset": 1026,
+    "match": "<meta data-rh=\"true\" name=\"twitter:site\" content=\"@stakewise_io\">",
+    "displayHandle": "stakewise_io"
+   },
+   "sources": [
+    {
+     "url": "https://docs.stakewise.io/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.stakewise.io/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:stakewise",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "753fc1d8c42c22eb",
+     "url": "https://docs.stakewise.io/",
+     "finalUrl": "https://docs.stakewise.io/",
+     "httpStatus": 200,
+     "sha256": "6f76da499dc9afe2685733444505f212bf3b3f187c2493702df1665fcedb237d",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "meta[twitter:site]",
+     "offset": 1026,
+     "match": "<meta data-rh=\"true\" name=\"twitter:site\" content=\"@stakewise_io\">",
+     "displayHandle": "stakewise_io"
+    },
+    {
+     "evidenceId": "bb4e5a728eaa48dc",
+     "url": "https://www.stakewise.io/",
+     "finalUrl": "https://stakewise.io/",
+     "httpStatus": 200,
+     "sha256": "2977cd43a4891a0017c2ebc533c08ed5e445521b4ff8b243b4d304b684656f5b",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 46561,
+     "match": "https://x.com/stakewise_io",
+     "displayHandle": "stakewise_io"
+    },
+    {
+     "evidenceId": "064be0f05e204840",
+     "url": "https://api.github.com/orgs/stakewise",
+     "finalUrl": "https://api.github.com/orgs/stakewise",
+     "httpStatus": 200,
+     "sha256": "c14e51b56218fb62dc7540cbd6219d5fb3f486e610f16f797faaa390fcb51083",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 783,
+     "match": "\"twitter_username\":\"stakewise_io\"",
+     "displayHandle": "stakewise_io"
+    }
+   ],
+   "candidates": {
+    "stakewise_io": [
+     "gh:stakewise",
+     "stakewise.io"
+    ]
+   }
+  },
+  {
+   "slug": "stargate-v2",
+   "protocolName": "Stargate V2",
+   "xHandle": "@StargateFinance",
+   "xUrl": "https://x.com/StargateFinance",
+   "verificationSource": {
+    "evidenceId": "448afeb5e6295647",
+    "url": "https://api.github.com/orgs/stargate-protocol",
+    "finalUrl": "https://api.github.com/orgs/stargate-protocol",
+    "httpStatus": 200,
+    "sha256": "ca9862728a3d1250300465f6869601c579b91ec4db7581e5f82a7f8d1c8c20cb",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 738,
+    "match": "\"twitter_username\":\"StargateFinance\"",
+    "displayHandle": "StargateFinance"
+   },
+   "sources": [
+    {
+     "url": "https://stargateprotocol.gitbook.io/stargate",
+     "provenance": "record"
+    },
+    {
+     "url": "https://stargate.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:stargate-protocol",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "448afeb5e6295647",
+     "url": "https://api.github.com/orgs/stargate-protocol",
+     "finalUrl": "https://api.github.com/orgs/stargate-protocol",
+     "httpStatus": 200,
+     "sha256": "ca9862728a3d1250300465f6869601c579b91ec4db7581e5f82a7f8d1c8c20cb",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 738,
+     "match": "\"twitter_username\":\"StargateFinance\"",
+     "displayHandle": "StargateFinance"
+    },
+    {
+     "evidenceId": "a49e385f0ff15bfc",
+     "url": "https://stargate.finance/",
+     "finalUrl": "https://stargate.finance/",
+     "httpStatus": 200,
+     "sha256": "8255bdee5f4dcc8c30aa8cad1eae2385c144b575302c47cdac4b08ff3a1491fa",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "meta[twitter:site]",
+     "offset": 7139,
+     "match": "<meta name=\"twitter:site\" content=\"@StargateFinance\"/>",
+     "displayHandle": "StargateFinance"
+    }
+   ],
+   "candidates": {
+    "stargatefinance": [
+     "gh:stargate-protocol",
+     "stargate.finance"
+    ]
+   }
+  },
+  {
+   "slug": "steakhouse-financial-ethereum",
+   "protocolName": "Steakhouse Financial (Ethereum)",
+   "xHandle": "@SteakhouseFi",
+   "xUrl": "https://x.com/SteakhouseFi",
+   "verificationSource": {
+    "evidenceId": "e421b739f71cd6a3",
+    "url": "https://www.steakhouse.financial/",
+    "finalUrl": "https://www.steakhouse.financial/",
+    "httpStatus": 200,
+    "sha256": "472cb3aa5dced1679c5d3948ec8b2a1282afcc6d00bb5f738f8a40795a7a5287",
+    "kind": "html",
+    "provenance": "snapshot",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 7075,
+    "match": "https://x.com/SteakhouseFi",
+    "displayHandle": "SteakhouseFi"
+   },
+   "sources": [
+    {
+     "url": "https://www.steakhouse.financial/",
+     "provenance": "snapshot"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "e421b739f71cd6a3",
+     "url": "https://www.steakhouse.financial/",
+     "finalUrl": "https://www.steakhouse.financial/",
+     "httpStatus": 200,
+     "sha256": "472cb3aa5dced1679c5d3948ec8b2a1282afcc6d00bb5f738f8a40795a7a5287",
+     "kind": "html",
+     "provenance": "snapshot",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 7075,
+     "match": "https://x.com/SteakhouseFi",
+     "displayHandle": "SteakhouseFi"
+    }
+   ],
+   "candidates": {
+    "steakhousefi": [
+     "steakhouse.financial"
+    ]
+   }
+  },
+  {
+   "slug": "steakhouse-usdc-metamorpho-base",
+   "protocolName": "Steakhouse USDC MetaMorpho (Base)",
+   "xHandle": "@SteakhouseFi",
+   "xUrl": "https://x.com/SteakhouseFi",
+   "verificationSource": {
+    "evidenceId": "e421b739f71cd6a3",
+    "url": "https://www.steakhouse.financial/",
+    "finalUrl": "https://www.steakhouse.financial/",
+    "httpStatus": 200,
+    "sha256": "472cb3aa5dced1679c5d3948ec8b2a1282afcc6d00bb5f738f8a40795a7a5287",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 7075,
+    "match": "https://x.com/SteakhouseFi",
+    "displayHandle": "SteakhouseFi"
+   },
+   "sources": [
+    {
+     "url": "https://www.steakhouse.financial/",
+     "provenance": "record"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "e421b739f71cd6a3",
+     "url": "https://www.steakhouse.financial/",
+     "finalUrl": "https://www.steakhouse.financial/",
+     "httpStatus": 200,
+     "sha256": "472cb3aa5dced1679c5d3948ec8b2a1282afcc6d00bb5f738f8a40795a7a5287",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 7075,
+     "match": "https://x.com/SteakhouseFi",
+     "displayHandle": "SteakhouseFi"
+    }
+   ],
+   "candidates": {
+    "steakhousefi": [
+     "steakhouse.financial"
+    ]
+   }
+  },
+  {
+   "slug": "superform-v2-base",
+   "protocolName": "Superform Core v2 (Base)",
+   "xHandle": "@superformxyz",
+   "xUrl": "https://x.com/superformxyz",
+   "verificationSource": {
+    "evidenceId": "b6c211295a5c9de8",
+    "url": "https://docs.superform.xyz/",
+    "finalUrl": "https://docs.superform.xyz/",
+    "httpStatus": 200,
+    "sha256": "e24734d6d8cd1a8baa7c2c33dfce251ec0a26ba570201743221dacb9b6d3c626",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 86174,
+    "match": "https://twitter.com/superformxyz",
+    "displayHandle": "superformxyz"
+   },
+   "sources": [
+    {
+     "url": "https://docs.superform.xyz/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.superform.xyz/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:superform-xyz",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "b6c211295a5c9de8",
+     "url": "https://docs.superform.xyz/",
+     "finalUrl": "https://docs.superform.xyz/",
+     "httpStatus": 200,
+     "sha256": "e24734d6d8cd1a8baa7c2c33dfce251ec0a26ba570201743221dacb9b6d3c626",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 86174,
+     "match": "https://twitter.com/superformxyz",
+     "displayHandle": "superformxyz"
+    },
+    {
+     "evidenceId": "a0c0bab7f6048022",
+     "url": "https://www.superform.xyz/",
+     "finalUrl": "https://www.superform.xyz/",
+     "httpStatus": 200,
+     "sha256": "15b131e5a378fb25570c2b64143c88298b95ee9d6b44d030c796648cc307c077",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 187156,
+     "match": "https://x.com/Superformxyz",
+     "displayHandle": "Superformxyz"
+    },
+    {
+     "evidenceId": "97c472c313445006",
+     "url": "https://api.github.com/orgs/superform-xyz",
+     "finalUrl": "https://api.github.com/orgs/superform-xyz",
+     "httpStatus": 200,
+     "sha256": "01d9dd5d941e8bd5bc6f31892454b13a893dac73c8632bba4024aca2c147dad9",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 712,
+     "match": "\"twitter_username\":\"superformxyz\"",
+     "displayHandle": "superformxyz"
+    }
+   ],
+   "candidates": {
+    "superformxyz": [
+     "gh:superform-xyz",
+     "superform.xyz"
+    ]
+   }
+  },
+  {
+   "slug": "superstate-ustb-uscc",
+   "protocolName": "Superstate (USTB / USCC)",
+   "xHandle": "@superstateinc",
+   "xUrl": "https://x.com/superstateinc",
+   "verificationSource": {
+    "evidenceId": "5f08797f32419fd4",
+    "url": "https://superstate.com/",
+    "finalUrl": "https://superstate.com/",
+    "httpStatus": 200,
+    "sha256": "1fba5f595d1f943daeab035b09b8f29855098127fd8f76f4ab417b7779b81738",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 49519,
+    "match": "https://x.com/superstateinc",
+    "displayHandle": "superstateinc"
+   },
+   "sources": [
+    {
+     "url": "https://docs.superstate.com/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://superstate.com/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:superstateinc",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "5f08797f32419fd4",
+     "url": "https://superstate.com/",
+     "finalUrl": "https://superstate.com/",
+     "httpStatus": 200,
+     "sha256": "1fba5f595d1f943daeab035b09b8f29855098127fd8f76f4ab417b7779b81738",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 49519,
+     "match": "https://x.com/superstateinc",
+     "displayHandle": "superstateinc"
+    }
+   ],
+   "candidates": {
+    "superstateinc": [
+     "superstate.com"
+    ]
+   }
+  },
+  {
+   "slug": "swell-sweth-rsweth",
+   "protocolName": "Swell (swETH / rswETH)",
+   "xHandle": "@swellnetworkio",
+   "xUrl": "https://x.com/swellnetworkio",
+   "verificationSource": {
+    "evidenceId": "7ddef318c624abf2",
+    "url": "https://api.github.com/orgs/SwellNetwork",
+    "finalUrl": "https://api.github.com/orgs/SwellNetwork",
+    "httpStatus": 200,
+    "sha256": "61f7c31e4ab64b8d6e18d7a3b849146d128665d06369eb5045f27902f07f4a0b",
+    "kind": "github_org",
+    "provenance": "seed",
+    "rule": "github_org.twitter_username",
+    "offset": 771,
+    "match": "\"twitter_username\":\"swellnetworkio\"",
+    "displayHandle": "swellnetworkio"
+   },
+   "sources": [
+    {
+     "url": "https://docs.swellnetwork.io/",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://www.swellnetwork.io/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:SwellNetwork",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "7ddef318c624abf2",
+     "url": "https://api.github.com/orgs/SwellNetwork",
+     "finalUrl": "https://api.github.com/orgs/SwellNetwork",
+     "httpStatus": 200,
+     "sha256": "61f7c31e4ab64b8d6e18d7a3b849146d128665d06369eb5045f27902f07f4a0b",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 771,
+     "match": "\"twitter_username\":\"swellnetworkio\"",
+     "displayHandle": "swellnetworkio"
+    },
+    {
+     "evidenceId": "b038e9af3579577f",
+     "url": "https://docs.swellnetwork.io/",
+     "finalUrl": "https://docs.swellnetwork.io/",
+     "httpStatus": 200,
+     "sha256": "dfe12ec7e73e1d8194a78398e07933f2c91bec1ddb1f7c66692e317564cd3e76",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 144184,
+     "match": "https://twitter.com/swellnetworkio",
+     "displayHandle": "swellnetworkio"
+    },
+    {
+     "evidenceId": "6233ca18e00cf953",
+     "url": "https://www.swellnetwork.io/",
+     "finalUrl": "https://www.swellnetwork.io/",
+     "httpStatus": 200,
+     "sha256": "29ad00161151235057d23681e61aac5eec23b6b6bd2a1af0e4afc462dfca3a6c",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 33658,
+     "match": "https://twitter.com/swellnetworkio",
+     "displayHandle": "swellnetworkio"
+    }
+   ],
+   "candidates": {
+    "swellnetworkio": [
+     "gh:swellnetwork",
+     "swellnetwork.io"
+    ]
+   }
+  },
+  {
+   "slug": "symbiotic-core",
+   "protocolName": "Symbiotic Core",
+   "xHandle": "@symbioticfi",
+   "xUrl": "https://x.com/symbioticfi",
+   "verificationSource": {
+    "evidenceId": "5f277097f1bd7db0",
+    "url": "https://api.github.com/orgs/symbioticfi",
+    "finalUrl": "https://api.github.com/orgs/symbioticfi",
+    "httpStatus": 200,
+    "sha256": "f6926a9aaca31312800268a86512774bead4a45289159cc8c5ad693bd9fbb13a",
+    "kind": "github_org",
+    "provenance": "seed",
+    "rule": "github_org.twitter_username",
+    "offset": 788,
+    "match": "\"twitter_username\":\"symbioticfi\"",
+    "displayHandle": "symbioticfi"
+   },
+   "sources": [
+    {
+     "url": "https://docs.symbiotic.fi/",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://symbiotic.fi/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:symbioticfi",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "5f277097f1bd7db0",
+     "url": "https://api.github.com/orgs/symbioticfi",
+     "finalUrl": "https://api.github.com/orgs/symbioticfi",
+     "httpStatus": 200,
+     "sha256": "f6926a9aaca31312800268a86512774bead4a45289159cc8c5ad693bd9fbb13a",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 788,
+     "match": "\"twitter_username\":\"symbioticfi\"",
+     "displayHandle": "symbioticfi"
+    },
+    {
+     "evidenceId": "4ed390eb446fb236",
+     "url": "https://docs.symbiotic.fi/",
+     "finalUrl": "https://docs.symbiotic.fi/get-started",
+     "httpStatus": 200,
+     "sha256": "0696c338a866c5a0ad627c31ca21847f7c88e9ff1723ee3ecc6ac339a2277f42",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 5687,
+     "match": "https://x.com/symbioticfi",
+     "displayHandle": "symbioticfi"
+    },
+    {
+     "evidenceId": "91c6a52b55150b3e",
+     "url": "https://symbiotic.fi/",
+     "finalUrl": "https://symbiotic.fi/",
+     "httpStatus": 200,
+     "sha256": "f3400016170ffd03cf0725618004272c9230acd030cdfd35fb0f0a37e988bf9a",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 7981,
+     "match": "https://twitter.com/symbioticfi",
+     "displayHandle": "symbioticfi"
+    }
+   ],
+   "candidates": {
+    "symbioticfi": [
+     "gh:symbioticfi",
+     "symbiotic.fi"
+    ]
+   }
+  },
+  {
+   "slug": "synthetix-v3-core",
+   "protocolName": "Synthetix V3 Core",
+   "xHandle": "@synthetix",
+   "xUrl": "https://x.com/synthetix",
+   "verificationSource": {
+    "evidenceId": "25368acdacab5cf7",
+    "url": "https://synthetix.io/",
+    "finalUrl": "https://synthetix.io/",
+    "httpStatus": 200,
+    "sha256": "bf7c5a6fab2f49dda892c675d51c19a72585b3d385d6b7d7f5db632865ac1b54",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "meta[twitter:site]",
+    "offset": 4727,
+    "match": "<meta name=\"twitter:site\" content=\"@synthetix\">",
+    "displayHandle": "synthetix"
+   },
+   "sources": [
+    {
+     "url": "https://docs.synthetix.io/",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "https://synthetix.io/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:Synthetixio",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "25368acdacab5cf7",
+     "url": "https://synthetix.io/",
+     "finalUrl": "https://synthetix.io/",
+     "httpStatus": 200,
+     "sha256": "bf7c5a6fab2f49dda892c675d51c19a72585b3d385d6b7d7f5db632865ac1b54",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "meta[twitter:site]",
+     "offset": 4727,
+     "match": "<meta name=\"twitter:site\" content=\"@synthetix\">",
+     "displayHandle": "synthetix"
+    }
+   ],
+   "candidates": {
+    "synthetix": [
+     "synthetix.io"
+    ]
+   }
+  },
+  {
+   "slug": "tether-usdt",
+   "protocolName": "Tether USDT",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://tether.to/",
+     "provenance": "record"
+    }
+   ],
+   "reason": "no relevant first-party handle"
+  },
+  {
+   "slug": "threshold-network-tbtc",
+   "protocolName": "Threshold Network (tBTC)",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.threshold.network/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://threshold.network/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:threshold-network",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "no relevant first-party handle (seen, not relevant: ['thetnetwork'])"
+  },
+  {
+   "slug": "treehouse-tree-teth",
+   "protocolName": "Treehouse (TREE / tETH)",
+   "xHandle": "@TreehouseFi",
+   "xUrl": "https://x.com/TreehouseFi",
+   "verificationSource": {
+    "evidenceId": "8546963f99d2b987",
+    "url": "https://www.treehouse.finance/",
+    "finalUrl": "https://www.treehouse.finance/",
+    "httpStatus": 200,
+    "sha256": "b8e07f0a350ba4f6ea85e6edb534efa03f322c6d29759d0d39f76aa683ae2f4e",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 351644,
+    "match": "https://x.com/TreehouseFi",
+    "displayHandle": "TreehouseFi"
+   },
+   "sources": [
+    {
+     "url": "https://docs.treehouse.finance/",
+     "provenance": "snapshot"
+    },
+    {
+     "url": "https://www.treehouse.finance/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:treehouse-gaia",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "8546963f99d2b987",
+     "url": "https://www.treehouse.finance/",
+     "finalUrl": "https://www.treehouse.finance/",
+     "httpStatus": 200,
+     "sha256": "b8e07f0a350ba4f6ea85e6edb534efa03f322c6d29759d0d39f76aa683ae2f4e",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 351644,
+     "match": "https://x.com/TreehouseFi",
+     "displayHandle": "TreehouseFi"
+    }
+   ],
+   "candidates": {
+    "treehousefi": [
+     "treehouse.finance"
+    ]
+   }
+  },
+  {
+   "slug": "uniswap-governance-timelock",
+   "protocolName": "Uniswap V3 & Governance Timelock",
+   "xHandle": "@Uniswap",
+   "xUrl": "https://x.com/Uniswap",
+   "verificationSource": {
+    "evidenceId": "222a61409b4f1f5d",
+    "url": "https://developers.uniswap.org/",
+    "finalUrl": "https://developers.uniswap.org/docs",
+    "httpStatus": 200,
+    "sha256": "b0ffe228f94e391b3242dd1e1649624a3531836ea984f6cb9a292acaefa48e3a",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 10801,
+    "match": "https://x.com/Uniswap",
+    "displayHandle": "Uniswap"
+   },
+   "sources": [
+    {
+     "url": "https://developers.uniswap.org/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://uniswap.org/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:Uniswap",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "222a61409b4f1f5d",
+     "url": "https://developers.uniswap.org/",
+     "finalUrl": "https://developers.uniswap.org/docs",
+     "httpStatus": 200,
+     "sha256": "b0ffe228f94e391b3242dd1e1649624a3531836ea984f6cb9a292acaefa48e3a",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 10801,
+     "match": "https://x.com/Uniswap",
+     "displayHandle": "Uniswap"
+    },
+    {
+     "evidenceId": "6be8b9cb2d25a2a9",
+     "url": "https://api.github.com/orgs/Uniswap",
+     "finalUrl": "https://api.github.com/orgs/Uniswap",
+     "httpStatus": 200,
+     "sha256": "a447af1686d9d38710d5b9ef82c76b3c6b20cd153ac1b2b751ab7585a5e8a1fb",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 737,
+     "match": "\"twitter_username\":\"Uniswap\"",
+     "displayHandle": "Uniswap"
+    }
+   ],
+   "candidates": {
+    "uniswap": [
+     "gh:uniswap",
+     "uniswap.org"
+    ]
+   }
+  },
+  {
+   "slug": "uniswap-v4",
+   "protocolName": "Uniswap V4",
+   "xHandle": "@Uniswap",
+   "xUrl": "https://x.com/Uniswap",
+   "verificationSource": {
+    "evidenceId": "222a61409b4f1f5d",
+    "url": "https://developers.uniswap.org/",
+    "finalUrl": "https://developers.uniswap.org/docs",
+    "httpStatus": 200,
+    "sha256": "b0ffe228f94e391b3242dd1e1649624a3531836ea984f6cb9a292acaefa48e3a",
+    "kind": "html",
+    "provenance": "record",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 10801,
+    "match": "https://x.com/Uniswap",
+    "displayHandle": "Uniswap"
+   },
+   "sources": [
+    {
+     "url": "https://developers.uniswap.org/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://uniswap.org/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:Uniswap",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "222a61409b4f1f5d",
+     "url": "https://developers.uniswap.org/",
+     "finalUrl": "https://developers.uniswap.org/docs",
+     "httpStatus": 200,
+     "sha256": "b0ffe228f94e391b3242dd1e1649624a3531836ea984f6cb9a292acaefa48e3a",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 10801,
+     "match": "https://x.com/Uniswap",
+     "displayHandle": "Uniswap"
+    },
+    {
+     "evidenceId": "6be8b9cb2d25a2a9",
+     "url": "https://api.github.com/orgs/Uniswap",
+     "finalUrl": "https://api.github.com/orgs/Uniswap",
+     "httpStatus": 200,
+     "sha256": "a447af1686d9d38710d5b9ef82c76b3c6b20cd153ac1b2b751ab7585a5e8a1fb",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 737,
+     "match": "\"twitter_username\":\"Uniswap\"",
+     "displayHandle": "Uniswap"
+    }
+   ],
+   "candidates": {
+    "uniswap": [
+     "gh:uniswap",
+     "uniswap.org"
+    ]
+   }
+  },
+  {
+   "slug": "usual-money-usd0-usd0",
+   "protocolName": "Usual Money (USD0 / USD0++)",
+   "xHandle": "@usualmoney",
+   "xUrl": "https://x.com/usualmoney",
+   "verificationSource": {
+    "evidenceId": "3a772d8420be1026",
+    "url": "https://usual.money/",
+    "finalUrl": "https://usual.money/",
+    "httpStatus": 200,
+    "sha256": "b46ac609cd0b549643f66f427b2aa83f7cd123efb07ef904075a54208b4708bc",
+    "kind": "html",
+    "provenance": "record-domain",
+    "rule": "link[x.com|twitter.com profile]",
+    "offset": 342723,
+    "match": "https://x.com/usualmoney",
+    "displayHandle": "usualmoney"
+   },
+   "sources": [
+    {
+     "url": "https://tech.usual.money/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://usual.money/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:usual-dao",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "3a772d8420be1026",
+     "url": "https://usual.money/",
+     "finalUrl": "https://usual.money/",
+     "httpStatus": 200,
+     "sha256": "b46ac609cd0b549643f66f427b2aa83f7cd123efb07ef904075a54208b4708bc",
+     "kind": "html",
+     "provenance": "record-domain",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 342723,
+     "match": "https://x.com/usualmoney",
+     "displayHandle": "usualmoney"
+    },
+    {
+     "evidenceId": "561c74d4b68a0ac1",
+     "url": "https://api.github.com/orgs/usual-dao",
+     "finalUrl": "https://api.github.com/orgs/usual-dao",
+     "httpStatus": 200,
+     "sha256": "a3bcd0cb9f03e837818d4bc6128f613fb0986063a2cdcd514d7abce8f78e4cac",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 717,
+     "match": "\"twitter_username\":\"usualmoney\"",
+     "displayHandle": "usualmoney"
+    }
+   ],
+   "candidates": {
+    "usualmoney": [
+     "gh:usual-dao",
+     "usual.money"
+    ]
+   }
+  },
+  {
+   "slug": "wormhole-core-ntt",
+   "protocolName": "Wormhole Core (NTT)",
+   "xHandle": "@wormhole",
+   "xUrl": "https://x.com/wormhole",
+   "verificationSource": {
+    "evidenceId": "9718271f902e429d",
+    "url": "https://api.github.com/orgs/wormhole-foundation",
+    "finalUrl": "https://api.github.com/orgs/wormhole-foundation",
+    "httpStatus": 200,
+    "sha256": "25b90611a0fa49d3883a1823ce0c6f3677c1e8a43fd06f0a035651fbc5a24670",
+    "kind": "github_org",
+    "provenance": "github",
+    "rule": "github_org.twitter_username",
+    "offset": 758,
+    "match": "\"twitter_username\":\"wormhole\"",
+    "displayHandle": "wormhole"
+   },
+   "sources": [
+    {
+     "url": "https://wormhole.com/docs",
+     "provenance": "record"
+    },
+    {
+     "url": "https://wormhole.com/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:wormhole-foundation",
+     "provenance": "github"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "9718271f902e429d",
+     "url": "https://api.github.com/orgs/wormhole-foundation",
+     "finalUrl": "https://api.github.com/orgs/wormhole-foundation",
+     "httpStatus": 200,
+     "sha256": "25b90611a0fa49d3883a1823ce0c6f3677c1e8a43fd06f0a035651fbc5a24670",
+     "kind": "github_org",
+     "provenance": "github",
+     "rule": "github_org.twitter_username",
+     "offset": 758,
+     "match": "\"twitter_username\":\"wormhole\"",
+     "displayHandle": "wormhole"
+    },
+    {
+     "evidenceId": "30c7a865ad14893e",
+     "url": "https://wormhole.com/docs",
+     "finalUrl": "https://wormhole.com/docs/",
+     "httpStatus": 200,
+     "sha256": "a9f0c6ac4b1bf7319738f0ceaf2d392fc8567298da3ea1d96dabc81f94dae6ba",
+     "kind": "html",
+     "provenance": "record",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 123877,
+     "match": "https://x.com/wormhole",
+     "displayHandle": "wormhole"
+    }
+   ],
+   "candidates": {
+    "wormhole": [
+     "gh:wormhole-foundation",
+     "wormhole.com"
+    ]
+   }
+  },
+  {
+   "slug": "yearn-v3",
+   "protocolName": "Yearn V3",
+   "xHandle": "@yearnfi",
+   "xUrl": "https://x.com/yearnfi",
+   "verificationSource": {
+    "evidenceId": "3c2ee026767231ca",
+    "url": "https://api.github.com/orgs/yearn",
+    "finalUrl": "https://api.github.com/orgs/yearn",
+    "httpStatus": 200,
+    "sha256": "4373ba359c34c0222c477d6f70a53a1b21ed03d3f5051eaaa250f60023b107ad",
+    "kind": "github_org",
+    "provenance": "seed",
+    "rule": "github_org.twitter_username",
+    "offset": 709,
+    "match": "\"twitter_username\":\"yearnfi\"",
+    "displayHandle": "yearnfi"
+   },
+   "sources": [
+    {
+     "url": "gh:yearn",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://docs.yearn.fi/",
+     "provenance": "seed"
+    },
+    {
+     "url": "https://yearn.fi/",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "single relevant handle",
+   "proofs": [
+    {
+     "evidenceId": "3c2ee026767231ca",
+     "url": "https://api.github.com/orgs/yearn",
+     "finalUrl": "https://api.github.com/orgs/yearn",
+     "httpStatus": 200,
+     "sha256": "4373ba359c34c0222c477d6f70a53a1b21ed03d3f5051eaaa250f60023b107ad",
+     "kind": "github_org",
+     "provenance": "seed",
+     "rule": "github_org.twitter_username",
+     "offset": 709,
+     "match": "\"twitter_username\":\"yearnfi\"",
+     "displayHandle": "yearnfi"
+    },
+    {
+     "evidenceId": "db21842d2b1ad2d5",
+     "url": "https://docs.yearn.fi/",
+     "finalUrl": "https://docs.yearn.fi/",
+     "httpStatus": 200,
+     "sha256": "f5f9b073becc40f7dc18a72cba3171e8b6b5864f416625a954bb72db1a27d12a",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 6219,
+     "match": "https://x.com/yearnfi",
+     "displayHandle": "yearnfi"
+    },
+    {
+     "evidenceId": "d913b907fba73d1c",
+     "url": "https://yearn.fi/",
+     "finalUrl": "https://yearn.fi/",
+     "httpStatus": 200,
+     "sha256": "c70cb64d636e0cba3b6f27d5b823ef90838e47a792ab4e76d607715ce3a422de",
+     "kind": "html",
+     "provenance": "seed",
+     "rule": "link[x.com|twitter.com profile]",
+     "offset": 7655,
+     "match": "https://x.com/yearnfi",
+     "displayHandle": "yearnfi"
+    }
+   ],
+   "candidates": {
+    "yearnfi": [
+     "gh:yearn",
+     "yearn.fi"
+    ]
+   }
+  },
+  {
+   "slug": "yo-protocol",
+   "protocolName": "YO Protocol",
+   "xHandle": null,
+   "xUrl": null,
+   "verificationSource": null,
+   "sources": [
+    {
+     "url": "https://docs.yo.xyz/",
+     "provenance": "record"
+    },
+    {
+     "url": "https://www.yo.xyz/",
+     "provenance": "seed"
+    },
+    {
+     "url": "gh:yoprotocol",
+     "provenance": "seed"
+    }
+   ],
+   "reason": "no relevant first-party handle (seen, not relevant: ['yield'])"
+  }
+ ]
+}

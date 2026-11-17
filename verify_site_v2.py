@@ -916,18 +916,18 @@ def main(argv=None):
     check("no curator / SaaS subscription tracks (one paid offer only)", not bad_s, str(bad_s[:4]))
     # M4 / M5 (v4): one tier family, byte-identical pricing cards on / and /request/ (only the relative link prefix differs)
     offer = ("$0", "$500", "Rapid Single-Gap Re-Verification", "Full Protocol Control-Plane Dossier", "$2,500–$5,000", "24h SLA",
-             "Continuous Monitoring", "$1,500", "USDC per month", "Enterprise API SLA")
+             "Continuous Control-Plane Monitoring", "$1,500", "USDC per month", "Enterprise API SLA")
     def plans_of(t):
         a = t.find('<div class="plans" data-pricing>')
         b = t.find('<p class="note">', a)
         return t[a:b] if 0 <= a < b else ""
     plans_h, plans_r = plans_of(page), plans_of(req_page).replace('href="../request/', 'href="request/')
-    check("homepage #pricing and /request/ carry the same five tiers ($0 / $500 / $2,500-$5,000 / $1,500 per month Continuous Monitoring / custom API SLA, "
+    check("homepage #pricing and /request/ carry the same five tiers ($0 / $500 / $2,500-$5,000 / $1,500 per month Continuous Control-Plane Monitoring / custom API SLA, "
           "identical cards); vulnerabilities routed to Immunefi / Cantina",
           all(t in plans_h for t in offer) and plans_h == plans_r and plans_h.count('data-plan="') == 5
           and all(x in read("docs/protocols/stader-labs-ethx/index.html") for x in ("Immunefi", "Cantina")))
     check("public data stated free and real-time (homepage, llms.txt, README)",
-          "free and real-time" in page and "Free and real-time" in llms_txt(read) and "Free and real-time" in read("README.md"))
+          "free, with live re-check on demand" in page and "Free and real-time" in llms_txt(read) and "Free and real-time" in read("README.md"))   # v4.5 G-P2-1 wording on the pricing card
     radios = re.findall(r'name="tier" value="([\w-]+)"', req_page)
     check("request builder (/request/) offers exactly the pricing tiers in pricing order (community, rapid-500, clearance default, continuous, api_sla); the homepage links there",
           radios == ["community", "rapid-500", "clearance", "continuous", "api_sla"]
@@ -1017,7 +1017,8 @@ def main(argv=None):
     check("M4 count-contradiction guard: 0 wrong RPC-observed / Base-EAS attested / attested checks / protocols numbers across every page, llms.txt, "
           "llms-full.txt, SKILL.md and README (self-probe: injected 999 RPC-Observed, 79 Base-EAS, 158 checks, 85 protocols are each caught)",
           probe_ok and not cc_bad, f"probe {probe_ok}; {len(cc_files)} files; contradictions {cc_bad[:4]}")
-    rows = len(re.findall(r'<tr class="sc-row"', page))
+
+    rows = len(re.findall(r'<tr class="sc-row(?: sc-m)?"', page))   # v4.5: rows 7-16 carry sc-m (kept back below 640 px)
     sys.path.insert(0, os.path.join(ROOT, "tools"))
     import build_site as BS
     check(f"homepage #scorecards ships the {len(BS.FLAGSHIP)} flagship protocols statically (every protocol hydrates from /api/v1/scorecards.json: harness)",
@@ -1428,28 +1429,28 @@ def main(argv=None):
           hero_ok and pf_ok, f"hero {hero_ok}; checker {pf_ok}")
     pr = re.search(r'<section class="sec" id="pricing">.*?</section>', home, re.S)
     pricing_ok = bool(pr) and all(x in pr.group(0) for x in ("$0", "$500", "$2,500–$5,000", "$1,500", "Free access &amp; community queue", "Rapid Single-Gap Re-Verification",
-                                                              "Full Protocol Control-Plane Dossier", "Continuous Monitoring", "Enterprise API SLA", "60 requests / minute",
+                                                              "Full Protocol Control-Plane Dossier", "Continuous Control-Plane Monitoring", "Enterprise API SLA", "60 requests / minute",
                                                               html.escape(BS.EDITORIAL_FIREWALL, quote=False)))
     req_ok = "Every scorecard, the API and the MCP server stay free" in req_page and 'id="pricing"' in req_page
-    check("pricing: #pricing = Free $0 (60 req/min) / Re-Verification $500 / Full Dossier $2,500-$5,000 / Continuous Monitoring $1,500 / API SLA under the editorial firewall; /request/ carries the same tiers",
+    check("pricing: #pricing = Free $0 (60 req/min) / Re-Verification $500 / Full Dossier $2,500-$5,000 / Continuous Control-Plane Monitoring $1,500 / API SLA under the editorial firewall; /request/ carries the same tiers",
           pricing_ok and req_ok, f"#pricing {pricing_ok}; /request/ {req_ok}")
     # unbundled #pricing: 2 cards (free; issuers with no API jargon) + one high-throughput bar below the grid
-    # M4 / M5 (v4): every pricing card links its own closed tier=; Continuous Monitoring says the result can still be Delta; no tier name
+    # M4 / M5 (v4): every pricing card links its own closed tier=; Continuous Control-Plane Monitoring says the result can still be Delta; no tier name
     # anywhere implies a paid Aligned status; the editorial firewall sits above the cards on / and /request/
     tier_ok = {}
     for rel, t in (("index.html", page), (os.path.join("request", "index.html"), req_page)):
         sec = re.search(r'<section class="sec" id="pricing">.*?</section>', t, re.S)
         sec = sec.group(0) if sec else ""
-        cards_ = re.findall(r'<div class="plan(?: feat)?" data-slot="card" data-plan="([\w-]+)">(.*?)</div>', sec, re.S)
+        cards_ = re.findall(r'<div class="plan(?: plan-row)?(?: feat)?" data-slot="card" data-plan="([\w-]+)">(.*?)</div>', sec, re.S)
         req_ = "request/" if rel == "index.html" else "../request/"
         tier_ok[rel] = ([k for k, _ in cards_] == ["community", "rapid-500", "clearance", "continuous", "api_sla"]
                         and all(f'href="{req_}?tier={k}" data-tier="{k}"' in body for k, body in cards_)
-                        and "can still be Delta" in dict(cards_)["continuous"] and "free and real-time" in dict(cards_)["community"]
+                        and "can still be Delta" in dict(cards_)["continuous"] and "free, with live re-check on demand" in dict(cards_)["community"]
                         and sec.find("data-editorial") < sec.find('data-pricing') and html.escape(BS.EDITORIAL_FIREWALL, quote=False) in sec)
     stale_m5 = sorted(f for f in [os.path.relpath(x, ROOT) for x in glob.glob(os.path.join(DOCS, "**", "*.html"), recursive=True)]
                       + ["docs/llms.txt", "docs/llms-full.txt", ".github/ISSUE_TEMPLATE/request-scan.yml", "tools/build_site.py", "tools/app.src.js", "README.md"]
                       if re.search(r"Aligned Maintenance|Aligned Status|continuous Aligned", read(f), re.I))
-    check("M4 + M5 pricing: five tier cards with their own tier= link on / and /request/, Continuous Monitoring states the result can still be Delta, "
+    check("M4 + M5 pricing: five tier cards with their own tier= link on / and /request/, Continuous Control-Plane Monitoring states the result can still be Delta, "
           "0 'Aligned Maintenance' / 'Aligned Status' strings on the site, feeds, issue template, generator, app.js or README",
           all(tier_ok.values()) and not stale_m5, f"{tier_ok}; stale {stale_m5[:4]}")
 
@@ -1457,7 +1458,7 @@ def main(argv=None):
     import html as _html
     import urllib.parse as _up
     CLR_H = "Verify and reconcile the record"
-    MNT_H = "Add Continuous Monitoring"
+    MNT_H = "Add Continuous Control-Plane Monitoring"
 
     def callout_ok(pg, kind, name, slug, forum=None):
         q = f"tier={kind}&amp;protocol={slug}" + (f"&amp;forum={_up.quote(forum, safe='')}" if forum else "")
@@ -1504,7 +1505,7 @@ def main(argv=None):
     every_delta = all(not ({e["classification"] for e in v["entries"]} & {"parameter_delta", "rpc_observed"})
                       or 'id="issuer-clearance"' in pages.get(os.path.join("protocols", v["slug"], "index.html"), "") for v in sp_.values())
     check(f"{X['protocols']} protocol pages: every parameter_delta / rpc_observed page carries the 24h clearance callout (RPC-pinned pages pass their governance URL as &forum=); "
-          "only all-aligned_baseline EAS-attested pages get the quiet $1,500/mo Continuous Monitoring callout (the result can still be Delta) and never a delta-remediation pitch",
+          "only all-aligned_baseline EAS-attested pages get the quiet $1,500/mo Continuous Control-Plane Monitoring callout (the result can still be Delta) and never a delta-remediation pitch",
           len(sp_) == X["protocols"] and not proto_bad and every_delta and n_al + n_cl == X["protocols"] and n_al == X["badge_tiers"]["aligned"], f"aligned {n_al}, clearance {n_cl}; bad {proto_bad[:5]}")
 
     # ---- #req-pay: Option A (invoice) first and default, Option B direct USDC to the treasury EOA, never called a Safe
@@ -1877,6 +1878,322 @@ def main(argv=None):
     f1_static = f1_static and "ADDR_RE.test(a)" in appjs[appjs.find("function problem(a)"):appjs.find("function run()")]
     check("F1 regression: a pending valid pre-flight is superseded (seq bumped + AbortController.abort before validation); an invalid submit's error is never overwritten by the stale HTTP 200",
           f1_static and all(res.get(k) is True for k in f1_keys), f"static {f1_static}; {[k for k in f1_keys if res.get(k) is not True]}")
+
+    # v4.2 staging build: python3 tools/build_site.py --base-path /website-test --out-dir <temp> builds a complete noindex copy for the
+    # sub-path mount (https://pacta.dri.network/website-test/) and never touches docs/ or the repository
+    import tempfile
+    import urllib.parse as _upst
+
+    def _tree_digest(d):
+        out = {}
+        for r_, _, fs_ in os.walk(d):
+            for f_ in fs_:
+                pth = os.path.join(r_, f_)
+                out[os.path.relpath(pth, d)] = hashlib.sha256(open(pth, "rb").read()).hexdigest()
+        return out
+    st_ok, st_detail = {}, ""
+    docs_before = _tree_digest(DOCS)
+    tmp_root = tempfile.mkdtemp(prefix="pacta-staging-")
+    try:
+        out_st = os.path.join(tmp_root, "website-test")
+        rc_st = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "build_site.py"), "--base-path", "/website-test", "--out-dir", out_st],
+                               cwd=ROOT, capture_output=True, text=True, timeout=300)
+        st = _tree_digest(out_st) if rc_st.returncode == 0 else {}
+        html_st = {k: open(os.path.join(out_st, k), encoding="utf-8").read() for k in st if k.endswith(".html")}
+        rootrel = [k for k, t in html_st.items() for u in re.findall(r'(?:href|src|action)="(/[^"]*)"', t) if not u.startswith(("/website-test/", "//"))]
+        st_ok = {
+            "build ok": rc_st.returncode == 0 and "staged:" in rc_st.stdout,
+            "docs/ untouched": _tree_digest(DOCS) == docs_before,
+            "same files as docs/ (+ marker)": set(st) - {".pacta-staging"} == set(docs_before),
+            "non-HTML bytes identical (robots.txt disallows)": all(st[k] == docs_before[k] for k in st if not k.endswith(".html") and k not in (".pacta-staging", "robots.txt"))
+                and open(os.path.join(out_st, "robots.txt")).read() == "User-agent: *\nDisallow: /\n",
+            "every page noindex, nofollow": bool(html_st) and all(re.findall(r'<meta name="robots" content="([^"]*)">', t) == ["noindex, nofollow"] for t in html_st.values()),
+            "every page records the base path": all('<html lang="en" data-base-path="/website-test">' in t for t in html_st.values()),
+            "0 root-relative links outside /website-test/": not rootrel,
+            "no beacon in staging": not any(re.search(r'<script src="[^"]*b\.js"', t) for t in html_st.values()),
+            "404 links + assets prefixed": all(x_ in html_st.get("404.html", "") for x_ in ('href="/website-test/protocols/"', 'href="/website-test/styles.css?v=',
+                                                                                 'src="/website-test/app.js?v=', 'href="/website-test/fonts/inter-latin-wght-normal.woff2"')),
+            "/pricing/ resolves to /website-test/#pricing": (lambda m: bool(m) and _upst.urljoin("https://pacta.dri.network/website-test/pricing/", m.group(1)) == "https://pacta.dri.network/website-test/#pricing")(
+                re.search(r'<meta http-equiv="refresh" content="0; url=([^"]+)">', html_st.get(os.path.join("pricing", "index.html"), ""))),
+            "canonical docs/ stays indexable with no base path": not any("noindex, nofollow" in t or "data-base-path" in t
+                                                                     for t in (open(p_, encoding="utf-8").read() for p_ in glob.glob(os.path.join(DOCS, "**", "*.html"), recursive=True))),
+        }
+        guard_dir = os.path.join(tmp_root, "not-staging")
+        os.makedirs(guard_dir)
+        open(os.path.join(guard_dir, "keep.txt"), "w").write("x")
+        rc_guard = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "build_site.py"), "--base-path", "/website-test", "--out-dir", guard_dir],
+                                  cwd=ROOT, capture_output=True, text=True, timeout=120)
+        rc_docs = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "build_site.py"), "--base-path", "/website-test"], cwd=ROOT, capture_output=True, text=True, timeout=120)
+        st_ok["refuses a non-staging out-dir and a base path on docs/"] = (rc_guard.returncode != 0 and os.path.exists(os.path.join(guard_dir, "keep.txt"))
+                                                                          and rc_docs.returncode != 0 and _tree_digest(DOCS) == docs_before)
+        st_ok["harness: runtime links follow the base path"] = all(res.get(k) is True for k in ("v42_base_path_catalog_link", "v42_base_path_rejects_bad_values",
+                                                                                           "v421_base_path_rejects_dot_segments", "v421_base_path_allows_dotted_names"))
+        # v4.2.1 D1: no standalone "." / ".." segment in a base path (Python validator + CLI), dotted names still valid
+        bad_bp = ("/..", "/.", "/website-test/../../evil", "/website-test/.")
+        dot_out = os.path.join(tmp_root, "dot-segment")
+        rc_dot = [subprocess.run([sys.executable, os.path.join(ROOT, "tools", "build_site.py"), "--base-path", bp_, "--out-dir", dot_out],
+                                 cwd=ROOT, capture_output=True, text=True, timeout=120).returncode for bp_ in ("/..", "/website-test/../../evil")]
+        st_ok["D1: '.' / '..' base-path segments refused (validator + CLI), /release.v4 allowed"] = (
+            not any(BS.valid_base_path(x_) for x_ in bad_bp) and BS.valid_base_path("/release.v4") and BS.valid_base_path("/website-test")
+            and all(r_ != 0 for r_ in rc_dot) and not os.path.exists(dot_out))
+        # v4.2.1 D2: symlinks are resolved before any containment check, marker or delete: an alias of the repository (and of docs/)
+        # is refused and docs/ stays byte-identical (the test never writes inside the repository)
+        alias = os.path.join(tmp_root, "alias-to-repo")
+        os.symlink(ROOT, alias)
+        rc_alias = [subprocess.run([sys.executable, os.path.join(ROOT, "tools", "build_site.py"), "--base-path", "/website-test", "--out-dir", t_],
+                                   cwd=ROOT, capture_output=True, text=True, timeout=120).returncode
+                    for t_ in (os.path.join(alias, "docs"), os.path.join(alias, "staging-inside-repo"), alias)]
+        st_ok["D2: realpath containment refuses repo / docs aliases, paths inside the repo and its ancestors; docs/ untouched"] = (
+            all(r_ != 0 for r_ in rc_alias) and BS.staging_target(os.path.join(alias, "docs"))[1] is not None
+            and BS.staging_target(os.path.dirname(os.path.realpath(ROOT)))[1] is not None   # an ancestor of the repo: checked without running
+            and BS.staging_target(os.path.join(tmp_root, "elsewhere"))[1] is None and _tree_digest(DOCS) == docs_before
+            and not os.path.exists(os.path.join(ROOT, "staging-inside-repo")))
+        # v4.3 N2: every staging page (and only staging pages) carries one subtle banner line right after the skip link
+        banner_st = BS.staging_banner("/website-test")
+        canon_html = [open(p_, encoding="utf-8").read() for p_ in glob.glob(os.path.join(DOCS, "**", "*.html"), recursive=True)]
+        st_ok["N2: one staging banner per staged page (after the skip link); none on docs/, which ships index, follow"] = (
+            banner_st == ('<div class="staging-banner" role="note" data-staging-banner>Staging preview (/website-test/) · robots=noindex on this '
+                          'test route; production pacta.wtf ships index, follow.</div>')
+            and bool(html_st) and all(t.count("data-staging-banner") == 1 and (banner_st in t or ("styles.css" not in t and BS.staging_banner("/website-test", True) in t))
+                                      for t in html_st.values())
+            and all(BS.SKIP_LINK + "\n" + banner_st in t for t in html_st.values() if BS.SKIP_LINK in t)
+            and not any("data-staging-banner" in t for t in canon_html)
+            and all(re.findall(r'<meta name="robots" content="([^"]*)">', pages[r_])[0].startswith(
+                        "noindex" if r_ in ("404.html", os.path.join("pricing", "index.html")) else "index, follow")
+                    for r_ in pages if r_.endswith(".html") and '<meta name="robots"' in pages[r_]))
+        st_detail = f"{len(html_st)} staged pages; root-relative {rootrel[:3]}; build rc {rc_st.returncode} {rc_st.stderr[-160:]}"
+    finally:
+        import shutil as _sh_st
+        _sh_st.rmtree(tmp_root, ignore_errors=True)
+    check("v4.2 staging build (--base-path /website-test --out-dir): complete noindex, nofollow copy with prefixed root links, no beacon, "
+          "robots disallow, /pricing/ -> /website-test/#pricing; docs/ untouched and canonical pages unchanged; unsafe out-dirs refused",
+          all(st_ok.values()) and bool(st_ok), f"{[k for k, x in st_ok.items() if not x]}; {st_detail}")
+
+    # v4.3: the auditor re-check of /website-test/ (N1-N7); N2 is part of the staging-build check above
+    home43, req43, meth43 = pages["index.html"], pages[os.path.join("request", "index.html")], pages[os.path.join("methodology", "index.html")]
+    css43, app43 = read("docs/styles.css"), read("tools/app.src.js")
+
+    def css_rule(sel):
+        i_ = css43.find(sel + " {")
+        return css43[i_:css43.index("}", i_)] if i_ >= 0 else ""
+
+    def pricing43(t):
+        sec = re.search(r'<section class="sec" id="pricing">.*?</section>', t, re.S)
+        return sec.group(0) if sec else ""
+
+    def plans43(t):
+        return re.findall(r'<div class="(plan(?: plan-row)?(?: feat)?)" data-slot="card" data-plan="([\w-]+)">', pricing43(t))
+    rad43 = json.loads(read("docs/api/v1/radar.json"))
+    rh_a = home43.find('<div class="radar-head">')
+    rhead = home43[rh_a:home43.find('<div class="tbl-wrap">', rh_a)] if rh_a >= 0 else ""
+    rhead_txt = re.sub(r"<[^>]+>", " ", rhead)
+    chips43 = re.findall(r'<button class="receipt"[^>]*data-receipt data-pf-chain="(ethereum|base)" data-pf-address="(0x[0-9a-fA-F]{40})"', home43)
+
+    def ref_html(pre):
+        return (f'<p class="note" data-referral>When code changes are needed, Pacta can refer teams to independent smart-contract auditors; '
+                f'under our <a href="{pre}methodology/#independence">Independence Policy</a>, referrals never influence docs-vs-chain status.</p>')
+    meth_ind = re.search(r'<section class="memo-sec" id="independence">.*?</section>', meth43, re.S)
+    meth_ind = meth_ind.group(0) if meth_ind else ""
+    executed43 = any(all(o.get("done") for o in it["operations"]) for it in rad43["items"])
+    v43 = {
+        "N1: 3 'Try:' examples carry chain + address; one click fills #pf-form, clears the error and runs one live check rendered under the form (harness)":
+            len(chips43) == 3 and "tryReceipt(b);" in app43 and '$$("[data-pf-address]").forEach' not in app43
+            and 0 < home43.find('id="pf-form"') < home43.find("data-receipt") < home43.find('id="pf-out"')   # v4.4 F3a: examples above the result
+            and all(res.get(k) is True for k in ("v43_n1_try_fills_and_runs", "pf_preset_fetches_once", "v_hero_click_fetches")),
+        "N1 robustness: every init starts on its own (a simulated early failure leaves the examples working and is still reported); 0 init errors (harness)":
+            all(res.get(k) is True for k in ("v43_init_isolation", "v43_no_init_errors")),
+        "N3: Free row above, Rapid / Dossier / Continuous as a 3-column card grid, Enterprise row below (/ and /request/)":
+            all(plans43(t) == [("plan plan-row", "community"), ("plan", "rapid-500"), ("plan feat", "clearance"), ("plan", "continuous"),
+                               ("plan plan-row", "api_sla")] for t in (home43, req43))
+            and "grid-template-columns: repeat(3, minmax(0, 1fr))" in css_rule(".plans") and "grid-column: 1 / -1;" in css_rule(".plan-row"),
+        "N4: the audience cards do not stretch to equal height (align-items: start)": "align-items: start;" in css_rule(".aud"),
+        "N5: radar counts 'Executed (N ops)' (never '(N operations)'); the radar header cites exactly one block number, the finalized read (+ harness)":
+            BS.radar_counts_text(rad43) in rhead and "operations)" not in rhead
+            and ("Executed (" in BS.radar_counts_text(rad43)) == executed43
+            and len(re.findall(r"\d{1,3}(?:,\d{3}){2,}", rhead_txt)) == 1
+            and f'finalized block <a href="https://etherscan.io/block/{rad43["refreshed_at"]["block_number"]}"' in rhead
+            and res.get("v43_n5_radar_header_one_block") is True and res.get("pp2_radar_counts") is True,
+        "N6: the #how-it-works step grid is a reset list (no inline-start padding), flush with the h2":
+            '<section class="sec" id="how-it-works">' in home43 and all(x_ in css_rule(".steps") for x_ in ("list-style: none;", "margin: 0;", "padding: 0;")),
+        "N7: the auditor-referral note is its own line under the cards, linked to /methodology/#independence (which discloses the 15% terms); "
+        "the vulnerability route no longer mentions referrals":
+            "referral" not in BS.VULN_ROUTE and "15%" not in BS.VULN_ROUTE
+            and ref_html("") in pricing43(home43) and ref_html("../") in pricing43(req43)
+            and all(0 <= pricing43(t).find("data-editorial") < pricing43(t).find("data-pricing") < pricing43(t).find("data-referral") for t in (home43, req43))
+            and not any("15%" in pricing43(t) for t in (home43, req43))
+            and "15% referral partnership" in meth_ind and html.escape(BS.EDITORIAL_FIREWALL, quote=False) in meth_ind
+            and "Referrals never influence docs-vs-chain status" in meth_ind
+            and sorted(r_ for r_, t in pages.items() if re.search(r"15% referral|referral partnership", t)) == [os.path.join("methodology", "index.html")]
+            and f"{BS.REFERRAL_NOTE} Independence policy: https://pacta.wtf/methodology/#independence" in read("docs/llms.txt"),
+    }
+    check("v4.3 auditor re-check (N1 Try examples run the live check, N3 pricing rows + 3 cards, N4 no stretched card, N5 'Executed (N ops)' + "
+          "one header block, N6 flush How it works, N7 referral note linked to the independence policy)", all(v43.values()),
+          str([k for k, x in v43.items() if not x]))
+
+    # v4.4: internal review round 1 (screenshot and interaction review): R-V1..R-V4, P1-2, P2-1, P2-2
+    idx44 = {e["id"]: e for e in json.loads(read("docs/api/v1/index.json"))["entries"]}
+    chips44 = {m.group(3): (m.group(1), m.group(2)) for m in re.finditer(
+        r'data-receipt data-pf-chain="(ethereum|base)" data-pf-address="(0x[0-9a-fA-F]{40})" data-r-name="([^"]+)"', home43)}
+    want44 = {lbl: BS.LIVE_CHECK_TARGET.get(slug, (BS.chain_of(idx44[rid]), idx44[rid]["target_contract"])) for slug, rid, lbl, *_ in BS.RECEIPTS}
+    glyph_pages = sorted(r_ for r_, t in pages.items()
+                         if re.search("[\u2192\u2197]", re.sub(r"<[^>]+>", "", re.sub(r"<script.*?</script>", "", t[t.find("<body"):], flags=re.S))))
+    arrows44 = sum(t.count('<svg class="i ia" viewBox="0 0 24 24" aria-hidden="true">') for t in pages.values())
+    v44 = {
+        "R-V1a: 'Try: Stader ETHx' checks the ETHx proxy (EIP-1967, timelocked admin; listed on the Stader record page); YO and Moonwell check their record targets":
+            chips44.get("Stader ETHx") == ("ethereum", BS.HERO_EXAMPLE[2]) == BS.LIVE_CHECK_TARGET["stader-labs-ethx"]
+            and BS.HERO_EXAMPLE[2] in pages[os.path.join("protocols", "stader-labs-ethx", "index.html")]
+            and all(chips44.get(lbl) == (BS.chain_of(idx44[rid]), idx44[rid]["target_contract"]) for slug, rid, lbl, *_ in BS.RECEIPTS if slug not in BS.LIVE_CHECK_TARGET)
+            and len(chips44) == 3,
+        "R-V1b: verdict, metrics, then the indexed record with its Docs-vs-chain badge; one visible scope sentence; methodology and limits collapsed (harness)":
+            res.get("v44_live_card_verdict_first") is True and "Methodology & single-address scope limits" in app43,
+        "R-V3: the Try examples wrap at narrow widths (no swipe row, no clipped chip)":
+            "  .try-row { flex-wrap: wrap; gap: 6px 8px; }" in css43 and "scroll-snap-type" not in css43 and "mask-image" not in css43,
+        "R-V2: long radar identifiers break inside their mobile card":
+            "  table.radar td, table.radar .op, table.radar .sub, table.radar .meta { overflow-wrap: anywhere; word-break: break-word; min-width: 0; }" in css43,
+        "P1-2 / R5: every pre in a card or tab panel wraps (pre-wrap + overflow-wrap: anywhere)":
+            '[data-slot="card"] pre, [data-slot="tabs-content"] pre { white-space: pre-wrap; overflow-wrap: anywhere;' in css43
+            and "white-space: pre-wrap; overflow-wrap: anywhere;" in css_rule(".term pre"),
+        "R-V4: 0 raw U+2192 / U+2197 in the visible text of every HTML page and in app.js; link arrows are inline aria-hidden Lucide icons":
+            not glyph_pages and not re.search("[\u2192\u2197\u2713\u2260]", read("docs/app.js")) and arrows44 > 0
+            and "svg.ia { width: 0.875em; height: 0.875em; margin-left: 0.25em; vertical-align: -0.125em; }" in css43
+            and res.get("v44_runtime_link_arrow_icon") is True,
+        "P2-1: the checker help line says the examples run a check too":
+            '<p class="checker-cap" id="pf-help">Free, read-only check of one contract address at the latest block. No API key, no wallet. '
+            'Runs when you press Check or pick an example below.</p>' in home43,
+        "P2-2: a Try click scrolls the form (input + result) into view, clear of the sticky top bar (harness)":
+            res.get("v44_try_scrolls_form") is True and "scroll-margin-top: 72px;" in css_rule(".checker"),
+        "F3a: the Try examples sit between the checker and its result (a result never pushes them off screen) (harness)":
+            0 < home43.find('id="pf-form"') < home43.find('<div class="try">') < home43.find('id="pf-out"')
+            and res.get("v44_examples_between_form_and_result") is True,
+        "F3b: the result card shows no raw enum (classification, controller kind) outside the raw JSON (harness)":
+            res.get("v44_no_raw_enums_in_result") is True and 'Object.prototype.hasOwnProperty.call(CTL_LABEL, k)' in app43,
+        "F5: after a live radar read the provenance pill says 'Live-checked · #<block>' and the livebar drops its pinned note (harness)":
+            '<span class="badge final" data-prov-pill>Scanner-pinned (L1 finalized)</span>' in home43
+            and all(res.get(k) is True for k in ("v44_radar_live_pill", "v44_radar_pill_stays_pinned_offline")),
+        "F6: the /request/ scope brief no longer repeats the address; 'Copy brief and address' prefixes it; secondary actions are outline":
+            res.get("v44_request_brief_no_to") is True
+            and f'id="req-copy" data-copy-from="req-brief" data-copy-prefix="To: {BS.CONTACT}"' in pages[os.path.join("request", "index.html")],
+    }
+    check("v4.4 review round 1 (R-V1 Stader ETHx proxy + verdict-first card, R-V2 radar wrap, R-V3 wrapping Try examples, R-V4 icon arrows, "
+          "P1-2 code wrap, P2-1 help copy, P2-2 scroll to the form, F3a examples above the result, F3b no raw enums, F5 live radar pill, "
+          "F6 request brief)", all(v44.values()),
+          f"{[k for k, x in v44.items() if not x]}; chips {chips44}; want {want44}; raw-arrow pages {glyph_pages[:4]}; icons {arrows44}")
+
+    # v4.5: consolidated review round 2 (R2-01..R2-06, G-P1-1, G-P1-3, G-P2-1..G-P2-9, OpenAPI sync)
+    def lum45(h):
+        h = h.lstrip("#")
+        c = [int(h[i:i + 2], 16) / 255 for i in (0, 2, 4)]
+        c = [x / 12.92 if x <= 0.03928 else ((x + 0.055) / 1.055) ** 2.4 for x in c]
+        return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+
+    def cr45(a, b):
+        la, lb = sorted((lum45(a), lum45(b)), reverse=True)
+        return (la + 0.05) / (lb + 0.05)
+
+    def tok45(block, name):
+        m = re.search(r"--" + re.escape(name) + r":\s*(#[0-9a-fA-F]{6})", block)
+        return m.group(1) if m else "#000000"
+    light45 = css43[css43.index(":root {"):css43.index("}", css43.index(":root {"))]
+    dark45 = css43[css43.index(".dark {"):css43.index("}", css43.index(".dark {"))]
+    demo45 = read("docs/demos/swapio-x402/index.html")
+    demo_css = demo45[demo45.index("<style>"):demo45.index("</style>")]
+    clamps45 = [(int(a), int(b)) for a, b in re.findall(r"font(?:-size)?:\s*clamp\((\d+)px,[\d.]+vw,(\d+)px\)", demo45)]
+    scale45 = {12, 14, 16, 18, 20, 24, 30, 36, 48}
+    sc45 = {c["slug"]: c for c in json.loads(read("docs/api/v1/scorecards.json"))["protocols"]}
+    req45, terms45 = pages[os.path.join("request", "index.html")], pages[os.path.join("terms", "index.html")]
+    desc45 = lambda t: html.unescape(re.search(r'<meta name="description" content="([^"]*)"', t).group(1))
+    radar45 = pages[os.path.join("radar", "index.html")]
+    nums45 = BS.site_numbers(json.loads(read("docs/api/v1/index.json")))
+    readme45, remed45 = read("README.md"), read("REMEDIATION_SERVICES.md")
+    gen_html45 = {r_: t for r_, t in pages.items() if r_.endswith(".html") and not r_.startswith(os.path.join("demos", ""))}
+    # item 16: the cards are 1200x675 PNGs, one per protocol page (+ the radar cards the feed names)
+    import struct as _st45
+    cards45 = {os.path.basename(c_)[:-4]: open(c_, "rb").read(24) for c_ in glob.glob(os.path.join(DOCS, "cards", "*.png"))}
+    proto_slugs45 = {r_.split(os.sep)[1] for r_ in pages if r_.startswith("protocols" + os.sep) and r_.count(os.sep) == 2}
+    card_ok45 = (bool(cards45) and proto_slugs45 <= set(cards45)
+                 and all(b[:8] == b"\x89PNG\r\n\x1a\n" and _st45.unpack(">II", b[16:24]) == (1200, 675) for b in cards45.values()))
+    try:
+        xf45, xh45 = json.loads(read("docs/api/v1/x-feed.json")), json.loads(read("docs/api/v1/x-handles.json"))
+        kind_grade = {"adverse_delta": "delta", "protective_delta": "protective", "aligned_baseline": "aligned", "rpc_observed": "observed"}
+        sc_g45 = {c["slug"]: c["grade"] for c in json.loads(read("docs/api/v1/scorecards.json"))["protocols"]}
+        prot_items = [i for i in xf45["items"] if i.get("kind") in kind_grade]
+        xfeed_ok45 = (xf45["schema"] == "pacta.x_feed.v1" and xh45["schema"] == "pacta.x_handles.v1"
+                      and all(os.path.exists(os.path.join(DOCS, "cards", i["cardFilename"])) for i in xf45["items"])
+                      and sorted(i["slug"] for i in prot_items) == sorted(sc_g45) and all(sc_g45[i["slug"]] == kind_grade[i["kind"]] for i in prot_items)
+                      and all(xf45["counts"][k] == sum(g == v for g in sc_g45.values()) for k, v in kind_grade.items())
+                      and sorted(p_["slug"] for p_ in xh45["protocols"]) == sorted(sc_g45)
+                      and not re.search(r"[/]home[/]|[.]tmp[/]", read("docs/api/v1/x-feed.json") + read("docs/api/v1/x-handles.json")))
+    except (KeyError, ValueError, TypeError, OSError):
+        xfeed_ok45 = False
+    v45 = {
+        "R2-01: /protocols/ headers wrap below 640 px with the cells' padding (no clipped 'Docs vs chain')":
+            "  #proto-table th { white-space: normal; padding: 10px 6px;" in css43,
+        "R2-02: the Light 'S' rosette dot is >= 4.5:1 (white on the strong green); Dark keeps its own pair":
+            ".fdot.r-g { background: var(--rosette-strong); color: #fff; }" in css43 and cr45("#ffffff", tok45(light45, "rosette-strong")) >= 4.5
+            and ".dark .fdot.r-g { color: #052e16; }" in css43 and cr45("#052e16", tok45(dark45, "rosette-strong")) >= 4.5,
+        "R2-03: editable controls use --input-border, >= 3:1 against the card and the page in Light and Dark":
+            "border: 1px solid var(--input-border); border-radius: var(--radius);" in css43
+            and all(cr45(tok45(b, "input-border"), tok45(b, k)) >= 3.0 for b in (light45, dark45) for k in ("card", "background")),
+        "R2-04: /demos/swapio-x402/: every clamp ends on the type scale (12-48 px), disclaimer >= 12 px and >= 4.5:1, controls in their own row below 640 px":
+            bool(clamps45) and all(a >= 12 and b in scale45 for a, b in clamps45)
+            and ".foot { position:absolute; left:7%; right:7%; bottom:7%; font-size:clamp(12px,1.2vw,14px); color:var(--mute); }" in demo_css
+            and cr45(re.search(r"--mute:(#[0-9a-f]{6})", demo_css).group(1), re.search(r"--bg:(#[0-9a-f]{6})", demo_css).group(1)) >= 4.5
+            and ".scene { inset:0 0 48px 0; }" in demo_css and "#clock, #ctl { bottom:10px; }" in demo_css
+            and not re.search(r"font-size:\s*0?\.\d+em", demo_css),   # no fractional-em sizes that fall between the scale steps
+        "R2-05: the radar explanation cards keep their natural height (align-items: start)": "align-items: start;" in css_rule(".cases"),
+        "R2-06: the tier is 'Continuous Control-Plane Monitoring' everywhere (site, generator, app.js, README, REMEDIATION, issue template)":
+            all('<h3 data-slot="card-title">Continuous Control-Plane Monitoring</h3>' in t for t in (home43, req43))
+            and not any(re.search(r"Continuous Monitoring", read(f)) for f in ["README.md", "REMEDIATION_SERVICES.md", ".github/ISSUE_TEMPLATE/request-scan.yml",
+                                                                             "tools/build_site.py", "tools/app.src.js", "docs/app.js", "docs/llms.txt"])
+            and not any("Continuous Monitoring" in t for t in pages.values()),
+        "G-P1-1: @pacta_fractal: twitter:site on every generated page, JSON-LD sameAs, top-bar X link, footer Company link":
+            all('<meta name="twitter:site" content="@pacta_fractal">' in t for t in gen_html45.values())
+            and BS.X_URL in BS.ORG_LD["sameAs"] and 'href="https://x.com/pacta_fractal" target="_blank" rel="noopener" aria-label="Pacta on X (@pacta_fractal, opens in a new tab)"' in home43
+            and '<a href="https://x.com/pacta_fractal" target="_blank" rel="noopener">X (@pacta_fractal)</a>' in home43,
+        "G-P1-3: every Try target (and every record address) is in its protocol's search index, scorecards.json and the /request/ combobox (+ harness)":
+            all(a.lower() in sc45[slug]["search"] for slug, (_, a) in BS.LIVE_CHECK_TARGET.items())
+            and all(BS.chain_of(e) and e["target_contract"].lower() in sc45[BS.protocol_slug(e["protocol"])]["search"]
+                    for e in json.loads(read("docs/api/v1/index.json"))["entries"])
+            and 'data-q="' in req43 and BS.HERO_EXAMPLE[2].lower() in req43
+            and all(res.get(k) is True for k in ("v45_search_finds_try_addresses", "v45_combobox_prefix_address_click")),
+        "G-P2-1: the Free card and the /request/ community track say 'free, with live re-check on demand'":
+            "free, with live re-check on demand" in pricing43(home43) and "stays free, with live re-check on demand" in req43,
+        "G-P2-2: 'Heuristic score' in the checker, limits link to /methodology/#live-checker, which explains the heuristic and the delta counts (+ harness)":
+            '"Heuristic score"' in app43 and "Risk score" not in app43 and '<section class="memo-sec" id="live-checker">' in meth43
+            and f'{nums45["delta"]} of the {nums45["protocols"]} protocols carry at least one adverse docs-vs-chain delta' in meth43
+            and res.get("v45_live_checker_link") is True,
+        "G-P2-3: combobox ranks prefix matches first, matches 0x addresses, a mouse pick closes it (aria-expanded=false) and clears the query (harness)":
+            res.get("v45_combobox_prefix_address_click") is True,
+        "G-P2-4 / G-P2-7: 6 scorecard cards first below 640 px (any interaction shows all); /radar/ lists the operations above the legend":
+            len(re.findall(r'<tr class="sc-row sc-m"', home43)) == 10 and "#scorecards tbody:not([data-all]) tr.sc-row.sc-m { display: none; }" in css43
+            and res.get("v45_mobile_six_then_all") is True
+            and 0 < radar45.find('<table class="tbl radar">') < radar45.find('<div class="cases"'),
+        "G-P2-5: the teams card shows a real badge and its one-line Markdown embed":
+            re.search(r'class="teams-card".*?<img class="cp-badge" src="badges/aave-v3-gho.svg"[^>]*>.*?Copy the Markdown badge embed', home43, re.S) is not None,
+        "G-P2-6: catalogMatch lines <= 140 characters and threshold lines name their Safe (harness: 'Matched: Security Council Safe threshold 3-of-5')":
+            res.get("v45_catalog_lines") is True,
+        "G-P2-8: /request/ description 150-160 characters, /terms/ about 115":
+            150 <= len(desc45(req43)) <= 160 and 105 <= len(desc45(terms45)) <= 125,
+        "G-P2-9: README and REMEDIATION_SERVICES carry the site's tiers and counts":
+            all(x in readme45 and x in remed45 for x in ("$500", "$2,500–$5,000", "$1,500 USDC / month", "Continuous Control-Plane Monitoring"))
+            and f'**{nums45["protocols"]} protocols ({nums45["eas_protocols"]} Base-EAS attested + {nums45["observed"]} RPC-observed)' in readme45
+            and f'**{nums45["protocols"]} protocols ({nums45["eas_protocols"]} Base-EAS attested + {nums45["observed"]} RPC-observed)**' in remed45
+            and "flat" not in remed45 and "$5,000 USDC` flat" not in readme45,
+        "OpenAPI: the published snapshot (docs/api/v1/openapi.json) carries the Worker's /v1/x-feed":
+            "/v1/x-feed" in json.loads(read("docs/api/v1/openapi.json"))["paths"],
+        "16: every protocol page shares its own 1200x675 card (og:image + twitter:image); other pages keep og-preview.png 1200x630":
+            card_ok45 and all(
+                f'<meta property="og:image" content="https://pacta.wtf/cards/{slug}.png">' in t
+                and '<meta property="og:image:width" content="1200">' in t and '<meta property="og:image:height" content="675">' in t
+                and f'<meta name="twitter:image" content="https://pacta.wtf/cards/{slug}.png">' in t
+                for slug, t in ((r_.split(os.sep)[1], t) for r_, t in pages.items() if r_.startswith("protocols" + os.sep) and r_.count(os.sep) == 2))
+            and '<meta property="og:image" content="https://pacta.wtf/og-preview.png">' in home43 and '<meta property="og:image:height" content="630">' in home43,
+        "16: docs/api/v1/x-feed.json + x-handles.json mirror /v1/x-feed: every item's card exists, kinds match the grades, counts match the data":
+            xfeed_ok45,
+    }
+    check("v4.5 round 2 (R2-01..R2-06 geometry / contrast / charter name, G-P1-1 @pacta_fractal, G-P1-3 address search, G-P2-1..G-P2-9 copy, "
+          "combobox, mobile order, badge, catalog lines, meta lengths, repo docs; OpenAPI /v1/x-feed; 16 receipt cards + x-feed mirror)", all(v45.values()),
+          str([k for k, x in v45.items() if not x]))
 
     nf = pages.get("404.html", "")
     nf_raw = nf.encode()
@@ -2511,9 +2828,9 @@ def main(argv=None):
         "README Community badge links the Discussions hub": f"[![Community](https://img.shields.io/badge/Community-GitHub_Discussions-f59e0b?style=for-the-badge&labelColor=000000)]({cu})" in read("README.md"),
         f"footer Community link on all {len(ftr_pages)} footer pages": len(ftr_pages) >= 85
             and all(f'<a href="{cu}" target="_blank" rel="noopener">Community</a>' in pages[r] for r in ftr_pages),
-        "/bounties/: Community Q&A (Discussions) + Q&A thread + Master issue #41": f'href="{cu}" target="_blank" rel="noopener">Community Q&amp;A (Discussions) ↗</a>' in bounty
-            and f'href="{cqa}"' in bounty and f'<a href="{iss}" target="_blank" rel="noopener" data-wave2-issue>Master issue #41 ↗</a>' in bounty,
-        "/leaderboard/: Community Q&A (Discussions)": f'href="{cu}" target="_blank" rel="noopener">Community Q&amp;A (Discussions) ↗</a>' in lbp and f'href="{cqa}"' in lbp,
+        "/bounties/: Community Q&A (Discussions) + Q&A thread + Master issue #41": f'href="{cu}" target="_blank" rel="noopener">Community Q&amp;A (Discussions){BS.EXT}</a>' in bounty
+            and f'href="{cqa}"' in bounty and f'<a href="{iss}" target="_blank" rel="noopener" data-wave2-issue>Master issue #41{BS.EXT}</a>' in bounty,
+        "/leaderboard/: Community Q&A (Discussions)": f'href="{cu}" target="_blank" rel="noopener">Community Q&amp;A (Discussions){BS.EXT}</a>' in lbp and f'href="{cqa}"' in lbp,
         "llms.txt, llms-full.txt, /llms/: community hub, Q&A thread, issue #41": all(cu in read(f_) and cqa in read(f_) and iss in read(f_)
                                                                                   for f_ in ("docs/llms.txt", "docs/llms-full.txt", "docs/llms/index.html")),
         "WAVE2-MASTER-ISSUE.md + bounties/wave-2/README.md: Questions -> Discussions": "## Questions" in master and cu in master and cqa in master
@@ -2606,7 +2923,7 @@ def main(argv=None):
     pp["U7 + R4 layout: every CTA button label is 3 words or fewer; NavigationMenu >= 768 px, hamburger Sheet below (menu button shown, nav hidden); "
        "/protocols/ <= 640 px = Protocol / Chain / Docs vs chain"] = (
         cta_words and all(len(w.split()) <= 3 for w in cta_words)
-        and '[data-slot="navigation-menu"], .tools .gh { display: none; }' in m767 and ".menu-btn { display: inline-flex; }" in m767
+        and '[data-slot="navigation-menu"], .tools .gh, .tools .xl { display: none; }' in m767 and ".menu-btn { display: inline-flex; }" in m767
         and top_level(css_p, ".menu-btn { display: none; }")
         and [ths_[i - 1] for i in range(1, len(ths_) + 1) if i not in hidden_] == ["Protocol", "Chain", "Docs vs chain"]
         and res.get("e3_checker_aria_invalid") is True)
@@ -2626,8 +2943,9 @@ def main(argv=None):
         and res.get("pp2_verdict_plain") is True
         and all(res.get(k) is True for k in ("pp3_inspector_live_rpc", "pp3_preflight_live_rpc_proxy", "pp3_immutable_headline",
                                              "pp3_preflight_live_rpc_owner", "pp3_live_rpc_failure")))
-    pp["S02 + V07: 'The contract check runs only when you press Check' + aggregate-pageview note; /bounties/ pill leads with funded slots open now"] = (
-        "The contract check runs only when you press Check" in home_p and "anonymous first-party aggregate pageviews" in home_p
+    pp["S02 + V07 (v4.4 wording): 'Runs when you press Check or pick an example below' (nothing runs on page load: harness) + aggregate-pageview note; /bounties/ pill leads with funded slots open now"] = (
+        "Runs when you press Check or pick an example below." in home_p and res.get("pf_no_fetch_on_load") is True
+        and "anonymous first-party aggregate pageviews" in home_p
         and f'data-bounty-pill>{BS.FUNDED_UNENCUMBERED_SLOTS} Funded Slots Open Now · ${BS.REWARD_USDC} USDC / Merged Finding</span>' in read("docs/bounties/index.html")
         and "ring-fenced for Wave 1 Slot #4" in read("docs/bounties/index.html"))
     def lum_(h):
@@ -2732,12 +3050,12 @@ def main(argv=None):
     hv_ = read("docs/index.html")
     e3["hydrated scorecards: every protocol row carries a 5-slice rosette naming all five factors, slice 5 hollow 'uncompared' on every RPC-observed row; /request/?tier=rapid-500 pre-selects the $500 track (harness)"] = (
         all(res.get(k_) is True for k_ in ("e3_hydrated_all", "e3_observed_parity_hollow", "prefill_rapid_500", "v_hero_receipts")))
-    e3["homepage = 7 blocks (hero, #how, #scorecards, #radar, audiences, #pricing, footer): no numbered section headers, no Findings / Inspector / Index / FAQ blocks; "
+    e3["homepage = 7 blocks (hero, #how-it-works, #scorecards, #radar, audiences, #pricing, footer): no numbered section headers, no Findings / Inspector / Index / FAQ blocks; "
        "< 150,000 B and < 2,200 elements; h1 'Protocol docs drift. The chain doesn't.'; proof bar counts computed from the catalog"] = (
         len(hv_.encode()) < 150000 and len(re.findall(r"<[a-zA-Z]", hv_)) < 2200 and '<span class="n">' not in hv_
         and not any(f'id="{x_}"' in hv_ for x_ in ("findings", "inspector", "index", "faq", "verify", "onboarding", "about", "request"))
         and re.findall(r'<section class="(?:sec|hero hero-v3)" id="([a-z]+)"|<section class="hero hero-v3">', hv_) is not None
-        and [m_ for m_ in re.findall(r'<section class="[^"]+"(?: id="([a-z-]+)")?[^>]*>', hv_)] == ["", "how", "scorecards", "radar", "audiences", "pricing"]
+        and [m_ for m_ in re.findall(r'<section class="[^"]+"(?: id="([a-z-]+)")?[^>]*>', hv_)] == ["", "how-it-works", "scorecards", "radar", "audiences", "pricing"]
         and '<h1><span class="l">Protocol docs drift.</span><br><span class="l">The chain doesn’t.</span></h1>' in hv_ and 'class="ftr"' in hv_
         and f'class="stat" data-slot="card"><b>{sum(c_["grade"] == "delta" for c_ in cards_.values())}</b><span>Deltas</span>' in hv_
         and f'class="stat" data-slot="card"><b>{sum(c_["grade"] == "protective" for c_ in cards_.values())}</b><span>Protective</span>' in hv_
@@ -2905,9 +3223,9 @@ def main(argv=None):
         and pl in read("docs/llms.txt") and pl in read("docs/llms-full.txt") and html.escape(pl, quote=False) in read("docs/llms/index.html")
         and re.search(r'class="stat" data-slot="card"><b>' + str(X["protocols"]) + r'</b><span>Protocols scored</span>', home_v) is not None)
     rad_v = json.loads(read("docs/api/v1/radar.json"))
-    v1["P2 provenance: radar refreshed from live RPC (finalized block, 2 RPCs), UTC observation + relative age, pinned snapshot label; executed only via isOperationDone"] = (
+    v1["P2 provenance: radar refreshed from live RPC (finalized block, 2 RPCs), UTC observation + relative age, pinned snapshot label (no block number: N5); executed only via isOperationDone"] = (
         rad_v["refreshed_at"]["tag"] == "finalized" and rad_v["refreshed_at"]["block_number"] >= 26434340 and rad_v["refreshed_at"]["rpcs_cross_checked"] == 2
-        and home_v.count(f'data-age="{rad_v["refreshed_at"]["block_timestamp"]}"') >= 2 and "pinned snapshot: radar block" in home_v
+        and home_v.count(f'data-age="{rad_v["refreshed_at"]["block_timestamp"]}"') >= 2 and "(pinned snapshot observed <time" in home_v
         and all(o["done"] for it in rad_v["items"] if not it.get("eta") for o in it["operations"]) and res.get("v_ages") is True)
     ed_bad = []
     for v in sp_v.values():
